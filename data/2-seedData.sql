@@ -225,6 +225,3 @@ INSERT INTO coach_assignment_log (coach_id, user_id, assigned_type, workout_plan
   (2, 1, 'workout_plan', 1,    NULL, NULL, '2026-03-01 10:00:00', 'Start with this plan for 2 weeks.'),
   (2, 1, 'meal_plan',    NULL, 1,    NULL, '2026-03-01 10:05:00', 'Keep calories consistent.'),
   (2, 1, 'template',     NULL, NULL, 1,    '2026-03-01 10:10:00', 'Public template reference.');
-
-select * from user_meal; 
-select * from points_wallet; 
