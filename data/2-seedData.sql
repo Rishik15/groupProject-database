@@ -225,3 +225,34 @@ INSERT INTO coach_assignment_log (coach_id, user_id, assigned_type, workout_plan
   (2, 1, 'workout_plan', 1,    NULL, NULL, '2026-03-01 10:00:00', 'Start with this plan for 2 weeks.'),
   (2, 1, 'meal_plan',    NULL, 1,    NULL, '2026-03-01 10:05:00', 'Keep calories consistent.'),
   (2, 1, 'template',     NULL, NULL, 1,    '2026-03-01 10:10:00', 'Public template reference.');
+
+
+INSERT INTO notification 
+(user_id, type, conversation_id, reference_id, title, body, is_read)
+VALUES
+-- CHAT NOTIFICATIONS (coach gets message from client)
+(2, 'chat_message', 1, 1,  'New message from Alex',  'Hey coach, excited to start.', 0),
+
+-- CHAT (client gets reply from coach)
+(1, 'chat_message', 1, 2, 
+ 'New message from Coach Sam', 
+ 'Let''s do it. Keep it simple, keep it consistent.', 
+ 1),
+
+-- COACH ACCEPTED CLIENT (based on contract)
+(1, 'coach_assigned', NULL, 1,
+ 'Coach Assigned',
+ 'You are now working with Coach Sam.',
+ 0),
+
+-- WELLNESS REMINDER
+(1, 'wellness_reminder', NULL, NULL,
+ 'Daily Check-in',
+ 'Don’t forget to complete your wellness survey today.',
+ 0),
+
+-- WORKOUT REMINDER (based on event)
+(1, 'workout_reminder', NULL, 1,
+ 'Workout Scheduled',
+ 'You have a workout scheduled today at 6 PM.',
+ 0)

@@ -649,6 +649,37 @@ CREATE TABLE coach_featured (
   FOREIGN KEY (coach_id) REFERENCES coach(coach_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE notification (
+  notification_id INT AUTO_INCREMENT PRIMARY KEY,
+
+  user_id INT NOT NULL,
+  type VARCHAR(50) NOT NULL,
+
+  conversation_id INT NULL,
+  reference_id INT NULL,
+  metadata JSON NULL,
+
+  title VARCHAR(255) NOT NULL,
+  body TEXT NULL,
+
+  is_read BOOLEAN NOT NULL DEFAULT FALSE,
+
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  INDEX idx_user_read (user_id, is_read),
+  INDEX idx_user_type (user_id, type),
+  CONSTRAINT fk_notification_user
+    FOREIGN KEY (user_id)
+    REFERENCES users_immutables(user_id)
+    ON DELETE CASCADE
+
+  CONSTRAINT fk_notification_conversation
+    FOREIGN KEY (conversation_id)
+    REFERENCES conversation(conversation_id)
+    ON DELETE CASCADE
+);
+
 
 -- audit triggers
 
