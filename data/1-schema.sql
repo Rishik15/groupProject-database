@@ -669,17 +669,15 @@ CREATE TABLE notification (
 
   INDEX idx_user_read (user_id, is_read),
   INDEX idx_user_type (user_id, type),
-  CONSTRAINT fk_notification_user
-    FOREIGN KEY (user_id)
-    REFERENCES users_immutables(user_id)
-    ON DELETE CASCADE
 
-  CONSTRAINT fk_notification_conversation
-    FOREIGN KEY (conversation_id)
-    REFERENCES conversation(conversation_id)
-    ON DELETE CASCADE
+  FOREIGN KEY (user_id)
+  REFERENCES users_immutables(user_id)
+  ON DELETE CASCADE,
+
+  FOREIGN KEY (conversation_id)
+  REFERENCES conversation(conversation_id)
+  ON DELETE CASCADE
 );
-
 
 -- audit triggers
 
