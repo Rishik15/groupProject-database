@@ -30,16 +30,16 @@ INSERT INTO user_mutables (user_id, profile_picture, weight, height, goal_weight
 
 INSERT INTO user_creds (user_id, username, password_hash, email) VALUES
   (1,  'system',   'n/a',         'system@betafit.internal'),
-  (2,  'alex_t',   'hash_abc123', 'alex@example.com'),
-  (3,  'sam_n',    'hash_def456', 'sam@example.com'),
-  (4,  'jordan_p', 'hash_ghi789', 'jordan@example.com'),
-  (5,  'taylor_b', 'hash_t1',     'taylor@example.com'),
-  (6,  'morgan_l', 'hash_m1',     'morgan@example.com'),
-  (7,  'riley_c',  'hash_r1',     'riley@example.com'),
-  (8,  'casey_d',  'hash_c1',     'casey@example.com'),
-  (9,  'drew_o',   'hash_d1',     'drew@example.com'),
-  (10, 'quinn_m',  'hash_q1',     'quinn@example.com'),
-  (11, 'avery_h',  'hash_a1',     'avery@example.com');
+  (2,  'alex_t',   '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'alex@example.com'),
+  (3,  'sam_n',    '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'sam@example.com'),
+  (4,  'jordan_p', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'jordan@example.com'),
+  (5,  'taylor_b', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2',     'taylor@example.com'),
+  (6,  'morgan_l', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2',     'morgan@example.com'),
+  (7,  'riley_c',  '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2',     'riley@example.com'),
+  (8,  'casey_d',  '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2',     'casey@example.com'),
+  (9,  'drew_o',   '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2',     'drew@example.com'),
+  (10, 'quinn_m',  '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2',     'quinn@example.com'),
+  (11, 'avery_h',  '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2',     'avery@example.com');
 
 -- Sam(3) and Taylor(5) are coaches, Jordan(4) is admin
 INSERT INTO coach (coach_id, coach_description, price) VALUES
