@@ -639,7 +639,6 @@ INSERT INTO feature (title, description, icon, display_order, active) VALUES
   ('Workout Templates',    'Browse public plans from top coaches.', 'layout',         10, 1);
 
 INSERT INTO coach_featured (coach_id, display_order, start_date, end_date, active) VALUES
-  (2, 1, '2026-03-01', '2026-04-01', 1),
   (3, 1, '2026-03-01', '2026-04-01', 1),
   (5, 2, '2026-03-01', '2026-04-01', 1);
 
