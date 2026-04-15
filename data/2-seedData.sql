@@ -347,64 +347,56 @@ INSERT INTO coach_client_note (coach_id, client_user_id, note_text, private) VAL
   (3, 6,  'Discussed nutrition targets for the cut phase.',                          1);
 
 
--- messaging (10 conversations)
 INSERT INTO conversation (conversation_type, created_by, title) VALUES
-  ('dm',    2,  NULL),                       -- 1
-  ('group', 3,  'Week 1 Accountability'),    -- 2
-  ('group', 5,  'HIIT Squad'),               -- 3
-  ('dm',    5,  NULL),                       -- 4
-  ('dm',    3,  NULL),                       -- 5
-  ('group', 3,  'Strength Block - March'),   -- 6
-  ('dm',    7,  NULL),                       -- 7
-  ('dm',    9,  NULL),                       -- 8
-  ('group', 5,  'Morning Crew'),             -- 9
-  ('dm',    11, NULL);                       -- 10
+  ('dm', 3, NULL),  -- 1: 3 ↔ 2
+  ('dm', 3, NULL),  -- 2: 3 ↔ 6
+  ('dm', 3, NULL),  -- 3: 3 ↔ 8
+  ('dm', 3, NULL),  -- 4: 3 ↔ 9
+  ('dm', 3, NULL),  -- 5: 3 ↔ 10
 
+  ('dm', 5, NULL),  -- 6: 5 ↔ 7
+  ('dm', 5, NULL);  -- 7: 5 ↔ 11
+
+-- messaging (10 conversations)
 INSERT INTO conversation_member (conversation_id, user_id, role) VALUES
-  (1,  2,  'owner'),
-  (1,  3,  'member'),
-  (2,  3,  'owner'),
-  (2,  2,  'member'),
-  (2,  4,  'admin'),
-  (2,  6,  'member'),
-  (3,  5,  'owner'),
-  (3,  6,  'member'),
-  (3,  7,  'member'),
-  (3,  8,  'member'),
-  (4,  5,  'owner'),
-  (4,  7,  'member'),
-  (5,  3,  'owner'),
-  (5,  8,  'member'),
-  (6,  3,  'owner'),
-  (6,  2,  'member'),
-  (6,  9,  'member'),
-  (6,  10, 'member'),
-  (7,  7,  'owner'),
-  (7,  5,  'member'),
-  (8,  9,  'owner'),
-  (8,  3,  'member'),
-  (9,  5,  'owner'),
-  (9,  7,  'member'),
-  (9,  11, 'member'),
-  (10, 11, 'owner'),
-  (10, 3,  'member');
+  (1, 3, 'owner'), (1, 2, 'member'),
+  (2, 3, 'owner'), (2, 6, 'member'),
+  (3, 3, 'owner'), (3, 8, 'member'),
+  (4, 3, 'owner'), (4, 9, 'member'),
+  (5, 3, 'owner'), (5, 10, 'member'),
+
+  (6, 5, 'owner'), (6, 7, 'member'),
+  (7, 5, 'owner'), (7, 11, 'member');
 
 INSERT INTO message (conversation_id, sender_user_id, content, sent_at) VALUES
-  (1,  2,  'Hey coach, excited to start.',                      '2026-03-02 07:55:00'),
-  (1,  3,  'Let''s do it. Keep it simple, keep it consistent.', '2026-03-02 08:00:00'),
-  (2,  3,  'Welcome everyone. Post your sessions here.',        '2026-03-02 08:05:00'),
-  (2,  2,  'Push day done. Felt strong.',                       '2026-03-02 19:05:00'),
-  (2,  6,  'Upper day complete. Shoulder felt a bit off.',      '2026-03-04 13:10:00'),
-  (3,  5,  'Let''s crush today''s HIIT.',                       '2026-03-03 06:50:00'),
-  (3,  6,  'Ready when you are!',                               '2026-03-03 06:55:00'),
-  (3,  7,  'Just finished. That was brutal.',                   '2026-03-03 07:45:00'),
-  (4,  5,  'Riley great work today. Check form on squats.',     '2026-03-05 09:00:00'),
-  (4,  7,  'Thanks coach, will watch the video again.',         '2026-03-05 09:15:00'),
-  (6,  3,  'Strength block starting Monday. Who''s in?',        '2026-03-01 10:00:00'),
-  (6,  2,  'In. What''s the plan?',                             '2026-03-01 10:05:00'),
-  (9,  5,  'Morning crew - everyone ready for the week?',       '2026-03-02 06:00:00'),
-  (9,  7,  'Ready!',                                            '2026-03-02 06:10:00'),
-  (9,  11, 'First week, nervous but excited.',                  '2026-03-02 06:15:00');
+
+-- convo 1: coach 3 ↔ user 2
+(1, 2, 'Hey coach, excited to start.',                      '2026-03-02 07:55:00'),
+(1, 3, 'Good to hear. Let''s stay consistent this week.',   '2026-03-02 08:00:00'),
+
+-- convo 2: coach 3 ↔ user 6
+(2, 6, 'Finished upper body today.',                        '2026-03-04 13:10:00'),
+(2, 3, 'Nice, how did shoulders feel?',                     '2026-03-04 13:15:00'),
+
+-- convo 3: coach 3 ↔ user 8
+(3, 3, 'Let''s focus on strength this month.',              '2026-03-03 09:00:00'),
+(3, 8, 'Sounds good, ready to go.',                         '2026-03-03 09:05:00'),
+
+-- convo 4: coach 3 ↔ user 9
+(4, 9, 'Started the program today.',                        '2026-03-01 10:00:00'),
+(4, 3, 'Great, keep me posted on progress.',                '2026-03-01 10:05:00'),
+
+-- convo 5: coach 3 ↔ user 10
+(5, 10, 'When does the next phase begin?',                  '2026-03-10 11:00:00'),
+(5, 3,  'We start next Monday.',                            '2026-03-10 11:10:00'),
+
+-- convo 6: coach 5 ↔ user 7
+(6, 5, 'Let''s crush today''s HIIT.',                       '2026-03-03 06:50:00'),
+(6, 7, 'Just finished. That was brutal.',                   '2026-03-03 07:45:00'),
+
+-- convo 7: coach 5 ↔ user 11
+(7, 11, 'First week, nervous but excited.',                 '2026-03-02 06:15:00'),
+(7, 5,  'You''ll do great, just stay consistent.',          '2026-03-02 06:20:00');
 
 
 -- reviews (10)
