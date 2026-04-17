@@ -49,6 +49,27 @@ CREATE TABLE user_mutables (
   FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE google_drive_oauth_connection (
+  connection_id        INT AUTO_INCREMENT PRIMARY KEY,
+  account_scope        VARCHAR(32) NOT NULL DEFAULT 'global',
+  connected_by_user_id INT NOT NULL,
+  google_email         VARCHAR(255) NULL,
+  access_token         TEXT NOT NULL,
+  refresh_token        TEXT NULL,
+  token_uri            VARCHAR(255) NOT NULL,
+  client_id            VARCHAR(255) NOT NULL,
+  scopes               TEXT NOT NULL,
+  root_folder_id       VARCHAR(255) NULL,
+  created_at           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  UNIQUE KEY uq_google_drive_oauth_connection_scope (account_scope),
+  FOREIGN KEY (connected_by_user_id)
+    REFERENCES users_immutables(user_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
 -- auth credentials kept separate personal info 
 CREATE TABLE user_creds (
   user_id       INT PRIMARY KEY,
@@ -62,6 +83,8 @@ CREATE TABLE user_creds (
   UNIQUE KEY (email),
   FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+
 
 -- coaches and admins are users (1:1)
 CREATE TABLE coach (
