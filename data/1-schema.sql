@@ -312,6 +312,20 @@ CREATE TABLE user_coach_contract (
   FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE progress_photo (
+  progress_photo_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id           INT NOT NULL,
+  photo_url         VARCHAR(255) NOT NULL,
+  caption           TEXT NULL,
+  taken_at          DATETIME NULL,
+  created_at        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  INDEX (user_id, created_at),
+  INDEX (user_id, taken_at),
+  FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 CREATE TABLE coach_availability (
   availability_id INT AUTO_INCREMENT PRIMARY KEY,
   coach_id        INT NOT NULL,
