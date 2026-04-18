@@ -76,33 +76,6 @@ CREATE TABLE google_drive_oauth_connection (
     ON UPDATE CASCADE
 );
 
-CREATE TABLE google_drive_oauth_connection (
-  connection_id        INT AUTO_INCREMENT PRIMARY KEY,
-  account_scope        VARCHAR(32) NOT NULL DEFAULT 'global',
-  owner_user_id        INT NULL,
-  connected_by_user_id INT NOT NULL,
-  google_email         VARCHAR(255) NULL,
-  access_token         TEXT NOT NULL,
-  refresh_token        TEXT NULL,
-  token_uri            VARCHAR(255) NOT NULL,
-  client_id            VARCHAR(255) NOT NULL,
-  scopes               TEXT NOT NULL,
-  root_folder_id       VARCHAR(255) NULL,
-  created_at           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-  UNIQUE KEY uq_google_drive_oauth_connection_global_scope (account_scope),
-  UNIQUE KEY uq_google_drive_oauth_connection_user_owner (owner_user_id),
-  FOREIGN KEY (owner_user_id)
-    REFERENCES users_immutables(user_id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  FOREIGN KEY (connected_by_user_id)
-    REFERENCES users_immutables(user_id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-);
-
 
 CREATE TABLE user_creds (
   user_id       INT PRIMARY KEY,
@@ -187,7 +160,7 @@ CREATE TABLE workout_plan (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-  UNIQUE KEY (plan_name)
+  INDEX idx_workout_plan_plan_name (plan_name)
 );
 
 -- sits between workout_plan and plan_exercise
@@ -310,7 +283,7 @@ CREATE TABLE user_meal (
   created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-  PRIMARY KEY (meal_id, meal_plan_id),
+  PRIMARY KEY (meal_id, meal_plan_id, day_of_week, meal_type),
   INDEX (meal_type),
   INDEX (day_of_week),
   FOREIGN KEY (meal_id) REFERENCES meal(meal_id) ON DELETE RESTRICT ON UPDATE CASCADE,

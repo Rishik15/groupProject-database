@@ -66,36 +66,36 @@ INSERT INTO certifications (coach_id, cert_name, provider_name, description, iss
 
 -- exercise library (IDs 1-30)
 INSERT INTO exercise (exercise_name, equipment, video_url) VALUES
-  ('hack calf raise',                              'sled machine',     '2ORFMoR.gif'),   -- 1
-  ('sled 45° leg press (side pov)',                'sled machine',     '2Qh2J1e.gif'),   -- 2
-  ('dumbbell front raise',                         'dumbbell',         '3eGE2JC.gif'),   -- 3
-  ('dumbbell over bench revers wrist curl',        'dumbbell',         '3tAXPQ6.gif'),   -- 4
-  ('barbell incline bench press',                  'barbell',          '3TZduzM.gif'),   -- 5
-  ('cable squatting curl',                         'cable',            '3XFdb1Z.gif'),   -- 6
-  ('dumbbell one arm hammer preacher curl',        'dumbbell',         '4dF3maG.gif'),   -- 7
-  ('barbell standing close grip curl',             'barbell',          '4dUn2iv.gif'),   -- 8
-  ('kettlebell pistol squat',                      'kettlebell',       '5bpPTHv.gif'),   -- 9
-  ('impossible dips',                              'body weight',      '05Cf2v8.gif'),   -- 10
-  ('barbell seated overhead triceps extension',    'barbell',          '5uFK1xr.gif'),   -- 11
-  ('smith incline bench press',                    'smith machine',    '5v7KYld.gif'),   -- 12
-  ('weighted side bend (on stability ball)',       'weighted',         '6bOA1Oi.gif'),   -- 13
-  ('dumbbell one arm upright row',                 'dumbbell',         '6cKQC5E.gif'),   -- 14
-  ('barbell standing rocking leg calf raise',      'barbell',          '6HiHHe0.gif'),   -- 15
-  ('barbell wrist curl v. 2',                      'barbell',          '6kSxYnw.gif'),   -- 16
-  ('dumbbell lying single extension',              'dumbbell',         '6MfS53i.gif'),   -- 17
-  ('dumbbell reverse spider curl',                 'dumbbell',         '6sMAmNv.gif'),   -- 18
-  ('bent knee lying twist (male)',                 'body weight',      '6sYyrRX.gif'),   -- 19
-  ('lever front pulldown',                         'leverage machine', '7F1DVzn.gif'),   -- 20
-  ('lever seated row',                             'leverage machine', '7I6LNUG.gif'),   -- 21
-  ('dumbbell standing concentration curl',         'dumbbell',         '7inpWch.gif'),   -- 22
-  ('cable decline fly',                            'cable',            '7saC5zz.gif'),   -- 23
-  ('smith leg press',                              'smith machine',    '7zdxRTl.gif'),   -- 24
-  ('dumbbell palms in incline bench press',        'dumbbell',         '8eqjhOl.gif'),   -- 25
-  ('assisted hanging knee raise with throw down', 'assisted',         '8K0w2yA.gif'),   -- 26
-  ('cable seated curl',                            'cable',            '8oYqOt9.gif'),   -- 27
-  ('barbell standing calf raise',                  'barbell',          '8ozhUIZ.gif'),   -- 28
-  ('weighted hyperextension (on stability ball)', 'weighted',         '8urJS9b.gif'),   -- 29
-  ('cable seated crunch',                          'cable',            '8xUv4J7.gif');   -- 30
+  ('hack calf raise',                              'sled machine',     '2ORFMoR.gif'),  
+  ('sled 45° leg press (side pov)',                'sled machine',     '2Qh2J1e.gif'),  
+  ('dumbbell front raise',                         'dumbbell',         '3eGE2JC.gif'),  
+  ('dumbbell over bench revers wrist curl',        'dumbbell',         '3tAXPQ6.gif'),  
+  ('barbell incline bench press',                  'barbell',          '3TZduzM.gif'),  
+  ('cable squatting curl',                         'cable',            '3XFdb1Z.gif'),  
+  ('dumbbell one arm hammer preacher curl',        'dumbbell',         '4dF3maG.gif'),  
+  ('barbell standing close grip curl',             'barbell',          '4dUn2iv.gif'),  
+  ('kettlebell pistol squat',                      'kettlebell',       '5bpPTHv.gif'),  
+  ('impossible dips',                              'body weight',      '05Cf2v8.gif'),  
+  ('barbell seated overhead triceps extension',    'barbell',          '5uFK1xr.gif'),  
+  ('smith incline bench press',                    'smith machine',    '5v7KYld.gif'),  
+  ('weighted side bend (on stability ball)',       'weighted',         '6bOA1Oi.gif'),  
+  ('dumbbell one arm upright row',                 'dumbbell',         '6cKQC5E.gif'),  
+  ('barbell standing rocking leg calf raise',      'barbell',          '6HiHHe0.gif'),  
+  ('barbell wrist curl v. 2',                      'barbell',          '6kSxYnw.gif'),  
+  ('dumbbell lying single extension',              'dumbbell',         '6MfS53i.gif'),  
+  ('dumbbell reverse spider curl',                 'dumbbell',         '6sMAmNv.gif'),  
+  ('bent knee lying twist (male)',                 'body weight',      '6sYyrRX.gif'),  
+  ('lever front pulldown',                         'leverage machine', '7F1DVzn.gif'),  
+  ('lever seated row',                             'leverage machine', '7I6LNUG.gif'),  
+  ('dumbbell standing concentration curl',         'dumbbell',         '7inpWch.gif'),  
+  ('cable decline fly',                            'cable',            '7saC5zz.gif'),  
+  ('smith leg press',                              'smith machine',    '7zdxRTl.gif'),  
+  ('dumbbell palms in incline bench press',        'dumbbell',         '8eqjhOl.gif'),  
+  ('assisted hanging knee raise with throw down', 'assisted',         '8K0w2yA.gif'),   
+  ('cable seated curl',                            'cable',            '8oYqOt9.gif'),  
+  ('barbell standing calf raise',                  'barbell',          '8ozhUIZ.gif'),  
+  ('weighted hyperextension (on stability ball)', 'weighted',         '8urJS9b.gif'),   
+  ('cable seated crunch',                          'cable',            '8xUv4J7.gif');  
 
 
 -- workout plans
@@ -115,55 +115,7 @@ INSERT INTO workout_plan (plan_name) VALUES
   ('Cutting Shred Program'),           -- 12
   ('Cardio Endurance Builder'),        -- 13
   ('HIIT & Conditioning');             -- 14
-  ('Hack Calf Raise',                    'sled machine',     '2ORFMoR.gif'),   -- 1
-  ('Sled Leg Press',                     'sled machine',     '2Qh2J1e.gif'),   -- 2
-  ('Dumbbell Front Raise',               'dumbbell',         '3eGE2JC.gif'),   -- 3
-  ('Dumbbell Reverse Wrist Curl',        'dumbbell',         '3tAXPQ6.gif'),   -- 4
-  ('Barbell Incline Bench Press',        'barbell',          '3TZduzM.gif'),   -- 5
-  ('Cable Squat Curl',                   'cable',            '3XFdb1Z.gif'),   -- 6
-  ('Dumbbell Hammer Preacher Curl',      'dumbbell',         '4dF3maG.gif'),   -- 7
-  ('Barbell Close Grip Curl',            'barbell',          '4dUn2iv.gif'),   -- 8
-  ('Kettlebell Pistol Squat',            'kettlebell',       '5bpPTHv.gif'),   -- 9
-  ('Weighted Dips',                      'body weight',      '05Cf2v8.gif'),   -- 10
-  ('Barbell Overhead Tricep Extension',  'barbell',          '5uFK1xr.gif'),   -- 11
-  ('Smith Machine Incline Press',        'smith machine',    '5v7KYld.gif'),   -- 12
-  ('Weighted Side Bend',                 'weighted',         '6bOA1Oi.gif'),   -- 13
-  ('Dumbbell Upright Row',               'dumbbell',         '6cKQC5E.gif'),   -- 14
-  ('Barbell Calf Raise',                 'barbell',          '6HiHHe0.gif'),   -- 15
-  ('Barbell Wrist Curl',                 'barbell',          '6kSxYnw.gif'),   -- 16
-  ('Dumbbell Tricep Extension',          'dumbbell',         '6MfS53i.gif'),   -- 17
-  ('Dumbbell Spider Curl',               'dumbbell',         '6sMAmNv.gif'),   -- 18
-  ('Lying Knee Twist',                   'body weight',      '6sYyrRX.gif'),   -- 19
-  ('Lat Pulldown',                       'leverage machine', '7F1DVzn.gif'),   -- 20
-  ('Seated Cable Row',                   'leverage machine', '7I6LNUG.gif'),   -- 21
-  ('Dumbbell Concentration Curl',        'dumbbell',         '7inpWch.gif'),   -- 22
-  ('Cable Decline Fly',                  'cable',            '7saC5zz.gif'),   -- 23
-  ('Smith Machine Leg Press',            'smith machine',    '7zdxRTl.gif'),   -- 24
-  ('Dumbbell Incline Press',             'dumbbell',         '8eqjhOl.gif'),   -- 25
-  ('Hanging Knee Raise',                 'assisted',         '8K0w2yA.gif'),   -- 26
-  ('Cable Curl',                         'cable',            '8oYqOt9.gif'),   -- 27
-  ('Standing Calf Raise',                'barbell',          '8ozhUIZ.gif'),   -- 28
-  ('Hyperextension',                     'weighted',         '8urJS9b.gif'),   -- 29
-  ('Cable Crunch',                       'cable',            '8xUv4J7.gif');   -- 30
 
--- ============================================================
--- workout_plan (IDs 1-14, unchanged)
--- ============================================================
-INSERT INTO workout_plan (plan_name) VALUES
-  ('Push Pull Legs - Intermediate'),   -- 1
-  ('Upper Lower Split - Beginner'),    -- 2
-  ('Full Body Strength - 3x Week'),    -- 3
-  ('Arms & Shoulders Hypertrophy'),    -- 4
-  ('Beginner Bodyweight'),             -- 5
-  ('Core & Conditioning'),             -- 6
-  ('Cable Machine Intro'),             -- 7
-  ('Kettlebell Fundamentals'),         -- 8
-  ('Strength Foundations'),            -- 9
-  ('Isolation Arm Builder'),           -- 10
-  ('Fat Loss Circuit'),                -- 11
-  ('Cutting Shred Program'),           -- 12
-  ('Cardio Endurance Builder'),        -- 13
-  ('HIIT & Conditioning');             -- 14
 
 -- ============================================================
 -- workout_day
@@ -392,11 +344,7 @@ INSERT INTO food_item (user_id, name, calories, protein, carbs, fats) VALUES
   (3, 'Protein Pancakes',      350, 28.00, 38.00,  8.00),
   (5, 'Pre-workout Smoothie',  240, 18.00, 32.00,  4.00),
   (6, 'Overnight Oats',        320, 12.00, 52.00,  7.00);
-  (2, 'Homemade Oatmeal',      300, 10.00, 50.00,  6.00),
-  (2, 'Peanut Butter on Rice', 280,  9.00, 30.00, 14.00),
-  (3, 'Protein Pancakes',      350, 28.00, 38.00,  8.00),
-  (5, 'Pre-workout Smoothie',  240, 18.00, 32.00,  4.00),
-  (6, 'Overnight Oats',        320, 12.00, 52.00,  7.00);
+
 
 -- meal plans (IDs 1-10)
 INSERT INTO meal_plan (user_id, plan_name, start_date, end_date, total_calories) VALUES
@@ -635,16 +583,7 @@ INSERT INTO mental_wellness_survey (user_id, survey_date, mood_score, notes) VAL
   (8,  '2026-03-07', 7,  NULL),
   (9,  '2026-03-03', 5,  'Feeling out of it. Long day at work.'),
   (10, '2026-03-04', 10, 'First gym session ever. Incredible feeling.');
-  (2,  '2026-03-02', 8,  'Pretty solid day.'),
-  (2,  '2026-03-03', 7,  'A bit tired after session.'),
-  (3,  '2026-03-02', 7,  NULL),
-  (5,  '2026-03-02', 9,  NULL),
-  (5,  '2026-03-03', 8,  'Good session this morning.'),
-  (6,  '2026-03-04', 6,  'Shoulder still bugging me a little.'),
-  (7,  '2026-03-05', 9,  'Loved today''s session.'),
-  (8,  '2026-03-07', 7,  NULL),
-  (9,  '2026-03-03', 5,  'Feeling out of it. Long day at work.'),
-  (10, '2026-03-04', 10, 'First gym session ever. Incredible feeling.');
+
 
 INSERT INTO survey_question (prompt, question_type, active) VALUES
   ('How stressed do you feel today (1-10)?',       'scale',  1),
