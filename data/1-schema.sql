@@ -52,6 +52,7 @@ CREATE TABLE user_mutables (
 CREATE TABLE google_drive_oauth_connection (
   connection_id        INT AUTO_INCREMENT PRIMARY KEY,
   account_scope        VARCHAR(32) NOT NULL DEFAULT 'global',
+  owner_user_id        INT NULL,
   connected_by_user_id INT NOT NULL,
   google_email         VARCHAR(255) NULL,
   access_token         TEXT NOT NULL,
@@ -63,7 +64,12 @@ CREATE TABLE google_drive_oauth_connection (
   created_at           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-  UNIQUE KEY uq_google_drive_oauth_connection_scope (account_scope),
+  UNIQUE KEY uq_google_drive_oauth_connection_global_scope (account_scope),
+  UNIQUE KEY uq_google_drive_oauth_connection_user_owner (owner_user_id),
+  FOREIGN KEY (owner_user_id)
+    REFERENCES users_immutables(user_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   FOREIGN KEY (connected_by_user_id)
     REFERENCES users_immutables(user_id)
     ON DELETE CASCADE
@@ -84,6 +90,20 @@ CREATE TABLE user_creds (
   FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE google_user_identity (
+  google_identity_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id            INT NOT NULL,
+  google_sub         VARCHAR(255) NOT NULL,
+  google_email       VARCHAR(255) NOT NULL,
+  email_verified     TINYINT(1) NOT NULL DEFAULT 0,
+  created_at         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  UNIQUE KEY uq_google_user_identity_user_id (user_id),
+  UNIQUE KEY uq_google_user_identity_google_sub (google_sub),
+  INDEX idx_google_user_identity_google_email (google_email),
+  FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 
 -- coaches and admins are users (1:1)
@@ -202,10 +222,9 @@ CREATE TABLE meal (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-  UNIQUE KEY (name),
+  INDEX (name),
   INDEX (calories)
 );
-
 CREATE TABLE food_item (
   food_item_id INT AUTO_INCREMENT PRIMARY KEY,
   user_id      INT NOT NULL,
