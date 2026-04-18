@@ -358,15 +358,15 @@ INSERT INTO conversation (conversation_type, created_by, title) VALUES
   ('dm', 5, NULL);  -- 7: 5 ↔ 11
 
 -- messaging (10 conversations)
-INSERT INTO conversation_member (conversation_id, user_id, role) VALUES
-  (1, 3, 'owner'), (1, 2, 'member'),
-  (2, 3, 'owner'), (2, 6, 'member'),
-  (3, 3, 'owner'), (3, 8, 'member'),
-  (4, 3, 'owner'), (4, 9, 'member'),
-  (5, 3, 'owner'), (5, 10, 'member'),
+INSERT INTO conversation_member (conversation_id, user_id, role, unread_count) VALUES
+  (1, 3, 'owner', 0), (1, 2, 'member', 0),
+  (2, 3, 'owner', 0), (2, 6, 'member', 0),
+  (3, 3, 'owner', 0), (3, 8, 'member', 0),
+  (4, 3, 'owner', 0), (4, 9, 'member', 0),
+  (5, 3, 'owner', 0), (5, 10, 'member', 0),
 
-  (6, 5, 'owner'), (6, 7, 'member'),
-  (7, 5, 'owner'), (7, 11, 'member');
+  (6, 5, 'owner', 0), (6, 7, 'member', 0),
+  (7, 5, 'owner', 0), (7, 11, 'member', 0);
 
 INSERT INTO message (conversation_id, sender_user_id, content, sent_at) VALUES
 
@@ -641,33 +641,3 @@ INSERT INTO feature (title, description, icon, display_order, active) VALUES
 INSERT INTO coach_featured (coach_id, display_order, start_date, end_date, active) VALUES
   (3, 1, '2026-03-01', '2026-04-01', 1),
   (5, 2, '2026-03-01', '2026-04-01', 1);
-
-INSERT INTO notification 
-(user_id, type, conversation_id, reference_id, title, body, is_read)
-VALUES
--- CHAT NOTIFICATIONS (coach gets message from client)
-(2, 'chat_message', 1, 1,  'New message from Alex',  'Hey coach, excited to start.', 0),
-
--- CHAT (client gets reply from coach)
-(1, 'chat_message', 1, 2, 
- 'New message from Coach Sam', 
- 'Let''s do it. Keep it simple, keep it consistent.', 
- 1),
-
--- COACH ACCEPTED CLIENT (based on contract)
-(1, 'coach_assigned', NULL, 1,
- 'Coach Assigned',
- 'You are now working with Coach Sam.',
- 0),
-
--- WELLNESS REMINDER
-(1, 'wellness_reminder', NULL, NULL,
- 'Daily Check-in',
- 'Don’t forget to complete your wellness survey today.',
- 0),
-
--- WORKOUT REMINDER (based on event)
-(1, 'workout_reminder', NULL, 1,
- 'Workout Scheduled',
- 'You have a workout scheduled today at 6 PM.',
- 0)
