@@ -4,6 +4,8 @@ services:
   db:
     image: mysql:8.0
     container_name: betafit-db
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: exercise_app
@@ -15,8 +17,9 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+
   backend:
-    build: 
+    build:
       context: backend
       dockerfile: Dockerfile
     container_name: betafit-backend
@@ -25,6 +28,7 @@ services:
     volumes:
       - ./backend:/app
       - /app/.venv
+      - backend_media:/app/media
     depends_on:
       db:
         condition: service_healthy
@@ -32,9 +36,10 @@ services:
       gunicorn
       --reload
       --bind 0.0.0.0:8000
-      app.main:app   
+      app.main:app
+
   frontend:
-    build: 
+    build:
       context: frontend
       dockerfile: Dockerfile
     container_name: betafit-frontend
@@ -44,10 +49,12 @@ services:
       - backend
     volumes:
       - ./frontend:/app
-      - /app/node_modules
+      - node_modules:/app/node_modules
     stdin_open: true
     tty: true
-    command: npm run dev --host
+    command: sh -c "npm install && npm run dev --host"
 
 volumes:
   mysql_data:
+  node_modules:
+  backend_media:
