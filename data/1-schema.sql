@@ -465,6 +465,44 @@ CREATE TABLE coach_review (
   FOREIGN KEY (reviewer_user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE coach_application (
+  application_id       INT AUTO_INCREMENT PRIMARY KEY,
+  user_id              INT NOT NULL,
+  status               ENUM('pending','approved','rejected') NOT NULL DEFAULT 'pending',
+  years_experience     INT NULL,
+  coach_description    TEXT NULL,
+  desired_price        DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  submitted_at         DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  reviewed_at          DATETIME NULL,
+  reviewed_by_admin_id INT NULL,
+  admin_action         TEXT NULL,
+  created_at           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  UNIQUE KEY uq_coach_application_user_id (user_id),
+  INDEX idx_coach_application_status (status),
+  INDEX idx_coach_application_reviewed_by_admin_id (reviewed_by_admin_id),
+  INDEX idx_coach_application_submitted_at (submitted_at),
+  FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (reviewed_by_admin_id) REFERENCES admin(admin_id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE coach_application_certification (
+  application_certification_id INT AUTO_INCREMENT PRIMARY KEY,
+  application_id               INT NOT NULL,
+  cert_name                    VARCHAR(120) NOT NULL,
+  provider_name                VARCHAR(120) NULL,
+  description                  TEXT NULL,
+  issued_date                  DATE NULL,
+  expires_date                 DATE NULL,
+  created_at                   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at                   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  INDEX idx_coach_application_certification_application_id (application_id),
+  INDEX idx_coach_application_certification_issued_expires (issued_date, expires_date),
+  FOREIGN KEY (application_id) REFERENCES coach_application(application_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 CREATE TABLE user_report (
   report_id            INT AUTO_INCREMENT PRIMARY KEY,
   reported_user_id     INT NOT NULL,

@@ -1,3 +1,4 @@
+SET FOREIGN_KEY_CHECKS = 0;
 -- user 1 is reserved as the system account
 -- real users start at ID 2
 -- coaches: Sam(3), Taylor(5) | admin: Jordan(4)
@@ -670,4 +671,509 @@ VALUES
 (1, 'workout_reminder', NULL, 1,
  'Workout Scheduled',
  'You have a workout scheduled today at 6 PM.',
- 0)
+ 0); 
+-- ==========================================
+-- 1. USERS (IDs 12 to 50)
+-- ==========================================
+INSERT INTO users_immutables (user_id, dob, first_name, last_name, email, phone_number) VALUES
+(12, '1990-04-12', 'Liam', 'Smith', 'liam@example.com', '555-0012'),
+(13, '1992-05-14', 'Olivia', 'Johnson', 'olivia@example.com', '555-0013'),
+(14, '1988-08-22', 'Noah', 'Williams', 'noah@example.com', '555-0014'),
+(15, '1995-11-03', 'Emma', 'Brown', 'emma@example.com', '555-0015'),
+(16, '1991-01-30', 'Oliver', 'Jones', 'oliver@example.com', '555-0016'),
+(17, '1989-07-19', 'Ava', 'Garcia', 'ava@example.com', '555-0017'),
+(18, '1993-09-08', 'Elijah', 'Miller', 'elijah@example.com', '555-0018'),
+(19, '1994-12-12', 'Charlotte', 'Davis', 'charlotte@example.com', '555-0019'),
+(20, '1987-03-25', 'William', 'Rodriguez', 'william@example.com', '555-0020'),
+(21, '1996-06-16', 'Sophia', 'Martinez', 'sophia@example.com', '555-0021'),
+(22, '1998-02-11', 'James', 'Hernandez', 'james@example.com', '555-0022'),
+(23, '1999-04-09', 'Isabella', 'Lopez', 'isabella@example.com', '555-0023'),
+(24, '2000-08-15', 'Benjamin', 'Gonzalez', 'benjamin@example.com', '555-0024'),
+(25, '2001-10-21', 'Mia', 'Wilson', 'mia@example.com', '555-0025'),
+(26, '1997-12-05', 'Lucas', 'Anderson', 'lucas@example.com', '555-0026'),
+(27, '1995-03-14', 'Amelia', 'Thomas', 'amelia@example.com', '555-0027'),
+(28, '1992-07-07', 'Henry', 'Taylor', 'henry@example.com', '555-0028'),
+(29, '1994-09-29', 'Harper', 'Moore', 'harper@example.com', '555-0029'),
+(30, '1990-11-18', 'Alexander', 'Jackson', 'alexander@example.com', '555-0030'),
+(31, '1989-01-22', 'Evelyn', 'Martin', 'evelyn@example.com', '555-0031'),
+(32, '1993-05-06', 'Michael', 'Lee', 'michael2@example.com', '555-0032'),
+(33, '1996-08-30', 'Abigail', 'Perez', 'abigail@example.com', '555-0033'),
+(34, '1998-10-12', 'Daniel', 'Thompson', 'daniel@example.com', '555-0034'),
+(35, '2000-12-24', 'Emily', 'White', 'emily@example.com', '555-0035'),
+(36, '1991-02-15', 'Matthew', 'Harris', 'matthew@example.com', '555-0036'),
+(37, '1994-04-20', 'Elizabeth', 'Sanchez', 'elizabeth@example.com', '555-0037'),
+(38, '1997-06-25', 'Jackson', 'Clark', 'jackson@example.com', '555-0038'),
+(39, '1999-09-08', 'Mila', 'Ramirez', 'mila@example.com', '555-0039'),
+(40, '1988-11-14', 'Sebastian', 'Lewis', 'sebastian@example.com', '555-0040'),
+(41, '1992-01-27', 'Ella', 'Robinson', 'ella@example.com', '555-0041'),
+(42, '1995-03-31', 'David', 'Walker', 'david@example.com', '555-0042'),
+(43, '1998-05-04', 'Avery', 'Young', 'avery2@example.com', '555-0043'),
+(44, '2000-07-17', 'Carter', 'Allen', 'carter@example.com', '555-0044'),
+(45, '1993-09-21', 'Sofia', 'King', 'sofia@example.com', '555-0045'),
+(46, '1996-11-02', 'Wyatt', 'Wright', 'wyatt@example.com', '555-0046'),
+(47, '1999-01-09', 'Camila', 'Scott', 'camila@example.com', '555-0047'),
+(48, '1990-03-15', 'Jayden', 'Torres', 'jayden@example.com', '555-0048'),
+(49, '1994-05-28', 'Aria', 'Nguyen', 'aria@example.com', '555-0049'),
+(50, '1997-08-11', 'John', 'Hill', 'john@example.com', '555-0050');
+
+INSERT INTO user_mutables (user_id, weight, height, goal_weight) VALUES
+(12, 175, 70, 165), (13, 140, 64, 130), (14, 190, 72, 180), (15, 130, 62, 120),
+(16, 210, 74, 195), (17, 150, 65, 140), (18, 185, 71, 175), (19, 135, 63, 125),
+(20, 200, 73, 185), (21, 145, 66, 135), (22, 180, 70, 170), (23, 125, 61, 120),
+(24, 195, 72, 185), (25, 130, 63, 125), (26, 175, 71, 165), (27, 140, 65, 135),
+(28, 185, 72, 175), (29, 150, 64, 140), (30, 210, 75, 190), (31, 135, 62, 125),
+(32, 190, 73, 180), (33, 145, 66, 135), (34, 170, 70, 160), (35, 125, 61, 120),
+(36, 180, 71, 170), (37, 150, 65, 140), (38, 200, 74, 185), (39, 140, 64, 130),
+(40, 195, 73, 180), (41, 130, 62, 120), (42, 185, 72, 175), (43, 135, 63, 125),
+(44, 205, 75, 195), (45, 145, 65, 135), (46, 175, 71, 165), (47, 120, 60, 115),
+(48, 190, 72, 180), (49, 150, 66, 140), (50, 200, 73, 190);
+
+INSERT INTO user_creds (user_id, username, password_hash, email) VALUES
+(12, 'liam_12', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'liam@example.com'),
+(13, 'olivia_13', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'olivia@example.com'),
+(14, 'noah_14', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'noah@example.com'),
+(15, 'emma_15', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'emma@example.com'),
+(16, 'oliver_16', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'oliver@example.com'),
+(17, 'ava_17', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'ava@example.com'),
+(18, 'elijah_18', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'elijah@example.com'),
+(19, 'charlot_19', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'charlotte@example.com'),
+(20, 'william_20', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'william@example.com'),
+(21, 'sophia_21', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'sophia@example.com'),
+(22, 'james_22', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'james@example.com'),
+(23, 'isabella_23', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'isabella@example.com'),
+(24, 'benjami_24', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'benjamin@example.com'),
+(25, 'mia_25', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'mia@example.com'),
+(26, 'lucas_26', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'lucas@example.com'),
+(27, 'amelia_27', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'amelia@example.com'),
+(28, 'henry_28', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'henry@example.com'),
+(29, 'harper_29', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'harper@example.com'),
+(30, 'alexand_30', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'alexander@example.com'),
+(31, 'evelyn_31', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'evelyn@example.com'),
+(32, 'michael_32', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'michael2@example.com'),
+(33, 'abigail_33', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'abigail@example.com'),
+(34, 'daniel_34', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'daniel@example.com'),
+(35, 'emily_35', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'emily@example.com'),
+(36, 'matthew_36', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'matthew@example.com'),
+(37, 'elizabe_37', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'elizabeth@example.com'),
+(38, 'jackson_38', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'jackson@example.com'),
+(39, 'mila_39', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'mila@example.com'),
+(40, 'sebasti_40', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'sebastian@example.com'),
+(41, 'ella_41', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'ella@example.com'),
+(42, 'david_42', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'david@example.com'),
+(43, 'avery_43', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'avery2@example.com'),
+(44, 'carter_44', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'carter@example.com'),
+(45, 'sofia_45', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'sofia@example.com'),
+(46, 'wyatt_46', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'wyatt@example.com'),
+(47, 'camila_47', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'camila@example.com'),
+(48, 'jayden_48', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'jayden@example.com'),
+(49, 'aria_49', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'aria@example.com'),
+(50, 'john_50', '$2b$12$7RLskAPYg.QqaTnf4lHGXO1MvsXs.BINL5QhChxfUfDfPyKcAW4L2', 'john@example.com');
+
+-- ==========================================
+-- 2. GOOGLE IDENTITIES
+-- ==========================================
+INSERT INTO google_user_identity (user_id, google_sub, google_email, email_verified) VALUES
+(12, 'sub12', 'liam@example.com', 1),
+(13, 'sub13', 'olivia@example.com', 1),
+(14, 'sub14', 'noah@example.com', 1),
+(15, 'sub15', 'emma@example.com', 1),
+(16, 'sub16', 'oliver@example.com', 1),
+(17, 'sub17', 'ava@example.com', 1),
+(18, 'sub18', 'elijah@example.com', 1),
+(19, 'sub19', 'charlotte@example.com', 1),
+(20, 'sub20', 'william@example.com', 1),
+(21, 'sub21', 'sophia@example.com', 1),
+(22, 'sub22', 'james@example.com', 1),
+(23, 'sub23', 'isabella@example.com', 1);
+
+-- ==========================================
+-- 3. ADMIN (1 new)
+-- ==========================================
+INSERT INTO admin (admin_id) VALUES (12);
+
+-- ==========================================
+-- 4. COACHES (10 new, IDs 13-22)
+-- ==========================================
+INSERT INTO coach (coach_id, coach_description, price) VALUES
+(13, 'Strength coaching and hypertrophy specialist. Get big, get strong.', 100.00),
+(14, 'Fat loss and body recomposition expert. Sustainable habits.', 80.00),
+(15, 'Beginner coaching and mobility. Start your journey right.', 60.00),
+(16, 'Conditioning and athletic performance.', 120.00),
+(17, 'Nutrition support and online accountability coaching.', 70.00),
+(18, 'Post-injury return to training. Let''s rebuild together.', 90.00),
+(19, 'Online accountability and habit building for busy professionals.', 75.00),
+(20, 'USA Weightlifting L1 coach. Olympic lifting focus.', 110.00),
+(21, 'Holistic wellness, combining mental and physical fitness.', 85.00),
+(22, 'General fitness and health optimization.', 55.00);
+
+-- ==========================================
+-- 5. CERTIFICATIONS
+-- ==========================================
+INSERT INTO certifications (coach_id, cert_name, provider_name, description, issued_date, expires_date) VALUES
+(13, 'CSCS', 'NSCA', 'Strength and Conditioning Specialist', '2023-01-15', '2028-01-15'),
+(13, 'Precision Nutrition L1', 'Precision Nutrition', NULL, '2022-05-10', NULL),
+(14, 'CPT', 'ACE', 'Personal Trainer Certification', '2024-03-22', '2028-03-22'),
+(14, 'CPR/AED', 'AHA', NULL, '2024-08-01', '2026-08-01'),
+(15, 'CPT', 'NASM', 'Certified Personal Trainer', '2023-11-05', '2027-11-05'),
+(15, 'Corrective Exercise', 'NASM', 'CES', '2022-12-10', NULL),
+(16, 'CrossFit L1', 'CrossFit', NULL, '2022-06-15', '2027-06-15'),
+(17, 'CPT', 'ISSA', NULL, '2023-02-28', '2027-02-28'),
+(17, 'Nutrition Coach', 'ISSA', NULL, '2024-01-15', NULL),
+(18, 'CSCS', 'NSCA', NULL, '2024-09-10', '2029-09-10'),
+(18, 'Corrective Exercise', 'NASM', NULL, '2023-10-15', NULL),
+(19, 'CPT', 'ACE', NULL, '2023-01-20', '2027-01-20'),
+(20, 'USA Weightlifting L1', 'USAW', NULL, '2022-04-12', NULL),
+(21, 'CPT', 'NASM', NULL, '2024-10-30', '2028-10-30'),
+(22, 'CPT', 'ACE', NULL, '2024-07-18', '2028-07-18');
+
+-- ==========================================
+-- 6. COACH APPLICATIONS (Explicit IDs 1-20)
+-- ==========================================
+INSERT INTO coach_application (application_id, user_id, years_experience, coach_description, desired_price, status, submitted_at, reviewed_at, admin_action, reviewed_by_admin_id) VALUES
+(1, 13, 5, 'Strength coaching and hypertrophy specialist. Get big, get strong.', 100.00, 'approved', '2024-01-10', '2024-01-15', 'Approved, solid credentials.', 4),
+(2, 14, 3, 'Fat loss and body recomposition expert. Sustainable habits.', 80.00, 'approved', '2024-02-05', '2024-02-10', 'Approved.', 4),
+(3, 15, 4, 'Beginner coaching and mobility. Start your journey right.', 60.00, 'approved', '2024-03-12', '2024-03-14', 'Approved.', 4),
+(4, 16, 6, 'Conditioning and athletic performance.', 120.00, 'approved', '2024-04-20', '2024-04-22', 'Approved.', 12),
+(5, 17, 2, 'Nutrition support and online accountability coaching.', 70.00, 'approved', '2024-05-18', '2024-05-20', 'Approved.', 12),
+(6, 18, 8, 'Post-injury return to training. Let''s rebuild together.', 90.00, 'approved', '2024-06-30', '2024-07-02', 'Approved.', 12),
+(7, 19, 3, 'Online accountability and habit building for busy professionals.', 75.00, 'approved', '2024-07-15', '2024-07-18', 'Approved.', 4),
+(8, 20, 10, 'USA Weightlifting L1 coach. Olympic lifting focus.', 110.00, 'approved', '2024-08-22', '2024-08-25', 'Approved.', 4),
+(9, 21, 4, 'Holistic wellness, combining mental and physical fitness.', 85.00, 'approved', '2024-09-05', '2024-09-10', 'Approved.', 12),
+(10, 22, 5, 'General fitness and health optimization.', 55.00, 'approved', '2024-10-12', '2024-10-15', 'Approved.', 4),
+(11, 23, 1, 'I like lifting and want to coach.', 50.00, 'pending', '2026-03-01', NULL, NULL, NULL),
+(12, 24, 2, 'Good at cardio and running.', 40.00, 'pending', '2026-03-10', NULL, NULL, NULL),
+(13, 25, 0, 'No experience but enthusiastic!', 100.00, 'rejected', '2025-11-20', '2025-11-25', 'Not enough experience.', 4),
+(14, 26, 1, 'Let me coach please.', 60.00, 'rejected', '2025-12-05', '2025-12-10', 'Incomplete profile and lacking certs.', 12),
+(15, 27, 4, 'Looking to train athletes.', 80.00, 'pending', '2026-03-15', NULL, NULL, NULL),
+(16, 28, 5, 'Powerlifting specialist.', 90.00, 'pending', '2026-03-18', NULL, NULL, NULL),
+(17, 29, 2, 'Nutrition background.', 70.00, 'pending', '2026-03-20', NULL, NULL, NULL),
+(18, 30, 1, 'Yoga instructor.', 50.00, 'rejected', '2025-08-10', '2025-08-15', 'No valid fitness certs provided.', 4),
+(19, 31, 3, 'Bodybuilding.', 85.00, 'rejected', '2025-09-01', '2025-09-05', 'Certs are expired.', 12),
+(20, 32, 7, 'Rehab specialist.', 110.00, 'rejected', '2025-10-10', '2025-10-12', 'Missing proof of insurance.', 4);
+
+-- ==========================================
+-- 7. COACH APPLICATION CERTIFICATIONS
+-- ==========================================
+INSERT INTO coach_application_certification (application_id, cert_name, provider_name, issued_date, expires_date) VALUES
+(1, 'CSCS', 'NSCA', '2023-01-15', '2028-01-15'), (1, 'Precision Nutrition L1', 'Precision Nutrition', '2022-05-10', NULL),
+(2, 'CPT', 'ACE', '2024-03-22', '2028-03-22'), (2, 'CPR/AED', 'AHA', '2024-08-01', '2026-08-01'),
+(3, 'CPT', 'NASM', '2023-11-05', '2027-11-05'), (3, 'Corrective Exercise', 'NASM', '2022-12-10', NULL),
+(4, 'CrossFit L1', 'CrossFit', '2022-06-15', '2027-06-15'),
+(5, 'CPT', 'ISSA', '2023-02-28', '2027-02-28'), (5, 'Nutrition Coach', 'ISSA', '2024-01-15', NULL),
+(6, 'CSCS', 'NSCA', '2024-09-10', '2029-09-10'), (6, 'Corrective Exercise', 'NASM', '2023-10-15', NULL),
+(7, 'CPT', 'ACE', '2023-01-20', '2027-01-20'),
+(8, 'USA Weightlifting L1', 'USAW', '2022-04-12', NULL),
+(9, 'CPT', 'NASM', '2024-10-30', '2028-10-30'),
+(10, 'CPT', 'ACE', '2024-07-18', '2028-07-18'),
+(11, 'CPR/AED', 'Red Cross', '2025-01-01', '2027-01-01'),
+(12, 'Run Coach', 'RRCA', '2024-05-01', NULL),
+(13, 'Fake Cert', 'Fake Provider', '2024-01-01', NULL),
+(15, 'CSCS', 'NSCA', '2023-08-10', '2028-08-10'), (15, 'CPR', 'AHA', '2025-02-01', '2027-02-01'),
+(16, 'Powerlifting cert', 'USAPL', '2024-11-01', NULL),
+(17, 'PN L1', 'Precision Nutrition', '2025-01-15', NULL),
+(18, 'Yoga Alliance 200hr', 'Yoga Alliance', '2020-05-10', NULL),
+(19, 'CPT', 'ACE', '2019-01-01', '2023-01-01'),
+(20, 'DPT', 'University', '2015-05-01', NULL);
+
+-- ==========================================
+-- 8. CONTRACTS
+-- ==========================================
+INSERT INTO user_coach_contract (coach_id, user_id, agreed_price, start_date, end_date, contract_text, active) VALUES
+(13, 23, 100.00, '2025-05-01', NULL, 'Ongoing strength coaching.', 1),
+(13, 24, 90.00, '2025-10-15', '2026-04-15', '6 month hypertrophy block.', 1),
+(13, 25, 100.00, '2024-01-01', '2024-07-01', 'Completed block.', 0),
+(14, 26, 80.00, '2026-01-10', NULL, 'Fat loss focus.', 1),
+(14, 27, 80.00, '2026-02-01', NULL, 'Recomp goals.', 1),
+(14, 28, 75.00, '2025-06-01', '2025-12-01', 'Summer shred program.', 0),
+(15, 29, 60.00, '2026-02-01', NULL, 'Beginner mobility program.', 1),
+(15, 30, 60.00, '2026-03-01', NULL, 'Foundation building.', 1),
+(15, 31, 60.00, '2025-08-01', '2026-02-01', '6 month foundations.', 0),
+(16, 32, 120.00, '2025-09-15', NULL, 'Athletic conditioning prep.', 1),
+(16, 33, 120.00, '2026-03-01', '2026-09-01', 'Offseason conditioning.', 1),
+(16, 34, 110.00, '2025-01-01', '2025-06-01', 'Pre-season camp.', 0),
+(17, 35, 70.00, '2025-11-01', NULL, 'Nutrition and accountability.', 1),
+(17, 36, 70.00, '2026-01-05', '2026-07-05', 'Habit building phase.', 1),
+(17, 37, 65.00, '2024-11-01', '2025-05-01', 'Nutrition tracking intro.', 0),
+(18, 38, 90.00, '2026-02-15', NULL, 'Post-surgery knee rehab training.', 1),
+(18, 39, 90.00, '2026-01-10', NULL, 'Shoulder mobility focus.', 1),
+(18, 40, 85.00, '2025-03-01', '2025-09-01', 'Shoulder recovery block.', 0),
+(19, 41, 75.00, '2026-03-10', NULL, 'Executive accountability coaching.', 1),
+(19, 42, 75.00, '2026-02-20', NULL, 'Daily check-ins.', 1),
+(19, 43, 70.00, '2025-12-01', '2026-03-01', 'Winter habit reset.', 0),
+(20, 44, 110.00, '2025-07-10', NULL, 'Olympic lifting technique.', 1),
+(20, 45, 110.00, '2026-01-20', '2026-06-20', 'Competition prep.', 1),
+(20, 46, 100.00, '2025-01-10', '2025-07-10', 'Snatch focus.', 0),
+(21, 47, 85.00, '2025-10-01', NULL, 'Mind-body wellness journey.', 1),
+(21, 48, 85.00, '2026-01-15', NULL, 'Holistic prep.', 1),
+(21, 49, 80.00, '2025-01-15', '2025-07-15', '6 month wellness intro.', 0),
+(22, 50, 55.00, '2026-02-01', NULL, 'General fitness programming.', 1),
+(22, 12, 55.00, '2026-03-05', NULL, 'Getting back in shape.', 1),
+(22, 23, 50.00, '2025-04-01', '2025-10-01', 'Discounted 6 month plan.', 0);
+
+-- ==========================================
+-- 9. AVAILABILITY & TIME OFF
+-- ==========================================
+INSERT INTO coach_availability (coach_id, day_of_week, start_time, end_time, recurring, active) VALUES
+(13, 'Mon', '08:00:00', '12:00:00', 1, 1), (13, 'Wed', '14:00:00', '18:00:00', 1, 1), (13, 'Fri', '08:00:00', '12:00:00', 1, 1),
+(14, 'Tue', '09:00:00', '17:00:00', 1, 1), (14, 'Thu', '09:00:00', '17:00:00', 1, 1), (14, 'Sat', '08:00:00', '12:00:00', 1, 1),
+(15, 'Mon', '10:00:00', '14:00:00', 1, 1), (15, 'Wed', '10:00:00', '14:00:00', 1, 1), (15, 'Fri', '10:00:00', '14:00:00', 1, 1),
+(16, 'Mon', '06:00:00', '10:00:00', 1, 1), (16, 'Tue', '06:00:00', '10:00:00', 1, 1), (16, 'Thu', '06:00:00', '10:00:00', 1, 1),
+(17, 'Mon', '12:00:00', '16:00:00', 1, 1), (17, 'Wed', '12:00:00', '16:00:00', 1, 1), (17, 'Fri', '12:00:00', '16:00:00', 1, 1),
+(18, 'Tue', '14:00:00', '18:00:00', 1, 1), (18, 'Thu', '14:00:00', '18:00:00', 1, 1),
+(19, 'Mon', '07:00:00', '11:00:00', 1, 1), (19, 'Wed', '07:00:00', '11:00:00', 1, 1),
+(20, 'Tue', '15:00:00', '19:00:00', 1, 1), (20, 'Thu', '15:00:00', '19:00:00', 1, 1), (20, 'Sat', '09:00:00', '13:00:00', 1, 1),
+(21, 'Mon', '09:00:00', '13:00:00', 1, 1), (21, 'Wed', '09:00:00', '13:00:00', 1, 1),
+(22, 'Fri', '16:00:00', '20:00:00', 1, 1), (22, 'Sat', '08:00:00', '12:00:00', 1, 1);
+
+INSERT INTO coach_time_off (coach_id, start_dt, end_dt, reason) VALUES
+(13, '2026-04-10 00:00:00', '2026-04-17 23:59:59', 'Vacation'),
+(14, '2026-05-01 00:00:00', '2026-05-05 23:59:59', 'Conference'),
+(15, '2026-06-15 00:00:00', '2026-06-20 23:59:59', 'Personal'),
+(16, '2026-03-20 00:00:00', '2026-03-22 23:59:59', 'Competition'),
+(17, '2026-07-01 00:00:00', '2026-07-07 23:59:59', 'Holiday'),
+(18, '2026-08-10 00:00:00', '2026-08-15 23:59:59', 'Continuing Ed'),
+(19, '2026-04-01 00:00:00', '2026-04-03 23:59:59', 'Sick Leave'),
+(20, '2026-05-20 00:00:00', '2026-05-25 23:59:59', 'Meet Prep'),
+(21, '2026-09-01 00:00:00', '2026-09-10 23:59:59', 'Retreat'),
+(22, '2026-10-15 00:00:00', '2026-10-20 23:59:59', 'Vacation');
+
+-- ==========================================
+-- 10. CLIENT NOTES & REVIEWS
+-- ==========================================
+INSERT INTO coach_client_note (coach_id, client_user_id, note_text, private) VALUES
+(13, 23, 'Client has a history of lower back pain, keep deadlift volume low.', 1),
+(13, 24, 'Excellent progress on squats.', 1),
+(14, 26, 'Struggling with weekend eating. Implement a looser Saturday macro target.', 1),
+(14, 27, 'Hitting protein perfectly.', 1),
+(15, 29, 'Ankle mobility is limiting squat depth. Prescribed daily stretches.', 1),
+(15, 30, 'Learning hinge mechanics well.', 1),
+(16, 32, 'Engine is huge, needs more pacing strategy for metcons.', 1),
+(16, 33, 'Great output on the rower today.', 1),
+(17, 35, 'Hitting protein goals consistently. Increasing carbs this week.', 1),
+(17, 36, 'Needs to drink more water.', 1),
+(18, 38, 'Knee is feeling 90% better. Slowly introducing unilateral leg work.', 1),
+(18, 39, 'Shoulder mobility is improving.', 1),
+(19, 41, 'Missed two check-ins due to work travel.', 1),
+(19, 42, 'Nailed the morning routine.', 1),
+(20, 44, 'Snatch pull is early, work on extension.', 1),
+(20, 45, 'Clean is looking solid.', 1),
+(21, 47, 'Reported better sleep after adding evening yoga.', 1),
+(21, 48, 'Stress levels are high, pulled back volume.', 1),
+(22, 50, 'Consistent attendance.', 1),
+(22, 12, 'Getting back into the groove.', 1);
+
+INSERT INTO coach_review (coach_id, reviewer_user_id, rating, review_text) VALUES
+(13, 23, 5, 'Absolutely incredible strength coach. My squat went up 40lbs in 3 months!'),
+(13, 25, 4, 'Very knowledgeable, but sometimes takes a day to reply.'),
+(14, 26, 5, 'Helped me lose 15lbs without sacrificing my social life. Great habits.'),
+(14, 28, 5, 'The summer shred program was tough but very effective.'),
+(15, 29, 4, 'Great for beginners, super patient with my mobility issues.'),
+(15, 31, 4, 'Learned the basics really well. Feeling much more confident in the gym.'),
+(16, 32, 5, 'If you want to get pushed to your absolute limit, this is the coach.'),
+(16, 34, 5, 'My conditioning is through the roof. Prepared me perfectly for my season.'),
+(17, 35, 4, 'Great accountability, the daily check-ins really help me stay on track.'),
+(17, 37, 5, 'Finally understand how to eat for my goals without starving.'),
+(18, 38, 5, 'Rehabbed my knee better than my PT did. Very careful and progressive.'),
+(18, 40, 5, 'Got me back to overhead pressing pain-free. Worth every penny.'),
+(19, 41, 5, 'Perfect for my busy schedule. The accountability is exactly what I needed.'),
+(19, 43, 4, 'Good check-ins, helped me build a solid morning routine.'),
+(20, 44, 5, 'My snatch technique has never been better. Very detail-oriented.'),
+(20, 46, 4, 'Solid programming, heavy volume but manageable.'),
+(21, 47, 5, 'Love the holistic approach. I feel better physically and mentally.'),
+(21, 49, 4, 'Good focus on overall wellness, not just lifting weights.'),
+(22, 50, 5, 'Great general programming, keeps me moving and healthy.'),
+(22, 23, 4, 'Solid coach, good value for the price.');
+
+-- ==========================================
+-- 11. USER REPORTS
+-- ==========================================
+INSERT INTO user_report (reported_user_id, reporter_user_id, reason, status, admin_action, resolved_by_admin_id) VALUES
+(13, 23, 'Coach sent inappropriate promotional DMs outside the platform.', 'reviewing', NULL, NULL),
+(25, 28, 'Spam DMs trying to sell supplements.', 'resolved', 'Banned user 25 from messaging.', 4),
+(14, 30, 'Missed two scheduled sessions in a row without notice.', 'resolved', 'Spoke with coach, issued warning.', 12),
+(26, 35, 'Impersonating another coach.', 'dismissed', 'User is not impersonating, just has a similar name.', 4),
+(40, 41, 'Abusive messages in community chat.', 'open', NULL, NULL),
+(16, 33, 'Harassment in comments.', 'open', NULL, NULL),
+(18, 38, 'Inappropriate language in plan notes.', 'reviewing', NULL, NULL),
+(50, 22, 'Spam profile.', 'resolved', 'Warned user.', 12),
+(20, 45, 'Missed a zoom call.', 'dismissed', 'Coach proved they were present.', 12),
+(47, 21, 'Soliciting other clients.', 'reviewing', NULL, NULL);
+
+-- ==========================================
+-- 12. MESSAGES & CONVERSATIONS (Explicit IDs)
+-- ==========================================
+INSERT INTO conversation (conversation_id, conversation_type, created_by, title) VALUES
+(11, 'dm', 13, NULL), (12, 'dm', 14, NULL), (13, 'dm', 15, NULL), (14, 'dm', 16, NULL), (15, 'dm', 17, NULL),
+(16, 'dm', 18, NULL), (17, 'dm', 19, NULL), (18, 'dm', 20, NULL), (19, 'dm', 21, NULL), (20, 'dm', 22, NULL);
+
+INSERT INTO conversation_member (conversation_id, user_id, role) VALUES
+(11, 13, 'owner'), (11, 23, 'member'),
+(12, 14, 'owner'), (12, 26, 'member'),
+(13, 15, 'owner'), (13, 29, 'member'),
+(14, 16, 'owner'), (14, 32, 'member'),
+(15, 17, 'owner'), (15, 35, 'member'),
+(16, 18, 'owner'), (16, 38, 'member'),
+(17, 19, 'owner'), (17, 41, 'member'),
+(18, 20, 'owner'), (18, 44, 'member'),
+(19, 21, 'owner'), (19, 47, 'member'),
+(20, 22, 'owner'), (20, 50, 'member');
+
+INSERT INTO message (message_id, conversation_id, sender_user_id, content, sent_at) VALUES
+(50, 11, 13, 'Hey, your deadlift video looked great. Let''s add 10lbs next week.', '2026-03-01 10:00:00'),
+(51, 11, 23, 'Sounds good! Lower back feels fine.', '2026-03-01 10:15:00'),
+(52, 12, 14, 'How did the weekend go with the new macro targets?', '2026-03-02 09:00:00'),
+(53, 12, 26, 'Much better, didn''t feel restricted at all.', '2026-03-02 09:30:00'),
+(54, 13, 15, 'Are you ready for your first block?', '2026-03-03 08:00:00'),
+(55, 13, 29, 'Yes, let''s get it!', '2026-03-03 08:10:00'),
+(56, 14, 16, 'We need to push the pacing on the erg.', '2026-03-04 14:00:00'),
+(57, 14, 32, 'I''ll try to hold sub 1:50.', '2026-03-04 14:20:00'),
+(58, 15, 17, 'Did you meal prep yesterday?', '2026-03-05 09:00:00'),
+(59, 15, 35, 'Yes, got all my lunches done.', '2026-03-05 09:45:00'),
+(60, 16, 18, 'How is the knee after the step-ups?', '2026-03-06 11:00:00'),
+(61, 16, 38, 'No pain at all.', '2026-03-06 11:30:00'),
+(62, 17, 19, 'Check-in time.', '2026-03-07 07:00:00'),
+(63, 17, 41, 'Done, check the app.', '2026-03-07 07:15:00'),
+(64, 18, 20, 'Send me the snatch video.', '2026-03-08 16:00:00'),
+(65, 18, 44, 'Uploading now.', '2026-03-08 16:30:00'),
+(66, 19, 21, 'Did you do the breathwork?', '2026-03-09 20:00:00'),
+(67, 19, 47, 'Yes, really helped me wind down.', '2026-03-09 20:30:00'),
+(68, 20, 22, 'Great week of workouts.', '2026-03-10 18:00:00'),
+(69, 20, 50, 'Thanks coach.', '2026-03-10 18:45:00');
+
+-- ==========================================
+-- 13. CALENDAR & EVENTS & MEALS
+-- ==========================================
+INSERT INTO calendar (user_id, full_date, day_name) VALUES
+(23, '2026-03-02', 'Mon'), (23, '2026-03-04', 'Wed'), (23, '2026-03-06', 'Fri'),
+(26, '2026-03-03', 'Tue'), (26, '2026-03-05', 'Thu'),
+(29, '2026-03-01', 'Sun'), (29, '2026-03-02', 'Mon'),
+(32, '2026-03-04', 'Wed'), (32, '2026-03-06', 'Fri');
+
+INSERT INTO event (user_id, event_date, start_time, end_time, event_type, description, workout_plan_id) VALUES
+(23, '2026-03-02', '17:00:00', '18:00:00', 'workout', 'Strength block day 1', 1),
+(23, '2026-03-04', '17:00:00', '18:00:00', 'workout', 'Strength block day 2', 1),
+(26, '2026-03-03', '06:00:00', '07:00:00', 'workout', 'Fat loss circuit', 11),
+(26, '2026-03-05', '06:00:00', '07:00:00', 'workout', 'Fat loss circuit 2', 11),
+(29, '2026-03-02', '18:00:00', '19:00:00', 'coach_session', 'Check-in with Coach', NULL),
+(32, '2026-03-04', '15:00:00', '16:00:00', 'workout', 'Conditioning intervals', 13);
+
+INSERT INTO meal_plan (meal_plan_id, user_id, plan_name, start_date, end_date, total_calories) VALUES
+(11, 23, 'Strength Bulk', '2026-03-01', '2026-05-01', 3200),
+(12, 26, 'Fat Loss Phase 1', '2026-03-01', '2026-04-01', 2100);
+
+INSERT INTO user_meal (meal_id, meal_plan_id, meal_type, servings, day_of_week) VALUES
+(1, 11, 'breakfast', 2.00, 'Mon'),
+(2, 11, 'lunch', 1.50, 'Mon'),
+(3, 12, 'breakfast', 1.00, 'Tue'),
+(4, 12, 'lunch', 1.00, 'Tue');
+
+INSERT INTO meal_log (user_id, meal_id, eaten_at, servings, notes) VALUES
+(23, 1, '2026-03-02 08:00:00', 2.00, 'Felt full.'),
+(26, 3, '2026-03-03 07:30:00', 1.00, 'Quick breakfast.');
+
+-- ==========================================
+-- 14. WORKOUT SESSIONS & LOGS
+-- ==========================================
+INSERT INTO workout_session (session_id, user_id, started_at, ended_at, workout_plan_id, notes) VALUES
+(20, 23, '2026-03-02 17:00:00', '2026-03-02 18:15:00', 1, 'Felt strong today.'),
+(21, 23, '2026-03-04 17:00:00', '2026-03-04 18:10:00', 1, 'Good pump.'),
+(22, 26, '2026-03-03 06:00:00', '2026-03-03 07:00:00', 11, 'Tough circuit.'),
+(23, 26, '2026-03-05 06:00:00', '2026-03-05 06:55:00', 11, 'Sweaty.'),
+(24, 32, '2026-03-04 15:00:00', '2026-03-04 16:00:00', 13, 'Pushed hard.');
+
+INSERT INTO exercise_set_log (session_id, exercise_id, set_number, reps, weight, rpe, performed_at) VALUES
+(20, 5, 1, 8, 185.00, 7.5, '2026-03-02 17:10:00'),
+(20, 5, 2, 8, 185.00, 8.0, '2026-03-02 17:15:00'),
+(20, 5, 3, 6, 185.00, 9.5, '2026-03-02 17:20:00'),
+(21, 21, 1, 10, 110.00, 7.0, '2026-03-04 17:15:00'),
+(21, 21, 2, 10, 110.00, 7.5, '2026-03-04 17:20:00'),
+(22, 30, 1, 15, 40.00, 8.0, '2026-03-03 06:10:00'),
+(22, 30, 2, 15, 40.00, 8.5, '2026-03-03 06:15:00'),
+(24, 26, 1, 12, NULL, 8.0, '2026-03-04 15:10:00');
+
+INSERT INTO cardio_log (session_id, user_id, performed_at, steps, distance_km, duration_min, calories, avg_hr) VALUES
+(22, 26, '2026-03-03 06:30:00', 2000, 1.500, 15, 120, 140),
+(23, 26, '2026-03-05 06:30:00', 2500, 1.800, 20, 150, 145),
+(24, 32, '2026-03-04 15:20:00', 5000, 4.000, 30, 300, 155);
+
+-- ==========================================
+-- 15. DAILY METRICS & WELLNESS
+-- ==========================================
+INSERT INTO daily_metrics (user_id, metric_date, weight, sleep_hours, resting_hr) VALUES
+(23, '2026-03-01', 125.00, 8.0, 58),
+(23, '2026-03-02', 125.20, 7.5, 60),
+(26, '2026-03-01', 175.50, 6.5, 65),
+(26, '2026-03-02', 175.00, 7.0, 64),
+(32, '2026-03-01', 190.00, 8.5, 55);
+
+INSERT INTO mental_wellness_survey (user_id, survey_date, mood_score, notes) VALUES
+(23, '2026-03-01', 8, 'Feeling great after the deload week.'),
+(26, '2026-03-01', 6, 'A bit stressed with work.'),
+(32, '2026-03-01', 9, 'Ready to crush this week.');
+
+INSERT INTO survey_question (question_id, prompt, question_type, active) VALUES
+(11, 'How would you rate your sleep quality this week?', 'scale', 1),
+(12, 'Did you hit your protein target most days?', 'yes_no', 1),
+(13, 'What was your biggest win this week?', 'text', 1),
+(14, 'How stressed do you feel on a scale of 1-10?', 'scale', 1);
+
+INSERT INTO survey_response (question_id, user_id, response_date, answer_text) VALUES
+(11, 23, '2026-03-07', '8'), (12, 23, '2026-03-07', 'yes'),
+(13, 23, '2026-03-07', 'Finally hit a PR on bench press!'), (14, 23, '2026-03-07', '4'),
+(11, 26, '2026-03-07', '6'), (12, 26, '2026-03-07', 'no'),
+(11, 32, '2026-03-07', '9'), (14, 32, '2026-03-07', '2');
+
+-- ==========================================
+-- 16. POINTS & PREDICTIONS
+-- ==========================================
+INSERT INTO points_wallet (user_id, balance) VALUES
+(12, 100), (13, 500), (14, 450), (15, 300), (16, 200), (17, 150), (18, 100), (19, 50), (20, 25), (21, 10), (22, 5),
+(23, 800), (24, 650), (25, 100), (26, 400), (27, 200), (28, 150), (29, 300), (30, 50), (31, 10), (32, 500), (33, 400),
+(34, 100), (35, 200), (36, 150), (37, 300), (38, 50), (39, 10), (40, 500), (41, 400), (42, 100), (43, 200), (44, 150),
+(45, 300), (46, 50), (47, 10), (48, 500), (49, 400), (50, 100);
+
+INSERT INTO points_txn (user_id, delta_points, reason, ref_type, ref_id) VALUES
+(23, 50, 'Completed workout', 'workout_session', 20),
+(23, 50, 'Completed workout', 'workout_session', 21),
+(26, 50, 'Completed workout', 'workout_session', 22),
+(26, 50, 'Completed workout', 'workout_session', 23),
+(32, 50, 'Completed workout', 'workout_session', 24);
+
+INSERT INTO prediction_market (market_id, creator_user_id, title, goal_text, status, end_date) VALUES
+(11, 4, 'Coach 13 Expansion', 'Will Coach 13 reach 20 clients?', 'open', '2026-04-30'),
+(12, 4, 'Diet Challenge', 'Will user 26 log 30 days of meals?', 'open', '2026-04-30');
+
+INSERT INTO prediction (market_id, predictor_user_id, prediction_value, points_wagered) VALUES
+(11, 23, 'yes', 100), (11, 26, 'no', 50),
+(12, 32, 'yes', 50), (12, 23, 'yes', 25);
+
+-- ==========================================
+-- 17. ASSIGNMENT LOG, PHOTOS & TESTIMONIALS
+-- ==========================================
+INSERT INTO coach_assignment_log (coach_id, user_id, assigned_type, workout_plan_id, template_id, assigned_at, note) VALUES
+(13, 23, 'workout_plan', 1, NULL, '2026-03-01 08:00:00', 'Starting the new strength block.'),
+(14, 26, 'template', NULL, 11, '2026-03-02 09:00:00', 'Using the cutting shred template for the next 4 weeks.');
+
+INSERT INTO progress_photo (user_id, photo_url, caption, taken_at) VALUES
+(23, 'https://cdn.example.com/photos/23_front_1.jpg', 'Start of the bulk', '2025-05-01 08:00:00'),
+(23, 'https://cdn.example.com/photos/23_front_2.jpg', '3 months in', '2025-08-01 08:00:00'),
+(26, 'https://cdn.example.com/photos/26_side.jpg', 'Feeling leaner', '2026-02-15 09:00:00');
+
+INSERT INTO landing_testimonial (before_after_story, text, rating, display_order) VALUES
+('Was stuck at 150lbs for years.', 'Coach 13 helped me break through my plateau and gain 15lbs of muscle.', 5, 11),
+('Tried every diet.', 'Coach 14 taught me how to eat sustainably. I''ve lost 20lbs and kept it off.', 5, 12);
+
+INSERT INTO coach_featured (coach_id, display_order, start_date, end_date, active) VALUES
+(13, 3, '2026-03-01', '2026-04-01', 1),
+(14, 4, '2026-03-01', '2026-04-01', 1);
+
+-- ==========================================
+-- 18. NOTIFICATIONS
+-- ==========================================
+INSERT INTO notification (user_id, type, conversation_id, reference_id, title, body, is_read) VALUES
+(23, 'chat_message', 11, 50, 'New message from Coach 13', 'Hey, your deadlift video looked great...', 0),
+(13, 'chat_message', 11, 51, 'New message from Isabella', 'Sounds good! Lower back feels fine.', 0),
+(26, 'chat_message', 12, 52, 'New message from Coach 14', 'How did the weekend go...', 0),
+(14, 'chat_message', 12, 53, 'New message from Lucas', 'Much better, didn''t feel restricted...', 0);
+
+SET FOREIGN_KEY_CHECKS = 1;
