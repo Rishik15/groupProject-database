@@ -49,7 +49,7 @@ CREATE TABLE user_mutables (
   FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- auth credentials kept separate personal info 
+-- auth credentials kept separate from personal info
 CREATE TABLE user_creds (
   user_id       INT PRIMARY KEY,
   username      CHAR(25) NOT NULL,
@@ -120,6 +120,23 @@ CREATE TABLE workout_plan (
   UNIQUE KEY (plan_name)
 );
 
+-- sits between workout_plan and plan_exercise
+-- each row is one training day within a plan
+-- single-day plans have exactly one row (day_order = 1)
+-- multi-day splits (e.g. PPL) have one row per day
+CREATE TABLE workout_day (
+  day_id     INT AUTO_INCREMENT PRIMARY KEY,
+  plan_id    INT NOT NULL,
+  day_order  INT NOT NULL DEFAULT 1,
+  day_label  VARCHAR(80) NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  UNIQUE KEY (plan_id, day_order),
+  INDEX (plan_id, day_order),
+  FOREIGN KEY (plan_id) REFERENCES workout_plan(plan_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 CREATE TABLE exercise (
   exercise_id   INT AUTO_INCREMENT PRIMARY KEY,
   exercise_name VARCHAR(120) NOT NULL,
@@ -132,9 +149,10 @@ CREATE TABLE exercise (
   INDEX (equipment)
 );
 
--- junction table: links exercises to a workout plan with exercise ordering and perexercise targets
+-- junction table: links exercises to a specific day within a workout plan
+-- plan_id is intentionally absent — it is derivable via day_id → workout_day.plan_id (3NF)
 CREATE TABLE plan_exercise (
-  plan_id          INT NOT NULL,
+  day_id           INT NOT NULL,
   exercise_id      INT NOT NULL,
   order_in_workout INT NOT NULL DEFAULT 1,
   sets_goal        INT NULL,
@@ -143,10 +161,9 @@ CREATE TABLE plan_exercise (
   created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-  PRIMARY KEY (plan_id, exercise_id),
-  -- order index useful for sorted fetches
-  INDEX (plan_id, order_in_workout),
-  FOREIGN KEY (plan_id) REFERENCES workout_plan(plan_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  PRIMARY KEY (day_id, exercise_id),
+  INDEX (day_id, order_in_workout),
+  FOREIGN KEY (day_id) REFERENCES workout_day(day_id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (exercise_id) REFERENCES exercise(exercise_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -231,7 +248,7 @@ CREATE TABLE user_meal (
   FOREIGN KEY (meal_plan_id) REFERENCES meal_plan(meal_plan_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- meal_id and food_item_id are mutually exclusive 
+-- meal_id and food_item_id are mutually exclusive
 CREATE TABLE meal_log (
   log_id       INT AUTO_INCREMENT PRIMARY KEY,
   user_id      INT NOT NULL,
@@ -250,7 +267,6 @@ CREATE TABLE meal_log (
   FOREIGN KEY (meal_id) REFERENCES meal(meal_id) ON DELETE SET NULL ON UPDATE CASCADE,
   FOREIGN KEY (food_item_id) REFERENCES food_item(food_item_id) ON DELETE SET NULL ON UPDATE CASCADE
 );
-
 
 CREATE TABLE user_coach_contract (
   contract_id   INT AUTO_INCREMENT PRIMARY KEY,
@@ -393,7 +409,6 @@ CREATE TABLE message (
   FOREIGN KEY (sender_user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
 CREATE TABLE coach_review (
   review_id        INT AUTO_INCREMENT PRIMARY KEY,
   coach_id         INT NOT NULL,
@@ -533,7 +548,6 @@ CREATE TABLE survey_response (
   FOREIGN KEY (question_id) REFERENCES survey_question(question_id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
 
 CREATE TABLE points_wallet (
   user_id    INT PRIMARY KEY,
