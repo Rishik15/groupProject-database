@@ -1211,6 +1211,74 @@ INSERT INTO coach_featured (coach_id, display_order, start_date, end_date, activ
 (13, 3, '2026-03-01', '2026-04-01', 1),
 (14, 4, '2026-03-01', '2026-04-01', 1);
 
+
+-- To test get weight:
+
+INSERT INTO daily_metrics (user_id, metric_date, weight, sleep_hours, resting_hr)
+VALUES
+-- Week 1
+(2, CURDATE() - INTERVAL 27 DAY, 180, 7.5, 65),
+(2, CURDATE() - INTERVAL 25 DAY, 179, 7.2, 66),
+
+-- Week 2
+(2, CURDATE() - INTERVAL 20 DAY, 178, 7.3, 64),
+(2, CURDATE() - INTERVAL 18 DAY, 177, 7.0, 67),
+
+-- Week 3
+(2, CURDATE() - INTERVAL 13 DAY, 176, 7.4, 63),
+(2, CURDATE() - INTERVAL 11 DAY, 175, 7.1, 65),
+
+-- Week 4 (current week)
+(2, CURDATE() - INTERVAL 5 DAY, 174, 7.2, 64),
+(2, CURDATE() - INTERVAL 2 DAY, 173, 7.0, 66);
+
+-- To test get calories
+
+INSERT INTO meal_log (user_id, meal_id, food_item_id, eaten_at, servings, notes) VALUES
+-- Monday
+(2, 1, NULL, NOW() - INTERVAL 4 DAY, 1.0, NULL),
+
+-- Tuesday
+(2, 2, NULL, NOW() - INTERVAL 3 DAY, 1.0, NULL),
+
+-- Thursday (skip Wednesday intentionally)
+(2, NULL, 1, NOW() - INTERVAL 1 DAY, 1.0, NULL);
+
+INSERT INTO meal (meal_id, name, calories, protein, carbs, fats) VALUES
+(1, 'Chicken Bowl', 650, 45.00, 70.00, 18.00),
+(2, 'Greek Yogurt', 140, 15.00, 10.00, 3.00)
+ON DUPLICATE KEY UPDATE name = VALUES(name);
+
+INSERT INTO food_item (food_item_id, user_id, name, calories, protein, carbs, fats) VALUES
+(1, 2, 'Homemade Oatmeal', 300, 10.00, 50.00, 6.00)
+ON DUPLICATE KEY UPDATE name = VALUES(name);
+
+-- To test get workouts:
+
+-- planned workouts
+INSERT INTO event (user_id, event_type, event_date)
+VALUES 
+(2, 'workout', CURDATE()),
+(2, 'workout', DATE_SUB(CURDATE(), INTERVAL 1 DAY)),
+(2, 'workout', DATE_ADD(CURDATE(), INTERVAL 1 DAY));
+
+-- completed workouts
+INSERT INTO workout_session (user_id, ended_at)
+VALUES
+(2, NOW()),
+(2, DATE_SUB(NOW(), INTERVAL 1 DAY)),
+
+INSERT INTO meal_log (user_id, meal_id, food_item_id, eaten_at, servings, notes) VALUES
+-- breakfast
+(2, 2, NULL, NOW(), 1.0, 'Breakfast'),
+
+-- lunch
+(2, NULL, 1, NOW(), 1.0, 'Lunch'),
+
+-- dinner
+(2, 1, NULL, NOW(), 1.0, 'Dinner');
+
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 

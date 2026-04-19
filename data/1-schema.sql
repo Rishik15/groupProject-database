@@ -318,6 +318,20 @@ CREATE TABLE meal_log (
   FOREIGN KEY (food_item_id) REFERENCES food_item(food_item_id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
+CREATE TABLE user_nutrition_goals (
+    user_id INT PRIMARY KEY,
+
+    calories_target INT NULL,
+    protein_target INT NULL,
+    carbs_target INT NULL,
+    fat_target INT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user_id) REFERENCES users_immutables(user_id)
+);
+
 CREATE TABLE user_coach_contract (
   contract_id   INT AUTO_INCREMENT PRIMARY KEY,
   coach_id      INT NOT NULL,
