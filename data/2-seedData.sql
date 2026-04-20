@@ -1266,7 +1266,7 @@ VALUES
 INSERT INTO workout_session (user_id, ended_at)
 VALUES
 (2, NOW()),
-(2, DATE_SUB(NOW(), INTERVAL 1 DAY)),
+(2, DATE_SUB(NOW(), INTERVAL 1 DAY));
 
 INSERT INTO meal_log (user_id, meal_id, food_item_id, eaten_at, servings, notes) VALUES
 -- breakfast
