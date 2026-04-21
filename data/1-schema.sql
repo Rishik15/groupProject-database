@@ -49,7 +49,34 @@ CREATE TABLE user_mutables (
   FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- auth credentials kept separate personal info 
+CREATE TABLE google_drive_oauth_connection (
+  connection_id        INT AUTO_INCREMENT PRIMARY KEY,
+  account_scope        VARCHAR(32) NOT NULL DEFAULT 'global',
+  owner_user_id        INT NULL,
+  connected_by_user_id INT NOT NULL,
+  google_email         VARCHAR(255) NULL,
+  access_token         TEXT NOT NULL,
+  refresh_token        TEXT NULL,
+  token_uri            VARCHAR(255) NOT NULL,
+  client_id            VARCHAR(255) NOT NULL,
+  scopes               TEXT NOT NULL,
+  root_folder_id       VARCHAR(255) NULL,
+  created_at           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  UNIQUE KEY uq_google_drive_oauth_connection_global_scope (account_scope),
+  UNIQUE KEY uq_google_drive_oauth_connection_user_owner (owner_user_id),
+  FOREIGN KEY (owner_user_id)
+    REFERENCES users_immutables(user_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  FOREIGN KEY (connected_by_user_id)
+    REFERENCES users_immutables(user_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+
 CREATE TABLE user_creds (
   user_id       INT PRIMARY KEY,
   username      CHAR(25) NOT NULL,
@@ -62,6 +89,22 @@ CREATE TABLE user_creds (
   UNIQUE KEY (email),
   FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE google_user_identity (
+  google_identity_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id            INT NOT NULL,
+  google_sub         VARCHAR(255) NOT NULL,
+  google_email       VARCHAR(255) NOT NULL,
+  email_verified     TINYINT(1) NOT NULL DEFAULT 0,
+  created_at         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  UNIQUE KEY uq_google_user_identity_user_id (user_id),
+  UNIQUE KEY uq_google_user_identity_google_sub (google_sub),
+  INDEX idx_google_user_identity_google_email (google_email),
+  FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 
 -- coaches and admins are users (1:1)
 CREATE TABLE coach (
@@ -117,7 +160,24 @@ CREATE TABLE workout_plan (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-  UNIQUE KEY (plan_name)
+  INDEX idx_workout_plan_plan_name (plan_name)
+);
+
+-- sits between workout_plan and plan_exercise
+-- each row is one training day within a plan
+-- single-day plans have exactly one row (day_order = 1)
+-- multi-day splits (e.g. PPL) have one row per day
+CREATE TABLE workout_day (
+  day_id     INT AUTO_INCREMENT PRIMARY KEY,
+  plan_id    INT NOT NULL,
+  day_order  INT NOT NULL DEFAULT 1,
+  day_label  VARCHAR(80) NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  UNIQUE KEY (plan_id, day_order),
+  INDEX (plan_id, day_order),
+  FOREIGN KEY (plan_id) REFERENCES workout_plan(plan_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE exercise (
@@ -133,9 +193,10 @@ CREATE TABLE exercise (
   INDEX (equipment)
 );
 
--- junction table: links exercises to a workout plan with exercise ordering and perexercise targets
+-- junction table: links exercises to a specific day within a workout plan
+-- plan_id is intentionally absent — it is derivable via day_id → workout_day.plan_id (3NF)
 CREATE TABLE plan_exercise (
-  plan_id          INT NOT NULL,
+  day_id           INT NOT NULL,
   exercise_id      INT NOT NULL,
   order_in_workout INT NOT NULL DEFAULT 1,
   sets_goal        INT NULL,
@@ -144,10 +205,9 @@ CREATE TABLE plan_exercise (
   created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-  PRIMARY KEY (plan_id, exercise_id),
-  -- order index useful for sorted fetches
-  INDEX (plan_id, order_in_workout),
-  FOREIGN KEY (plan_id) REFERENCES workout_plan(plan_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  PRIMARY KEY (day_id, exercise_id),
+  INDEX (day_id, order_in_workout),
+  FOREIGN KEY (day_id) REFERENCES workout_day(day_id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (exercise_id) REFERENCES exercise(exercise_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -180,10 +240,9 @@ CREATE TABLE meal (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-  UNIQUE KEY (name),
+  INDEX (name),
   INDEX (calories)
 );
-
 CREATE TABLE food_item (
   food_item_id INT AUTO_INCREMENT PRIMARY KEY,
   user_id      INT NOT NULL,
@@ -225,14 +284,14 @@ CREATE TABLE user_meal (
   created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-  PRIMARY KEY (meal_id, meal_plan_id),
+  PRIMARY KEY (meal_id, meal_plan_id, day_of_week, meal_type),
   INDEX (meal_type),
   INDEX (day_of_week),
   FOREIGN KEY (meal_id) REFERENCES meal(meal_id) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (meal_plan_id) REFERENCES meal_plan(meal_plan_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- meal_id and food_item_id are mutually exclusive 
+-- meal_id and food_item_id are mutually exclusive
 CREATE TABLE meal_log (
   log_id       INT AUTO_INCREMENT PRIMARY KEY,
   user_id      INT NOT NULL,
@@ -252,7 +311,6 @@ CREATE TABLE meal_log (
   FOREIGN KEY (food_item_id) REFERENCES food_item(food_item_id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-
 CREATE TABLE user_coach_contract (
   contract_id   INT AUTO_INCREMENT PRIMARY KEY,
   coach_id      INT NOT NULL,
@@ -268,6 +326,20 @@ CREATE TABLE user_coach_contract (
   INDEX (active),
   INDEX (start_date, end_date),
   FOREIGN KEY (coach_id) REFERENCES coach(coach_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE progress_photo (
+  progress_photo_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id           INT NOT NULL,
+  photo_url         VARCHAR(255) NOT NULL,
+  caption           TEXT NULL,
+  taken_at          DATETIME NULL,
+  created_at        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  INDEX (user_id, created_at),
+  INDEX (user_id, taken_at),
   FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -394,7 +466,6 @@ CREATE TABLE message (
   FOREIGN KEY (sender_user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
 CREATE TABLE coach_review (
   review_id        INT AUTO_INCREMENT PRIMARY KEY,
   coach_id         INT NOT NULL,
@@ -408,6 +479,44 @@ CREATE TABLE coach_review (
   INDEX (rating),
   FOREIGN KEY (coach_id) REFERENCES coach(coach_id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (reviewer_user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE coach_application (
+  application_id       INT AUTO_INCREMENT PRIMARY KEY,
+  user_id              INT NOT NULL,
+  status               ENUM('pending','approved','rejected') NOT NULL DEFAULT 'pending',
+  years_experience     INT NULL,
+  coach_description    TEXT NULL,
+  desired_price        DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  submitted_at         DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  reviewed_at          DATETIME NULL,
+  reviewed_by_admin_id INT NULL,
+  admin_action         TEXT NULL,
+  created_at           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  UNIQUE KEY uq_coach_application_user_id (user_id),
+  INDEX idx_coach_application_status (status),
+  INDEX idx_coach_application_reviewed_by_admin_id (reviewed_by_admin_id),
+  INDEX idx_coach_application_submitted_at (submitted_at),
+  FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (reviewed_by_admin_id) REFERENCES admin(admin_id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE coach_application_certification (
+  application_certification_id INT AUTO_INCREMENT PRIMARY KEY,
+  application_id               INT NOT NULL,
+  cert_name                    VARCHAR(120) NOT NULL,
+  provider_name                VARCHAR(120) NULL,
+  description                  TEXT NULL,
+  issued_date                  DATE NULL,
+  expires_date                 DATE NULL,
+  created_at                   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at                   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  INDEX idx_coach_application_certification_application_id (application_id),
+  INDEX idx_coach_application_certification_issued_expires (issued_date, expires_date),
+  FOREIGN KEY (application_id) REFERENCES coach_application(application_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE user_report (
@@ -535,7 +644,6 @@ CREATE TABLE survey_response (
   FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
 CREATE TABLE points_wallet (
   user_id    INT PRIMARY KEY,
   balance    INT NOT NULL DEFAULT 0,
@@ -650,6 +758,35 @@ CREATE TABLE coach_featured (
   FOREIGN KEY (coach_id) REFERENCES coach(coach_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE notification (
+  notification_id INT AUTO_INCREMENT PRIMARY KEY,
+
+  user_id INT NOT NULL,
+  type VARCHAR(50) NOT NULL,
+
+  conversation_id INT NULL,
+  reference_id INT NULL,
+  metadata JSON NULL,
+
+  title VARCHAR(255) NOT NULL,
+  body TEXT NULL,
+
+  is_read BOOLEAN NOT NULL DEFAULT FALSE,
+
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  INDEX idx_user_read (user_id, is_read),
+  INDEX idx_user_type (user_id, type),
+
+  FOREIGN KEY (user_id)
+  REFERENCES users_immutables(user_id)
+  ON DELETE CASCADE,
+
+  FOREIGN KEY (conversation_id)
+  REFERENCES conversation(conversation_id)
+  ON DELETE CASCADE
+);
 
 -- audit triggers
 
