@@ -64,38 +64,38 @@ INSERT INTO certifications (coach_id, cert_name, provider_name, description, iss
   (5, 'Precision Nutrition L1',  'Precision Nutrition','PN1 certification',                '2024-02-01', NULL);
 
 
--- exercise library (IDs 1-30)
-INSERT INTO exercise (exercise_name, equipment, video_url) VALUES
-  ('hack calf raise',                              'sled machine',     '2ORFMoR.gif'),  
-  ('sled 45° leg press (side pov)',                'sled machine',     '2Qh2J1e.gif'),  
-  ('dumbbell front raise',                         'dumbbell',         '3eGE2JC.gif'),  
-  ('dumbbell over bench revers wrist curl',        'dumbbell',         '3tAXPQ6.gif'),  
-  ('barbell incline bench press',                  'barbell',          '3TZduzM.gif'),  
-  ('cable squatting curl',                         'cable',            '3XFdb1Z.gif'),  
-  ('dumbbell one arm hammer preacher curl',        'dumbbell',         '4dF3maG.gif'),  
-  ('barbell standing close grip curl',             'barbell',          '4dUn2iv.gif'),  
-  ('kettlebell pistol squat',                      'kettlebell',       '5bpPTHv.gif'),  
-  ('impossible dips',                              'body weight',      '05Cf2v8.gif'),  
-  ('barbell seated overhead triceps extension',    'barbell',          '5uFK1xr.gif'),  
-  ('smith incline bench press',                    'smith machine',    '5v7KYld.gif'),  
-  ('weighted side bend (on stability ball)',       'weighted',         '6bOA1Oi.gif'),  
-  ('dumbbell one arm upright row',                 'dumbbell',         '6cKQC5E.gif'),  
-  ('barbell standing rocking leg calf raise',      'barbell',          '6HiHHe0.gif'),  
-  ('barbell wrist curl v. 2',                      'barbell',          '6kSxYnw.gif'),  
-  ('dumbbell lying single extension',              'dumbbell',         '6MfS53i.gif'),  
-  ('dumbbell reverse spider curl',                 'dumbbell',         '6sMAmNv.gif'),  
-  ('bent knee lying twist (male)',                 'body weight',      '6sYyrRX.gif'),  
-  ('lever front pulldown',                         'leverage machine', '7F1DVzn.gif'),  
-  ('lever seated row',                             'leverage machine', '7I6LNUG.gif'),  
-  ('dumbbell standing concentration curl',         'dumbbell',         '7inpWch.gif'),  
-  ('cable decline fly',                            'cable',            '7saC5zz.gif'),  
-  ('smith leg press',                              'smith machine',    '7zdxRTl.gif'),  
-  ('dumbbell palms in incline bench press',        'dumbbell',         '8eqjhOl.gif'),  
-  ('assisted hanging knee raise with throw down', 'assisted',         '8K0w2yA.gif'),   
-  ('cable seated curl',                            'cable',            '8oYqOt9.gif'),  
-  ('barbell standing calf raise',                  'barbell',          '8ozhUIZ.gif'),  
-  ('weighted hyperextension (on stability ball)', 'weighted',         '8urJS9b.gif'),   
-  ('cable seated crunch',                          'cable',            '8xUv4J7.gif');  
+-- exercise library (IDs 1-30)-- exercise library (IDs 1-30)
+INSERT INTO exercise (exercise_name, equipment, video_url, created_by) VALUES
+  ('Hack Calf Raise',                    'sled machine',     '2ORFMoR.gif', 1),
+  ('Sled Leg Press',                     'sled machine',     '2Qh2J1e.gif', 1),
+  ('Dumbbell Front Raise',               'dumbbell',         '3eGE2JC.gif', 1),
+  ('Dumbbell Reverse Wrist Curl',        'dumbbell',         '3tAXPQ6.gif', 1),
+  ('Barbell Incline Bench Press',        'barbell',          '3TZduzM.gif', 1),
+  ('Cable Squat Curl',                   'cable',            '3XFdb1Z.gif', 1),
+  ('Dumbbell Hammer Preacher Curl',      'dumbbell',         '4dF3maG.gif', 1),
+  ('Barbell Close Grip Curl',            'barbell',          '4dUn2iv.gif', 1),
+  ('Kettlebell Pistol Squat',            'kettlebell',       '5bpPTHv.gif', 1),
+  ('Weighted Dips',                      'body weight',      '05Cf2v8.gif', 1),
+  ('Barbell Overhead Tricep Extension',  'barbell',          '5uFK1xr.gif', 1),
+  ('Smith Machine Incline Press',        'smith machine',    '5v7KYld.gif', 1),
+  ('Weighted Side Bend',                 'weighted',         '6bOA1Oi.gif', 1),
+  ('Dumbbell Upright Row',               'dumbbell',         '6cKQC5E.gif', 1),
+  ('Barbell Calf Raise',                 'barbell',          '6HiHHe0.gif', 1),
+  ('Barbell Wrist Curl',                 'barbell',          '6kSxYnw.gif', 1),
+  ('Dumbbell Tricep Extension',          'dumbbell',         '6MfS53i.gif', 1),
+  ('Dumbbell Spider Curl',               'dumbbell',         '6sMAmNv.gif', 1),
+  ('Lying Knee Twist',                   'body weight',      '6sYyrRX.gif', 1),
+  ('Lat Pulldown',                       'leverage machine', '7F1DVzn.gif', 1),
+  ('Seated Cable Row',                   'leverage machine', '7I6LNUG.gif', 1),
+  ('Dumbbell Concentration Curl',        'dumbbell',         '7inpWch.gif', 1),
+  ('Cable Decline Fly',                  'cable',            '7saC5zz.gif', 1),
+  ('Smith Machine Leg Press',            'smith machine',    '7zdxRTl.gif', 1),
+  ('Dumbbell Incline Press',             'dumbbell',         '8eqjhOl.gif', 1),
+  ('Hanging Knee Raise',                 'assisted',         '8K0w2yA.gif', 1),
+  ('Cable Curl',                         'cable',            '8oYqOt9.gif', 1),
+  ('Standing Calf Raise',                'barbell',          '8ozhUIZ.gif', 1),
+  ('Hyperextension',                     'weighted',         '8urJS9b.gif', 1),
+  ('Cable Crunch',                       'cable',            '8xUv4J7.gif', 1);
 
 
 -- workout plans
@@ -715,36 +715,15 @@ INSERT INTO feature (title, description, icon, display_order, active) VALUES
 INSERT INTO coach_featured (coach_id, display_order, start_date, end_date, active) VALUES
   (3, 1, '2026-03-01', '2026-04-01', 1),
   (5, 2, '2026-03-01', '2026-04-01', 1);
-
-INSERT INTO notification 
+  
+INSERT INTO notification
 (user_id, type, conversation_id, reference_id, title, body, is_read)
 VALUES
--- CHAT NOTIFICATIONS (coach gets message from client)
-(2, 'chat_message', 1, 1,  'New message from Alex',  'Hey coach, excited to start.', 0),
-
--- CHAT (client gets reply from coach)
-(1, 'chat_message', 1, 2, 
- 'New message from Coach Sam', 
- 'Let''s do it. Keep it simple, keep it consistent.', 
- 1),
-
--- COACH ACCEPTED CLIENT (based on contract)
-(1, 'coach_assigned', NULL, 1,
- 'Coach Assigned',
- 'You are now working with Coach Sam.',
- 0),
-
--- WELLNESS REMINDER
-(1, 'wellness_reminder', NULL, NULL,
- 'Daily Check-in',
- 'Don’t forget to complete your wellness survey today.',
- 0),
-
--- WORKOUT REMINDER (based on event)
-(1, 'workout_reminder', NULL, 1,
- 'Workout Scheduled',
- 'You have a workout scheduled today at 6 PM.',
- 0); 
+(2, 'chat_message',     1, 1,    'New message from Alex',      'Hey coach, excited to start.',                              0),
+(2, 'chat_message',     1, 2,    'New message from Coach Sam', 'Let''s do it. Keep it simple, keep it consistent.',         1),
+(2, 'coach_assigned',   NULL, 1, 'Coach Assigned',             'You are now working with Coach Sam.',                       1),
+(2, 'wellness_reminder',NULL, NULL,'Daily Check-in',           'Don''t forget to complete your wellness survey today.',     0),
+(2, 'workout_reminder', NULL, 1, 'Workout Scheduled',          'You have a workout scheduled today at 6 PM.',               1);
 -- ==========================================
 -- 1. USERS (IDs 12 to 50)
 -- ==========================================
