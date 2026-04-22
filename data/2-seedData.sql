@@ -1212,3 +1212,75 @@ INSERT INTO coach_featured (coach_id, display_order, start_date, end_date, activ
 (14, 4, '2026-03-01', '2026-04-01', 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+-- ============================================================
+-- COACH PRICE CHANGE REQUESTS (Phase 11 Testing Data)
+-- ============================================================
+
+-- Pending requests (these are the ones your endpoints will operate on)
+INSERT INTO coach_price_change_request (
+  coach_id,
+  proposed_price,
+  status,
+  admin_action,
+  reviewed_by_admin_id,
+  reviewed_at
+) VALUES
+  (3, 80.00,  'pending', NULL, NULL, NULL),
+  (3, 85.00,  'pending', NULL, NULL, NULL),
+  (5, 70.00,  'pending', NULL, NULL, NULL),
+  (5, 75.00,  'pending', NULL, NULL, NULL),
+  (3, 90.00,  'pending', NULL, NULL, NULL),
+  (5, 68.00,  'pending', NULL, NULL, NULL);
+
+-- Already approved requests (test "cannot re-approve")
+INSERT INTO coach_price_change_request (
+  coach_id,
+  proposed_price,
+  status,
+  admin_action,
+  reviewed_by_admin_id,
+  reviewed_at
+) VALUES
+  (3, 78.00,  'approved', 'Approved during initial onboarding', 4, NOW()),
+  (5, 72.00,  'approved', 'Market adjustment approved',        4, NOW()),
+  (3, 82.00,  'approved', 'Performance-based increase',        4, NOW());
+
+-- Rejected requests (test rejection handling + filtering)
+INSERT INTO coach_price_change_request (
+  coach_id,
+  proposed_price,
+  status,
+  admin_action,
+  reviewed_by_admin_id,
+  reviewed_at
+) VALUES
+  (3, 150.00, 'rejected', 'Too high compared to market rate',   4, NOW()),
+  (5, 120.00, 'rejected', 'Insufficient experience justification', 4, NOW()),
+  (3, 95.00,  'rejected', 'Client complaints pending review',   4, NOW());
+
+-- Edge cases: multiple rapid submissions by same coach
+INSERT INTO coach_price_change_request (
+  coach_id,
+  proposed_price,
+  status,
+  admin_action,
+  reviewed_by_admin_id,
+  reviewed_at
+) VALUES
+  (3, 88.00, 'pending', NULL, NULL, NULL),
+  (3, 89.00, 'pending', NULL, NULL, NULL);
+
+-- Historical (older timestamps to test ordering)
+INSERT INTO coach_price_change_request (
+  coach_id,
+  proposed_price,
+  status,
+  admin_action,
+  reviewed_by_admin_id,
+  reviewed_at,
+  created_at
+) VALUES
+  (5, 60.00, 'approved', 'Legacy approval', 4, NOW(), '2025-12-01 10:00:00'),
+  (3, 65.00, 'rejected', 'Old rejected request', 4, NOW(), '2025-11-15 09:00:00');
