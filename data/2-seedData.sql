@@ -1228,4 +1228,383 @@ INSERT INTO notification (user_id, type, conversation_id, reference_id, title, b
 (26, 'chat_message', 12, 52, 'New message from Coach 14', 'How did the weekend go...', 0),
 (14, 'chat_message', 12, 53, 'New message from Lucas', 'Much better, didn''t feel restricted...', 0);
 
+
+
+-- ============================================================
+-- NUTRITION LIBRARY SEED DATA
+-- meal IDs start at 11 (1-10 already exist)
+-- meal_plan IDs start at 13 (1-12 already exist)
+-- All system plans use user_id = 1
+-- ============================================================
+
+-- ============================================================
+-- MEALS (IDs 11-50)
+-- ============================================================
+
+INSERT INTO meal (name, calories, protein, carbs, fats) VALUES
+  -- Breakfast
+  ('Overnight Oats with Berries',     380, 14.00, 62.00,  8.00),   -- 11
+  ('Scrambled Eggs & Toast',          420, 24.00, 38.00, 16.00),   -- 12
+  ('Banana Protein Smoothie',         340, 28.00, 44.00,  6.00),   -- 13
+  ('Oatmeal with Peanut Butter',      450, 18.00, 58.00, 16.00),   -- 14
+  ('Greek Yogurt Parfait',            320, 20.00, 42.00,  6.00),   -- 15
+  ('Veggie Omelette',                 310, 22.00, 10.00, 20.00),   -- 16
+  ('Whole Grain Pancakes',            480, 16.00, 72.00, 14.00),   -- 17
+  ('Breakfast Burrito',               520, 28.00, 52.00, 20.00),   -- 18
+  ('Chia Pudding',                    290, 10.00, 36.00, 12.00),   -- 19
+  ('Smoothie Bowl',                   390, 12.00, 68.00,  8.00),   -- 20
+
+  -- Lunch
+  ('Grilled Chicken Wrap',            480, 38.00, 42.00, 14.00),   -- 21
+  ('Quinoa Power Bowl',               440, 18.00, 60.00, 14.00),   -- 22
+  ('Turkey & Avocado Sandwich',       520, 34.00, 46.00, 18.00),   -- 23
+  ('Lentil Soup',                     320, 18.00, 48.00,  4.00),   -- 24
+  ('Tuna Poke Bowl',                  490, 36.00, 52.00, 12.00),   -- 25
+  ('Chicken Caesar Wrap',             510, 40.00, 38.00, 20.00),   -- 26
+  ('Beef & Rice Bowl',                580, 42.00, 62.00, 14.00),   -- 27
+  ('Shrimp Stir Fry',                 420, 32.00, 44.00, 10.00),   -- 28
+  ('Black Bean Burrito Bowl',         460, 20.00, 68.00, 10.00),   -- 29
+  ('Caprese Salad with Chicken',      390, 38.00, 12.00, 20.00),   -- 30
+
+  -- Dinner
+  ('Baked Salmon & Asparagus',        480, 44.00, 18.00, 24.00),   -- 31
+  ('Chicken Stir Fry & Brown Rice',   520, 40.00, 58.00, 10.00),   -- 32
+  ('Lean Beef Tacos',                 560, 38.00, 52.00, 18.00),   -- 33
+  ('Turkey Meatballs & Pasta',        580, 42.00, 64.00, 12.00),   -- 34
+  ('Baked Cod & Sweet Potato',        420, 38.00, 40.00,  8.00),   -- 35
+  ('Chicken Tikka Masala & Rice',     540, 36.00, 58.00, 14.00),   -- 36
+  ('Pork Tenderloin & Veggies',       460, 40.00, 28.00, 18.00),   -- 37
+  ('Shrimp Pasta',                    520, 34.00, 62.00, 12.00),   -- 38
+  ('Beef & Broccoli',                 480, 38.00, 32.00, 18.00),   -- 39
+  ('Stuffed Bell Peppers',            440, 30.00, 46.00, 14.00),   -- 40
+
+  -- Snacks
+  ('Rice Cakes & Almond Butter',      220,  6.00, 28.00, 10.00),   -- 41
+  ('Mixed Nuts & Dried Fruit',        280,  8.00, 30.00, 16.00),   -- 42
+  ('Hummus & Veggies',                180,  6.00, 22.00,  8.00),   -- 43
+  ('Hard Boiled Eggs',                150, 12.00,  2.00, 10.00),   -- 44
+  ('Edamame',                         160, 14.00, 12.00,  6.00),   -- 45
+  ('Protein Bar',                     240, 20.00, 26.00,  8.00),   -- 46
+  ('Apple & Peanut Butter',           250,  8.00, 30.00, 12.00),   -- 47
+  ('String Cheese & Apple',           190,  8.00, 26.00,  6.00),   -- 48
+  ('Celery & Cream Cheese',           120,  4.00,  6.00, 10.00),   -- 49
+  ('Edamame & Rice Crackers',         200, 12.00, 26.00,  6.00);   -- 50
+
+
+-- ============================================================
+-- MEAL PLANS (IDs 13-42)
+-- 30 system plans owned by user_id = 1
+-- ============================================================
+
+INSERT INTO meal_plan (user_id, plan_name, start_date, end_date, total_calories) VALUES
+  (1, 'Fat Loss - 1500 Cal',            NULL, NULL, 1500),   -- 13
+  (1, 'Fat Loss - 1800 Cal',            NULL, NULL, 1800),   -- 14
+  (1, 'Aggressive Cut - 1200 Cal',      NULL, NULL, 1200),   -- 15
+  (1, 'Moderate Cut - 2000 Cal',        NULL, NULL, 2000),   -- 16
+  (1, 'Lean Bulk - 2800 Cal',           NULL, NULL, 2800),   -- 17
+  (1, 'Aggressive Bulk - 3500 Cal',     NULL, NULL, 3500),   -- 18
+  (1, 'Clean Bulk - 3000 Cal',          NULL, NULL, 3000),   -- 19
+  (1, 'Maintenance - 2200 Cal',         NULL, NULL, 2200),   -- 20
+  (1, 'Maintenance - 2500 Cal',         NULL, NULL, 2500),   -- 21
+  (1, 'Maintenance - 2800 Cal',         NULL, NULL, 2800),   -- 22
+  (1, 'High Protein Cut - 1800 Cal',    NULL, NULL, 1800),   -- 23
+  (1, 'High Protein Bulk - 3000 Cal',   NULL, NULL, 3000),   -- 24
+  (1, 'High Protein Maintain - 2400',   NULL, NULL, 2400),   -- 25
+  (1, 'Athlete Performance - 3200 Cal', NULL, NULL, 3200),   -- 26
+  (1, 'Endurance Fueling - 2800 Cal',   NULL, NULL, 2800),   -- 27
+  (1, 'Strength Athlete - 3600 Cal',    NULL, NULL, 3600),   -- 28
+  (1, 'Body Recomp - 2200 Cal',         NULL, NULL, 2200),   -- 29
+  (1, 'Body Recomp - 2500 Cal',         NULL, NULL, 2500),   -- 30
+  (1, 'Vegetarian Fat Loss - 1700 Cal', NULL, NULL, 1700),   -- 31
+  (1, 'Vegetarian Bulk - 2900 Cal',     NULL, NULL, 2900),   -- 32
+  (1, 'Plant Based Maintain - 2300',    NULL, NULL, 2300),   -- 33
+  (1, 'Beginner Fat Loss - 1800 Cal',   NULL, NULL, 1800),   -- 34
+  (1, 'Beginner Bulk - 2700 Cal',       NULL, NULL, 2700),   -- 35
+  (1, 'Beginner Maintain - 2100 Cal',   NULL, NULL, 2100),   -- 36
+  (1, 'Contest Prep - 1400 Cal',        NULL, NULL, 1400),   -- 37
+  (1, 'Post Contest Reverse Diet',      NULL, NULL, 2000),   -- 38
+  (1, 'Injury Recovery - 2000 Cal',     NULL, NULL, 2000),   -- 39
+  (1, 'Senior Fitness - 1900 Cal',      NULL, NULL, 1900),   -- 40
+  (1, 'Youth Athlete - 2600 Cal',       NULL, NULL, 2600),   -- 41
+  (1, 'Weight Class Cut - 1600 Cal',    NULL, NULL, 1600);   -- 42
+
+
+-- ============================================================
+-- USER_MEAL
+-- Full week Mon-Sun, breakfast/lunch/dinner/snack per plan
+-- PK: (meal_id, meal_plan_id, day_of_week, meal_type)
+-- ============================================================
+
+INSERT INTO user_meal (meal_id, meal_plan_id, meal_type, servings, day_of_week) VALUES
+
+-- Plan 13: Fat Loss - 1500 Cal
+(15, 13, 'breakfast', 1.00, 'Mon'), (43, 13, 'snack', 1.00, 'Mon'), (26, 13, 'lunch', 0.75, 'Mon'), (31, 13, 'dinner', 0.80, 'Mon'),
+(15, 13, 'breakfast', 1.00, 'Tue'), (44, 13, 'snack', 1.00, 'Tue'), (25, 13, 'lunch', 0.75, 'Tue'), (35, 13, 'dinner', 1.00, 'Tue'),
+(19, 13, 'breakfast', 1.00, 'Wed'), (43, 13, 'snack', 1.00, 'Wed'), (24, 13, 'lunch', 1.00, 'Wed'), (39, 13, 'dinner', 0.80, 'Wed'),
+(12, 13, 'breakfast', 0.75, 'Thu'), (44, 13, 'snack', 1.00, 'Thu'), (21, 13, 'lunch', 0.75, 'Thu'), (37, 13, 'dinner', 0.80, 'Thu'),
+(15, 13, 'breakfast', 1.00, 'Fri'), (43, 13, 'snack', 1.00, 'Fri'), (30, 13, 'lunch', 1.00, 'Fri'), (31, 13, 'dinner', 0.80, 'Fri'),
+(20, 13, 'breakfast', 0.75, 'Sat'), (47, 13, 'snack', 1.00, 'Sat'), (22, 13, 'lunch', 0.75, 'Sat'), (35, 13, 'dinner', 1.00, 'Sat'),
+(19, 13, 'breakfast', 1.00, 'Sun'), (43, 13, 'snack', 1.00, 'Sun'), (24, 13, 'lunch', 1.00, 'Sun'), (37, 13, 'dinner', 0.80, 'Sun'),
+
+-- Plan 14: Fat Loss - 1800 Cal
+(11, 14, 'breakfast', 1.00, 'Mon'), (46, 14, 'snack', 1.00, 'Mon'), (21, 14, 'lunch', 1.00, 'Mon'), (31, 14, 'dinner', 1.00, 'Mon'),
+(12, 14, 'breakfast', 1.00, 'Tue'), (44, 14, 'snack', 1.00, 'Tue'), (26, 14, 'lunch', 1.00, 'Tue'), (35, 14, 'dinner', 1.00, 'Tue'),
+(15, 14, 'breakfast', 1.00, 'Wed'), (47, 14, 'snack', 1.00, 'Wed'), (25, 14, 'lunch', 1.00, 'Wed'), (32, 14, 'dinner', 0.90, 'Wed'),
+(13, 14, 'breakfast', 1.00, 'Thu'), (43, 14, 'snack', 1.00, 'Thu'), (30, 14, 'lunch', 1.00, 'Thu'), (39, 14, 'dinner', 1.00, 'Thu'),
+(11, 14, 'breakfast', 1.00, 'Fri'), (46, 14, 'snack', 1.00, 'Fri'), (22, 14, 'lunch', 1.00, 'Fri'), (37, 14, 'dinner', 1.00, 'Fri'),
+(16, 14, 'breakfast', 1.00, 'Sat'), (44, 14, 'snack', 1.00, 'Sat'), (23, 14, 'lunch', 0.90, 'Sat'), (31, 14, 'dinner', 1.00, 'Sat'),
+(15, 14, 'breakfast', 1.00, 'Sun'), (47, 14, 'snack', 1.00, 'Sun'), (24, 14, 'lunch', 1.00, 'Sun'), (35, 14, 'dinner', 1.00, 'Sun'),
+
+-- Plan 15: Aggressive Cut - 1200 Cal
+(19, 15, 'breakfast', 0.75, 'Mon'), (43, 15, 'snack', 0.50, 'Mon'), (24, 15, 'lunch', 0.75, 'Mon'), (31, 15, 'dinner', 0.60, 'Mon'),
+(15, 15, 'breakfast', 0.75, 'Tue'), (44, 15, 'snack', 1.00, 'Tue'), (30, 15, 'lunch', 0.75, 'Tue'), (35, 15, 'dinner', 0.70, 'Tue'),
+(13, 15, 'breakfast', 0.75, 'Wed'), (43, 15, 'snack', 0.50, 'Wed'), (25, 15, 'lunch', 0.60, 'Wed'), (37, 15, 'dinner', 0.60, 'Wed'),
+(19, 15, 'breakfast', 0.75, 'Thu'), (44, 15, 'snack', 1.00, 'Thu'), (24, 15, 'lunch', 0.75, 'Thu'), (39, 15, 'dinner', 0.60, 'Thu'),
+(15, 15, 'breakfast', 0.75, 'Fri'), (43, 15, 'snack', 0.50, 'Fri'), (30, 15, 'lunch', 0.75, 'Fri'), (31, 15, 'dinner', 0.60, 'Fri'),
+(12, 15, 'breakfast', 0.60, 'Sat'), (44, 15, 'snack', 1.00, 'Sat'), (22, 15, 'lunch', 0.75, 'Sat'), (35, 15, 'dinner', 0.70, 'Sat'),
+(19, 15, 'breakfast', 0.75, 'Sun'), (43, 15, 'snack', 0.50, 'Sun'), (24, 15, 'lunch', 0.75, 'Sun'), (37, 15, 'dinner', 0.60, 'Sun'),
+
+-- Plan 16: Moderate Cut - 2000 Cal
+(14, 16, 'breakfast', 1.00, 'Mon'), (46, 16, 'snack', 1.00, 'Mon'), (21, 16, 'lunch', 1.00, 'Mon'), (33, 16, 'dinner', 1.00, 'Mon'),
+(11, 16, 'breakfast', 1.00, 'Tue'), (47, 16, 'snack', 1.00, 'Tue'), (26, 16, 'lunch', 1.00, 'Tue'), (31, 16, 'dinner', 1.00, 'Tue'),
+(12, 16, 'breakfast', 1.00, 'Wed'), (44, 16, 'snack', 1.00, 'Wed'), (25, 16, 'lunch', 1.00, 'Wed'), (36, 16, 'dinner', 1.00, 'Wed'),
+(16, 16, 'breakfast', 1.00, 'Thu'), (43, 16, 'snack', 1.00, 'Thu'), (22, 16, 'lunch', 1.00, 'Thu'), (32, 16, 'dinner', 1.00, 'Thu'),
+(15, 16, 'breakfast', 1.00, 'Fri'), (46, 16, 'snack', 1.00, 'Fri'), (30, 16, 'lunch', 1.00, 'Fri'), (39, 16, 'dinner', 1.00, 'Fri'),
+(14, 16, 'breakfast', 1.00, 'Sat'), (47, 16, 'snack', 1.00, 'Sat'), (23, 16, 'lunch', 1.00, 'Sat'), (37, 16, 'dinner', 1.00, 'Sat'),
+(11, 16, 'breakfast', 1.00, 'Sun'), (44, 16, 'snack', 1.00, 'Sun'), (24, 16, 'lunch', 1.00, 'Sun'), (35, 16, 'dinner', 1.00, 'Sun'),
+
+-- Plan 17: Lean Bulk - 2800 Cal
+(18, 17, 'breakfast', 1.00, 'Mon'), (42, 17, 'snack', 1.00, 'Mon'), (27, 17, 'lunch', 1.00, 'Mon'), (34, 17, 'dinner', 1.00, 'Mon'),
+(14, 17, 'breakfast', 1.00, 'Tue'), (46, 17, 'snack', 1.00, 'Tue'), (26, 17, 'lunch', 1.00, 'Tue'), (36, 17, 'dinner', 1.00, 'Tue'),
+(17, 17, 'breakfast', 1.00, 'Wed'), (42, 17, 'snack', 1.00, 'Wed'), (27, 17, 'lunch', 1.00, 'Wed'), (33, 17, 'dinner', 1.00, 'Wed'),
+(18, 17, 'breakfast', 1.00, 'Thu'), (46, 17, 'snack', 1.00, 'Thu'), (25, 17, 'lunch', 1.00, 'Thu'), (38, 17, 'dinner', 1.00, 'Thu'),
+(14, 17, 'breakfast', 1.00, 'Fri'), (42, 17, 'snack', 1.00, 'Fri'), (27, 17, 'lunch', 1.00, 'Fri'), (34, 17, 'dinner', 1.00, 'Fri'),
+(17, 17, 'breakfast', 1.00, 'Sat'), (46, 17, 'snack', 1.00, 'Sat'), (26, 17, 'lunch', 1.00, 'Sat'), (36, 17, 'dinner', 1.00, 'Sat'),
+(18, 17, 'breakfast', 1.00, 'Sun'), (42, 17, 'snack', 1.00, 'Sun'), (22, 17, 'lunch', 1.00, 'Sun'), (33, 17, 'dinner', 1.00, 'Sun'),
+
+-- Plan 18: Aggressive Bulk - 3500 Cal
+(17, 18, 'breakfast', 1.50, 'Mon'), (42, 18, 'snack', 1.50, 'Mon'), (27, 18, 'lunch', 1.50, 'Mon'), (34, 18, 'dinner', 1.50, 'Mon'),
+(18, 18, 'breakfast', 1.50, 'Tue'), (46, 18, 'snack', 1.50, 'Tue'), (27, 18, 'lunch', 1.50, 'Tue'), (38, 18, 'dinner', 1.50, 'Tue'),
+(14, 18, 'breakfast', 1.50, 'Wed'), (42, 18, 'snack', 1.50, 'Wed'), (26, 18, 'lunch', 1.50, 'Wed'), (36, 18, 'dinner', 1.50, 'Wed'),
+(17, 18, 'breakfast', 1.50, 'Thu'), (46, 18, 'snack', 1.50, 'Thu'), (27, 18, 'lunch', 1.50, 'Thu'), (33, 18, 'dinner', 1.50, 'Thu'),
+(18, 18, 'breakfast', 1.50, 'Fri'), (42, 18, 'snack', 1.50, 'Fri'), (25, 18, 'lunch', 1.50, 'Fri'), (34, 18, 'dinner', 1.50, 'Fri'),
+(14, 18, 'breakfast', 1.50, 'Sat'), (46, 18, 'snack', 1.50, 'Sat'), (27, 18, 'lunch', 1.50, 'Sat'), (38, 18, 'dinner', 1.50, 'Sat'),
+(17, 18, 'breakfast', 1.50, 'Sun'), (42, 18, 'snack', 1.50, 'Sun'), (22, 18, 'lunch', 1.50, 'Sun'), (36, 18, 'dinner', 1.50, 'Sun'),
+
+-- Plan 19: Clean Bulk - 3000 Cal
+(14, 19, 'breakfast', 1.25, 'Mon'), (46, 19, 'snack', 1.00, 'Mon'), (27, 19, 'lunch', 1.25, 'Mon'), (34, 19, 'dinner', 1.25, 'Mon'),
+(17, 19, 'breakfast', 1.00, 'Tue'), (42, 19, 'snack', 1.00, 'Tue'), (26, 19, 'lunch', 1.25, 'Tue'), (36, 19, 'dinner', 1.25, 'Tue'),
+(18, 19, 'breakfast', 1.00, 'Wed'), (46, 19, 'snack', 1.00, 'Wed'), (25, 19, 'lunch', 1.25, 'Wed'), (33, 19, 'dinner', 1.25, 'Wed'),
+(14, 19, 'breakfast', 1.25, 'Thu'), (42, 19, 'snack', 1.00, 'Thu'), (27, 19, 'lunch', 1.25, 'Thu'), (38, 19, 'dinner', 1.25, 'Thu'),
+(17, 19, 'breakfast', 1.00, 'Fri'), (46, 19, 'snack', 1.00, 'Fri'), (26, 19, 'lunch', 1.25, 'Fri'), (34, 19, 'dinner', 1.25, 'Fri'),
+(18, 19, 'breakfast', 1.00, 'Sat'), (42, 19, 'snack', 1.00, 'Sat'), (27, 19, 'lunch', 1.25, 'Sat'), (36, 19, 'dinner', 1.25, 'Sat'),
+(14, 19, 'breakfast', 1.25, 'Sun'), (46, 19, 'snack', 1.00, 'Sun'), (22, 19, 'lunch', 1.25, 'Sun'), (33, 19, 'dinner', 1.25, 'Sun'),
+
+-- Plan 20: Maintenance - 2200 Cal
+(11, 20, 'breakfast', 1.00, 'Mon'), (47, 20, 'snack', 1.00, 'Mon'), (21, 20, 'lunch', 1.00, 'Mon'), (32, 20, 'dinner', 1.00, 'Mon'),
+(12, 20, 'breakfast', 1.00, 'Tue'), (44, 20, 'snack', 1.00, 'Tue'), (23, 20, 'lunch', 1.00, 'Tue'), (35, 20, 'dinner', 1.00, 'Tue'),
+(16, 20, 'breakfast', 1.00, 'Wed'), (47, 20, 'snack', 1.00, 'Wed'), (26, 20, 'lunch', 1.00, 'Wed'), (31, 20, 'dinner', 1.00, 'Wed'),
+(11, 20, 'breakfast', 1.00, 'Thu'), (43, 20, 'snack', 1.00, 'Thu'), (22, 20, 'lunch', 1.00, 'Thu'), (36, 20, 'dinner', 1.00, 'Thu'),
+(15, 20, 'breakfast', 1.00, 'Fri'), (47, 20, 'snack', 1.00, 'Fri'), (25, 20, 'lunch', 1.00, 'Fri'), (37, 20, 'dinner', 1.00, 'Fri'),
+(12, 20, 'breakfast', 1.00, 'Sat'), (44, 20, 'snack', 1.00, 'Sat'), (28, 20, 'lunch', 1.00, 'Sat'), (32, 20, 'dinner', 1.00, 'Sat'),
+(11, 20, 'breakfast', 1.00, 'Sun'), (47, 20, 'snack', 1.00, 'Sun'), (24, 20, 'lunch', 1.00, 'Sun'), (40, 20, 'dinner', 1.00, 'Sun'),
+
+-- Plan 21: Maintenance - 2500 Cal
+(14, 21, 'breakfast', 1.00, 'Mon'), (46, 21, 'snack', 1.00, 'Mon'), (27, 21, 'lunch', 1.00, 'Mon'), (32, 21, 'dinner', 1.00, 'Mon'),
+(17, 21, 'breakfast', 1.00, 'Tue'), (47, 21, 'snack', 1.00, 'Tue'), (23, 21, 'lunch', 1.00, 'Tue'), (36, 21, 'dinner', 1.00, 'Tue'),
+(11, 21, 'breakfast', 1.00, 'Wed'), (46, 21, 'snack', 1.00, 'Wed'), (26, 21, 'lunch', 1.00, 'Wed'), (34, 21, 'dinner', 1.00, 'Wed'),
+(15, 21, 'breakfast', 1.00, 'Thu'), (47, 21, 'snack', 1.00, 'Thu'), (25, 21, 'lunch', 1.00, 'Thu'), (33, 21, 'dinner', 1.00, 'Thu'),
+(14, 21, 'breakfast', 1.00, 'Fri'), (46, 21, 'snack', 1.00, 'Fri'), (22, 21, 'lunch', 1.00, 'Fri'), (38, 21, 'dinner', 1.00, 'Fri'),
+(17, 21, 'breakfast', 1.00, 'Sat'), (47, 21, 'snack', 1.00, 'Sat'), (28, 21, 'lunch', 1.00, 'Sat'), (37, 21, 'dinner', 1.00, 'Sat'),
+(11, 21, 'breakfast', 1.00, 'Sun'), (46, 21, 'snack', 1.00, 'Sun'), (24, 21, 'lunch', 1.00, 'Sun'), (40, 21, 'dinner', 1.00, 'Sun'),
+
+-- Plan 22: Maintenance - 2800 Cal
+(17, 22, 'breakfast', 1.00, 'Mon'), (42, 22, 'snack', 1.00, 'Mon'), (27, 22, 'lunch', 1.00, 'Mon'), (34, 22, 'dinner', 1.00, 'Mon'),
+(18, 22, 'breakfast', 1.00, 'Tue'), (46, 22, 'snack', 1.00, 'Tue'), (26, 22, 'lunch', 1.00, 'Tue'), (36, 22, 'dinner', 1.00, 'Tue'),
+(14, 22, 'breakfast', 1.00, 'Wed'), (42, 22, 'snack', 1.00, 'Wed'), (25, 22, 'lunch', 1.00, 'Wed'), (33, 22, 'dinner', 1.00, 'Wed'),
+(17, 22, 'breakfast', 1.00, 'Thu'), (46, 22, 'snack', 1.00, 'Thu'), (27, 22, 'lunch', 1.00, 'Thu'), (38, 22, 'dinner', 1.00, 'Thu'),
+(18, 22, 'breakfast', 1.00, 'Fri'), (42, 22, 'snack', 1.00, 'Fri'), (23, 22, 'lunch', 1.00, 'Fri'), (37, 22, 'dinner', 1.00, 'Fri'),
+(14, 22, 'breakfast', 1.00, 'Sat'), (46, 22, 'snack', 1.00, 'Sat'), (22, 22, 'lunch', 1.00, 'Sat'), (34, 22, 'dinner', 1.00, 'Sat'),
+(17, 22, 'breakfast', 1.00, 'Sun'), (42, 22, 'snack', 1.00, 'Sun'), (24, 22, 'lunch', 1.00, 'Sun'), (40, 22, 'dinner', 1.00, 'Sun'),
+
+-- Plan 23: High Protein Cut - 1800 Cal
+(13, 23, 'breakfast', 1.00, 'Mon'), (44, 23, 'snack', 1.00, 'Mon'), (26, 23, 'lunch', 1.00, 'Mon'), (31, 23, 'dinner', 1.00, 'Mon'),
+(16, 23, 'breakfast', 1.00, 'Tue'), (45, 23, 'snack', 1.00, 'Tue'), (25, 23, 'lunch', 1.00, 'Tue'), (35, 23, 'dinner', 1.00, 'Tue'),
+(13, 23, 'breakfast', 1.00, 'Wed'), (44, 23, 'snack', 1.00, 'Wed'), (30, 23, 'lunch', 1.00, 'Wed'), (37, 23, 'dinner', 1.00, 'Wed'),
+(16, 23, 'breakfast', 1.00, 'Thu'), (45, 23, 'snack', 1.00, 'Thu'), (26, 23, 'lunch', 1.00, 'Thu'), (39, 23, 'dinner', 1.00, 'Thu'),
+(13, 23, 'breakfast', 1.00, 'Fri'), (44, 23, 'snack', 1.00, 'Fri'), (21, 23, 'lunch', 1.00, 'Fri'), (31, 23, 'dinner', 1.00, 'Fri'),
+(16, 23, 'breakfast', 1.00, 'Sat'), (45, 23, 'snack', 1.00, 'Sat'), (25, 23, 'lunch', 1.00, 'Sat'), (35, 23, 'dinner', 1.00, 'Sat'),
+(13, 23, 'breakfast', 1.00, 'Sun'), (44, 23, 'snack', 1.00, 'Sun'), (30, 23, 'lunch', 1.00, 'Sun'), (37, 23, 'dinner', 1.00, 'Sun'),
+
+-- Plan 24: High Protein Bulk - 3000 Cal
+(13, 24, 'breakfast', 1.25, 'Mon'), (46, 24, 'snack', 1.00, 'Mon'), (27, 24, 'lunch', 1.25, 'Mon'), (34, 24, 'dinner', 1.25, 'Mon'),
+(16, 24, 'breakfast', 1.25, 'Tue'), (45, 24, 'snack', 1.00, 'Tue'), (26, 24, 'lunch', 1.25, 'Tue'), (36, 24, 'dinner', 1.25, 'Tue'),
+(18, 24, 'breakfast', 1.00, 'Wed'), (46, 24, 'snack', 1.00, 'Wed'), (25, 24, 'lunch', 1.25, 'Wed'), (33, 24, 'dinner', 1.25, 'Wed'),
+(13, 24, 'breakfast', 1.25, 'Thu'), (45, 24, 'snack', 1.00, 'Thu'), (27, 24, 'lunch', 1.25, 'Thu'), (38, 24, 'dinner', 1.25, 'Thu'),
+(16, 24, 'breakfast', 1.25, 'Fri'), (46, 24, 'snack', 1.00, 'Fri'), (26, 24, 'lunch', 1.25, 'Fri'), (34, 24, 'dinner', 1.25, 'Fri'),
+(18, 24, 'breakfast', 1.00, 'Sat'), (45, 24, 'snack', 1.00, 'Sat'), (25, 24, 'lunch', 1.25, 'Sat'), (36, 24, 'dinner', 1.25, 'Sat'),
+(13, 24, 'breakfast', 1.25, 'Sun'), (46, 24, 'snack', 1.00, 'Sun'), (22, 24, 'lunch', 1.25, 'Sun'), (33, 24, 'dinner', 1.25, 'Sun'),
+
+-- Plan 25: High Protein Maintain - 2400 Cal
+(16, 25, 'breakfast', 1.00, 'Mon'), (44, 25, 'snack', 1.00, 'Mon'), (26, 25, 'lunch', 1.00, 'Mon'), (32, 25, 'dinner', 1.00, 'Mon'),
+(13, 25, 'breakfast', 1.00, 'Tue'), (45, 25, 'snack', 1.00, 'Tue'), (25, 25, 'lunch', 1.00, 'Tue'), (31, 25, 'dinner', 1.00, 'Tue'),
+(16, 25, 'breakfast', 1.00, 'Wed'), (46, 25, 'snack', 1.00, 'Wed'), (21, 25, 'lunch', 1.00, 'Wed'), (37, 25, 'dinner', 1.00, 'Wed'),
+(13, 25, 'breakfast', 1.00, 'Thu'), (44, 25, 'snack', 1.00, 'Thu'), (30, 25, 'lunch', 1.00, 'Thu'), (35, 25, 'dinner', 1.00, 'Thu'),
+(16, 25, 'breakfast', 1.00, 'Fri'), (45, 25, 'snack', 1.00, 'Fri'), (26, 25, 'lunch', 1.00, 'Fri'), (39, 25, 'dinner', 1.00, 'Fri'),
+(13, 25, 'breakfast', 1.00, 'Sat'), (46, 25, 'snack', 1.00, 'Sat'), (23, 25, 'lunch', 1.00, 'Sat'), (32, 25, 'dinner', 1.00, 'Sat'),
+(16, 25, 'breakfast', 1.00, 'Sun'), (44, 25, 'snack', 1.00, 'Sun'), (24, 25, 'lunch', 1.00, 'Sun'), (31, 25, 'dinner', 1.00, 'Sun'),
+
+-- Plan 26: Athlete Performance - 3200 Cal
+(18, 26, 'breakfast', 1.25, 'Mon'), (42, 26, 'snack', 1.00, 'Mon'), (27, 26, 'lunch', 1.25, 'Mon'), (34, 26, 'dinner', 1.25, 'Mon'),
+(17, 26, 'breakfast', 1.25, 'Tue'), (46, 26, 'snack', 1.00, 'Tue'), (26, 26, 'lunch', 1.25, 'Tue'), (36, 26, 'dinner', 1.25, 'Tue'),
+(18, 26, 'breakfast', 1.25, 'Wed'), (42, 26, 'snack', 1.00, 'Wed'), (25, 26, 'lunch', 1.25, 'Wed'), (33, 26, 'dinner', 1.25, 'Wed'),
+(17, 26, 'breakfast', 1.25, 'Thu'), (46, 26, 'snack', 1.00, 'Thu'), (27, 26, 'lunch', 1.25, 'Thu'), (38, 26, 'dinner', 1.25, 'Thu'),
+(18, 26, 'breakfast', 1.25, 'Fri'), (42, 26, 'snack', 1.00, 'Fri'), (26, 26, 'lunch', 1.25, 'Fri'), (34, 26, 'dinner', 1.25, 'Fri'),
+(17, 26, 'breakfast', 1.25, 'Sat'), (46, 26, 'snack', 1.00, 'Sat'), (22, 26, 'lunch', 1.25, 'Sat'), (36, 26, 'dinner', 1.25, 'Sat'),
+(18, 26, 'breakfast', 1.25, 'Sun'), (42, 26, 'snack', 1.00, 'Sun'), (24, 26, 'lunch', 1.00, 'Sun'), (40, 26, 'dinner', 1.25, 'Sun'),
+
+-- Plan 27: Endurance Fueling - 2800 Cal
+(20, 27, 'breakfast', 1.25, 'Mon'), (50, 27, 'snack', 1.00, 'Mon'), (22, 27, 'lunch', 1.25, 'Mon'), (32, 27, 'dinner', 1.25, 'Mon'),
+(11, 27, 'breakfast', 1.25, 'Tue'), (41, 27, 'snack', 1.00, 'Tue'), (29, 27, 'lunch', 1.25, 'Tue'), (34, 27, 'dinner', 1.25, 'Tue'),
+(17, 27, 'breakfast', 1.00, 'Wed'), (50, 27, 'snack', 1.00, 'Wed'), (22, 27, 'lunch', 1.25, 'Wed'), (38, 27, 'dinner', 1.25, 'Wed'),
+(20, 27, 'breakfast', 1.25, 'Thu'), (41, 27, 'snack', 1.00, 'Thu'), (24, 27, 'lunch', 1.25, 'Thu'), (32, 27, 'dinner', 1.25, 'Thu'),
+(11, 27, 'breakfast', 1.25, 'Fri'), (50, 27, 'snack', 1.00, 'Fri'), (29, 27, 'lunch', 1.25, 'Fri'), (36, 27, 'dinner', 1.25, 'Fri'),
+(17, 27, 'breakfast', 1.00, 'Sat'), (41, 27, 'snack', 1.00, 'Sat'), (25, 27, 'lunch', 1.25, 'Sat'), (34, 27, 'dinner', 1.25, 'Sat'),
+(20, 27, 'breakfast', 1.25, 'Sun'), (50, 27, 'snack', 1.00, 'Sun'), (22, 27, 'lunch', 1.00, 'Sun'), (40, 27, 'dinner', 1.25, 'Sun'),
+
+-- Plan 28: Strength Athlete - 3600 Cal
+(17, 28, 'breakfast', 1.50, 'Mon'), (42, 28, 'snack', 1.50, 'Mon'), (27, 28, 'lunch', 1.50, 'Mon'), (34, 28, 'dinner', 1.50, 'Mon'),
+(18, 28, 'breakfast', 1.50, 'Tue'), (46, 28, 'snack', 1.50, 'Tue'), (26, 28, 'lunch', 1.50, 'Tue'), (38, 28, 'dinner', 1.50, 'Tue'),
+(17, 28, 'breakfast', 1.50, 'Wed'), (42, 28, 'snack', 1.50, 'Wed'), (27, 28, 'lunch', 1.50, 'Wed'), (33, 28, 'dinner', 1.50, 'Wed'),
+(18, 28, 'breakfast', 1.50, 'Thu'), (46, 28, 'snack', 1.50, 'Thu'), (25, 28, 'lunch', 1.50, 'Thu'), (36, 28, 'dinner', 1.50, 'Thu'),
+(17, 28, 'breakfast', 1.50, 'Fri'), (42, 28, 'snack', 1.50, 'Fri'), (27, 28, 'lunch', 1.50, 'Fri'), (34, 28, 'dinner', 1.50, 'Fri'),
+(18, 28, 'breakfast', 1.50, 'Sat'), (46, 28, 'snack', 1.50, 'Sat'), (26, 28, 'lunch', 1.50, 'Sat'), (38, 28, 'dinner', 1.50, 'Sat'),
+(17, 28, 'breakfast', 1.50, 'Sun'), (42, 28, 'snack', 1.50, 'Sun'), (22, 28, 'lunch', 1.50, 'Sun'), (33, 28, 'dinner', 1.50, 'Sun'),
+
+-- Plan 29: Body Recomp - 2200 Cal
+(16, 29, 'breakfast', 1.00, 'Mon'), (45, 29, 'snack', 1.00, 'Mon'), (26, 29, 'lunch', 1.00, 'Mon'), (31, 29, 'dinner', 1.00, 'Mon'),
+(12, 29, 'breakfast', 1.00, 'Tue'), (44, 29, 'snack', 1.00, 'Tue'), (21, 29, 'lunch', 1.00, 'Tue'), (35, 29, 'dinner', 1.00, 'Tue'),
+(15, 29, 'breakfast', 1.00, 'Wed'), (45, 29, 'snack', 1.00, 'Wed'), (30, 29, 'lunch', 1.00, 'Wed'), (37, 29, 'dinner', 1.00, 'Wed'),
+(16, 29, 'breakfast', 1.00, 'Thu'), (44, 29, 'snack', 1.00, 'Thu'), (25, 29, 'lunch', 1.00, 'Thu'), (32, 29, 'dinner', 1.00, 'Thu'),
+(12, 29, 'breakfast', 1.00, 'Fri'), (45, 29, 'snack', 1.00, 'Fri'), (26, 29, 'lunch', 1.00, 'Fri'), (39, 29, 'dinner', 1.00, 'Fri'),
+(15, 29, 'breakfast', 1.00, 'Sat'), (44, 29, 'snack', 1.00, 'Sat'), (23, 29, 'lunch', 1.00, 'Sat'), (31, 29, 'dinner', 1.00, 'Sat'),
+(16, 29, 'breakfast', 1.00, 'Sun'), (45, 29, 'snack', 1.00, 'Sun'), (24, 29, 'lunch', 1.00, 'Sun'), (35, 29, 'dinner', 1.00, 'Sun'),
+
+-- Plan 30: Body Recomp - 2500 Cal
+(14, 30, 'breakfast', 1.00, 'Mon'), (46, 30, 'snack', 1.00, 'Mon'), (26, 30, 'lunch', 1.00, 'Mon'), (32, 30, 'dinner', 1.00, 'Mon'),
+(16, 30, 'breakfast', 1.00, 'Tue'), (47, 30, 'snack', 1.00, 'Tue'), (25, 30, 'lunch', 1.00, 'Tue'), (36, 30, 'dinner', 1.00, 'Tue'),
+(11, 30, 'breakfast', 1.00, 'Wed'), (46, 30, 'snack', 1.00, 'Wed'), (30, 30, 'lunch', 1.00, 'Wed'), (33, 30, 'dinner', 1.00, 'Wed'),
+(14, 30, 'breakfast', 1.00, 'Thu'), (47, 30, 'snack', 1.00, 'Thu'), (21, 30, 'lunch', 1.00, 'Thu'), (37, 30, 'dinner', 1.00, 'Thu'),
+(16, 30, 'breakfast', 1.00, 'Fri'), (46, 30, 'snack', 1.00, 'Fri'), (26, 30, 'lunch', 1.00, 'Fri'), (34, 30, 'dinner', 1.00, 'Fri'),
+(11, 30, 'breakfast', 1.00, 'Sat'), (47, 30, 'snack', 1.00, 'Sat'), (28, 30, 'lunch', 1.00, 'Sat'), (36, 30, 'dinner', 1.00, 'Sat'),
+(14, 30, 'breakfast', 1.00, 'Sun'), (46, 30, 'snack', 1.00, 'Sun'), (24, 30, 'lunch', 1.00, 'Sun'), (40, 30, 'dinner', 1.00, 'Sun'),
+
+-- Plan 31: Vegetarian Fat Loss - 1700 Cal
+(15, 31, 'breakfast', 1.00, 'Mon'), (43, 31, 'snack', 1.00, 'Mon'), (24, 31, 'lunch', 1.00, 'Mon'), (40, 31, 'dinner', 1.00, 'Mon'),
+(19, 31, 'breakfast', 1.00, 'Tue'), (45, 31, 'snack', 1.00, 'Tue'), (29, 31, 'lunch', 1.00, 'Tue'), (40, 31, 'dinner', 1.00, 'Tue'),
+(11, 31, 'breakfast', 1.00, 'Wed'), (43, 31, 'snack', 1.00, 'Wed'), (22, 31, 'lunch', 1.00, 'Wed'), (40, 31, 'dinner', 1.00, 'Wed'),
+(15, 31, 'breakfast', 1.00, 'Thu'), (45, 31, 'snack', 1.00, 'Thu'), (29, 31, 'lunch', 1.00, 'Thu'), (40, 31, 'dinner', 1.00, 'Thu'),
+(19, 31, 'breakfast', 1.00, 'Fri'), (43, 31, 'snack', 1.00, 'Fri'), (24, 31, 'lunch', 1.00, 'Fri'), (40, 31, 'dinner', 1.00, 'Fri'),
+(11, 31, 'breakfast', 1.00, 'Sat'), (45, 31, 'snack', 1.00, 'Sat'), (22, 31, 'lunch', 1.00, 'Sat'), (40, 31, 'dinner', 1.00, 'Sat'),
+(15, 31, 'breakfast', 1.00, 'Sun'), (43, 31, 'snack', 1.00, 'Sun'), (29, 31, 'lunch', 1.00, 'Sun'), (40, 31, 'dinner', 1.00, 'Sun'),
+
+-- Plan 32: Vegetarian Bulk - 2900 Cal
+(17, 32, 'breakfast', 1.25, 'Mon'), (50, 32, 'snack', 1.00, 'Mon'), (22, 32, 'lunch', 1.25, 'Mon'), (40, 32, 'dinner', 1.25, 'Mon'),
+(14, 32, 'breakfast', 1.25, 'Tue'), (41, 32, 'snack', 1.00, 'Tue'), (29, 32, 'lunch', 1.25, 'Tue'), (40, 32, 'dinner', 1.25, 'Tue'),
+(20, 32, 'breakfast', 1.25, 'Wed'), (50, 32, 'snack', 1.00, 'Wed'), (24, 32, 'lunch', 1.25, 'Wed'), (40, 32, 'dinner', 1.25, 'Wed'),
+(17, 32, 'breakfast', 1.25, 'Thu'), (41, 32, 'snack', 1.00, 'Thu'), (22, 32, 'lunch', 1.25, 'Thu'), (40, 32, 'dinner', 1.25, 'Thu'),
+(14, 32, 'breakfast', 1.25, 'Fri'), (50, 32, 'snack', 1.00, 'Fri'), (29, 32, 'lunch', 1.25, 'Fri'), (40, 32, 'dinner', 1.25, 'Fri'),
+(20, 32, 'breakfast', 1.25, 'Sat'), (41, 32, 'snack', 1.00, 'Sat'), (24, 32, 'lunch', 1.25, 'Sat'), (40, 32, 'dinner', 1.25, 'Sat'),
+(17, 32, 'breakfast', 1.25, 'Sun'), (50, 32, 'snack', 1.00, 'Sun'), (22, 32, 'lunch', 1.00, 'Sun'), (40, 32, 'dinner', 1.25, 'Sun'),
+
+-- Plan 33: Plant Based Maintain - 2300 Cal
+(11, 33, 'breakfast', 1.00, 'Mon'), (50, 33, 'snack', 1.00, 'Mon'), (22, 33, 'lunch', 1.00, 'Mon'), (40, 33, 'dinner', 1.00, 'Mon'),
+(20, 33, 'breakfast', 1.00, 'Tue'), (41, 33, 'snack', 1.00, 'Tue'), (29, 33, 'lunch', 1.00, 'Tue'), (40, 33, 'dinner', 1.00, 'Tue'),
+(15, 33, 'breakfast', 1.00, 'Wed'), (45, 33, 'snack', 1.00, 'Wed'), (24, 33, 'lunch', 1.00, 'Wed'), (40, 33, 'dinner', 1.00, 'Wed'),
+(11, 33, 'breakfast', 1.00, 'Thu'), (50, 33, 'snack', 1.00, 'Thu'), (22, 33, 'lunch', 1.00, 'Thu'), (40, 33, 'dinner', 1.00, 'Thu'),
+(20, 33, 'breakfast', 1.00, 'Fri'), (41, 33, 'snack', 1.00, 'Fri'), (29, 33, 'lunch', 1.00, 'Fri'), (40, 33, 'dinner', 1.00, 'Fri'),
+(15, 33, 'breakfast', 1.00, 'Sat'), (45, 33, 'snack', 1.00, 'Sat'), (24, 33, 'lunch', 1.00, 'Sat'), (40, 33, 'dinner', 1.00, 'Sat'),
+(11, 33, 'breakfast', 1.00, 'Sun'), (50, 33, 'snack', 1.00, 'Sun'), (22, 33, 'lunch', 1.00, 'Sun'), (40, 33, 'dinner', 1.00, 'Sun'),
+
+-- Plan 34: Beginner Fat Loss - 1800 Cal
+(12, 34, 'breakfast', 1.00, 'Mon'), (47, 34, 'snack', 1.00, 'Mon'), (21, 34, 'lunch', 1.00, 'Mon'), (35, 34, 'dinner', 1.00, 'Mon'),
+(15, 34, 'breakfast', 1.00, 'Tue'), (44, 34, 'snack', 1.00, 'Tue'), (23, 34, 'lunch', 1.00, 'Tue'), (31, 34, 'dinner', 1.00, 'Tue'),
+(12, 34, 'breakfast', 1.00, 'Wed'), (47, 34, 'snack', 1.00, 'Wed'), (21, 34, 'lunch', 1.00, 'Wed'), (37, 34, 'dinner', 1.00, 'Wed'),
+(15, 34, 'breakfast', 1.00, 'Thu'), (44, 34, 'snack', 1.00, 'Thu'), (23, 34, 'lunch', 1.00, 'Thu'), (35, 34, 'dinner', 1.00, 'Thu'),
+(12, 34, 'breakfast', 1.00, 'Fri'), (47, 34, 'snack', 1.00, 'Fri'), (21, 34, 'lunch', 1.00, 'Fri'), (31, 34, 'dinner', 1.00, 'Fri'),
+(15, 34, 'breakfast', 1.00, 'Sat'), (44, 34, 'snack', 1.00, 'Sat'), (23, 34, 'lunch', 1.00, 'Sat'), (37, 34, 'dinner', 1.00, 'Sat'),
+(12, 34, 'breakfast', 1.00, 'Sun'), (47, 34, 'snack', 1.00, 'Sun'), (21, 34, 'lunch', 1.00, 'Sun'), (35, 34, 'dinner', 1.00, 'Sun'),
+
+-- Plan 35: Beginner Bulk - 2700 Cal
+(14, 35, 'breakfast', 1.25, 'Mon'), (46, 35, 'snack', 1.00, 'Mon'), (27, 35, 'lunch', 1.00, 'Mon'), (36, 35, 'dinner', 1.00, 'Mon'),
+(17, 35, 'breakfast', 1.00, 'Tue'), (42, 35, 'snack', 1.00, 'Tue'), (26, 35, 'lunch', 1.00, 'Tue'), (34, 35, 'dinner', 1.00, 'Tue'),
+(14, 35, 'breakfast', 1.25, 'Wed'), (46, 35, 'snack', 1.00, 'Wed'), (22, 35, 'lunch', 1.00, 'Wed'), (33, 35, 'dinner', 1.00, 'Wed'),
+(17, 35, 'breakfast', 1.00, 'Thu'), (42, 35, 'snack', 1.00, 'Thu'), (27, 35, 'lunch', 1.00, 'Thu'), (38, 35, 'dinner', 1.00, 'Thu'),
+(14, 35, 'breakfast', 1.25, 'Fri'), (46, 35, 'snack', 1.00, 'Fri'), (26, 35, 'lunch', 1.00, 'Fri'), (36, 35, 'dinner', 1.00, 'Fri'),
+(17, 35, 'breakfast', 1.00, 'Sat'), (42, 35, 'snack', 1.00, 'Sat'), (22, 35, 'lunch', 1.00, 'Sat'), (34, 35, 'dinner', 1.00, 'Sat'),
+(14, 35, 'breakfast', 1.25, 'Sun'), (46, 35, 'snack', 1.00, 'Sun'), (24, 35, 'lunch', 1.00, 'Sun'), (33, 35, 'dinner', 1.00, 'Sun'),
+
+-- Plan 36: Beginner Maintain - 2100 Cal
+(12, 36, 'breakfast', 1.00, 'Mon'), (47, 36, 'snack', 1.00, 'Mon'), (21, 36, 'lunch', 1.00, 'Mon'), (32, 36, 'dinner', 1.00, 'Mon'),
+(11, 36, 'breakfast', 1.00, 'Tue'), (44, 36, 'snack', 1.00, 'Tue'), (23, 36, 'lunch', 1.00, 'Tue'), (35, 36, 'dinner', 1.00, 'Tue'),
+(15, 36, 'breakfast', 1.00, 'Wed'), (47, 36, 'snack', 1.00, 'Wed'), (22, 36, 'lunch', 1.00, 'Wed'), (37, 36, 'dinner', 1.00, 'Wed'),
+(12, 36, 'breakfast', 1.00, 'Thu'), (44, 36, 'snack', 1.00, 'Thu'), (21, 36, 'lunch', 1.00, 'Thu'), (31, 36, 'dinner', 1.00, 'Thu'),
+(11, 36, 'breakfast', 1.00, 'Fri'), (47, 36, 'snack', 1.00, 'Fri'), (23, 36, 'lunch', 1.00, 'Fri'), (36, 36, 'dinner', 1.00, 'Fri'),
+(15, 36, 'breakfast', 1.00, 'Sat'), (44, 36, 'snack', 1.00, 'Sat'), (22, 36, 'lunch', 1.00, 'Sat'), (32, 36, 'dinner', 1.00, 'Sat'),
+(12, 36, 'breakfast', 1.00, 'Sun'), (47, 36, 'snack', 1.00, 'Sun'), (24, 36, 'lunch', 1.00, 'Sun'), (35, 36, 'dinner', 1.00, 'Sun'),
+
+-- Plan 37: Contest Prep - 1400 Cal
+(19, 37, 'breakfast', 0.75, 'Mon'), (44, 37, 'snack', 1.00, 'Mon'), (30, 37, 'lunch', 0.75, 'Mon'), (31, 37, 'dinner', 0.70, 'Mon'),
+(15, 37, 'breakfast', 0.75, 'Tue'), (43, 37, 'snack', 0.75, 'Tue'), (25, 37, 'lunch', 0.75, 'Tue'), (35, 37, 'dinner', 0.80, 'Tue'),
+(19, 37, 'breakfast', 0.75, 'Wed'), (44, 37, 'snack', 1.00, 'Wed'), (30, 37, 'lunch', 0.75, 'Wed'), (37, 37, 'dinner', 0.75, 'Wed'),
+(15, 37, 'breakfast', 0.75, 'Thu'), (43, 37, 'snack', 0.75, 'Thu'), (25, 37, 'lunch', 0.75, 'Thu'), (31, 37, 'dinner', 0.70, 'Thu'),
+(19, 37, 'breakfast', 0.75, 'Fri'), (44, 37, 'snack', 1.00, 'Fri'), (30, 37, 'lunch', 0.75, 'Fri'), (35, 37, 'dinner', 0.80, 'Fri'),
+(15, 37, 'breakfast', 0.75, 'Sat'), (43, 37, 'snack', 0.75, 'Sat'), (25, 37, 'lunch', 0.75, 'Sat'), (37, 37, 'dinner', 0.75, 'Sat'),
+(19, 37, 'breakfast', 0.75, 'Sun'), (44, 37, 'snack', 1.00, 'Sun'), (30, 37, 'lunch', 0.75, 'Sun'), (31, 37, 'dinner', 0.70, 'Sun'),
+
+-- Plan 38: Post Contest Reverse Diet - 2000 Cal
+(12, 38, 'breakfast', 1.00, 'Mon'), (46, 38, 'snack', 1.00, 'Mon'), (21, 38, 'lunch', 1.00, 'Mon'), (32, 38, 'dinner', 1.00, 'Mon'),
+(16, 38, 'breakfast', 1.00, 'Tue'), (47, 38, 'snack', 1.00, 'Tue'), (25, 38, 'lunch', 1.00, 'Tue'), (35, 38, 'dinner', 1.00, 'Tue'),
+(12, 38, 'breakfast', 1.00, 'Wed'), (46, 38, 'snack', 1.00, 'Wed'), (26, 38, 'lunch', 1.00, 'Wed'), (31, 38, 'dinner', 1.00, 'Wed'),
+(16, 38, 'breakfast', 1.00, 'Thu'), (47, 38, 'snack', 1.00, 'Thu'), (21, 38, 'lunch', 1.00, 'Thu'), (37, 38, 'dinner', 1.00, 'Thu'),
+(12, 38, 'breakfast', 1.00, 'Fri'), (46, 38, 'snack', 1.00, 'Fri'), (25, 38, 'lunch', 1.00, 'Fri'), (32, 38, 'dinner', 1.00, 'Fri'),
+(16, 38, 'breakfast', 1.00, 'Sat'), (47, 38, 'snack', 1.00, 'Sat'), (26, 38, 'lunch', 1.00, 'Sat'), (35, 38, 'dinner', 1.00, 'Sat'),
+(12, 38, 'breakfast', 1.00, 'Sun'), (46, 38, 'snack', 1.00, 'Sun'), (22, 38, 'lunch', 1.00, 'Sun'), (31, 38, 'dinner', 1.00, 'Sun'),
+
+-- Plan 39: Injury Recovery - 2000 Cal
+(19, 39, 'breakfast', 1.00, 'Mon'), (43, 39, 'snack', 1.00, 'Mon'), (24, 39, 'lunch', 1.00, 'Mon'), (31, 39, 'dinner', 1.00, 'Mon'),
+(15, 39, 'breakfast', 1.00, 'Tue'), (45, 39, 'snack', 1.00, 'Tue'), (22, 39, 'lunch', 1.00, 'Tue'), (35, 39, 'dinner', 1.00, 'Tue'),
+(11, 39, 'breakfast', 1.00, 'Wed'), (43, 39, 'snack', 1.00, 'Wed'), (24, 39, 'lunch', 1.00, 'Wed'), (31, 39, 'dinner', 1.00, 'Wed'),
+(19, 39, 'breakfast', 1.00, 'Thu'), (45, 39, 'snack', 1.00, 'Thu'), (22, 39, 'lunch', 1.00, 'Thu'), (37, 39, 'dinner', 1.00, 'Thu'),
+(15, 39, 'breakfast', 1.00, 'Fri'), (43, 39, 'snack', 1.00, 'Fri'), (24, 39, 'lunch', 1.00, 'Fri'), (35, 39, 'dinner', 1.00, 'Fri'),
+(11, 39, 'breakfast', 1.00, 'Sat'), (45, 39, 'snack', 1.00, 'Sat'), (22, 39, 'lunch', 1.00, 'Sat'), (31, 39, 'dinner', 1.00, 'Sat'),
+(19, 39, 'breakfast', 1.00, 'Sun'), (43, 39, 'snack', 1.00, 'Sun'), (24, 39, 'lunch', 1.00, 'Sun'), (37, 39, 'dinner', 1.00, 'Sun'),
+
+-- Plan 40: Senior Fitness - 1900 Cal
+(12, 40, 'breakfast', 1.00, 'Mon'), (48, 40, 'snack', 1.00, 'Mon'), (24, 40, 'lunch', 1.00, 'Mon'), (35, 40, 'dinner', 1.00, 'Mon'),
+(15, 40, 'breakfast', 1.00, 'Tue'), (44, 40, 'snack', 1.00, 'Tue'), (21, 40, 'lunch', 1.00, 'Tue'), (31, 40, 'dinner', 1.00, 'Tue'),
+(12, 40, 'breakfast', 1.00, 'Wed'), (48, 40, 'snack', 1.00, 'Wed'), (24, 40, 'lunch', 1.00, 'Wed'), (37, 40, 'dinner', 1.00, 'Wed'),
+(15, 40, 'breakfast', 1.00, 'Thu'), (44, 40, 'snack', 1.00, 'Thu'), (21, 40, 'lunch', 1.00, 'Thu'), (35, 40, 'dinner', 1.00, 'Thu'),
+(12, 40, 'breakfast', 1.00, 'Fri'), (48, 40, 'snack', 1.00, 'Fri'), (24, 40, 'lunch', 1.00, 'Fri'), (31, 40, 'dinner', 1.00, 'Fri'),
+(15, 40, 'breakfast', 1.00, 'Sat'), (44, 40, 'snack', 1.00, 'Sat'), (21, 40, 'lunch', 1.00, 'Sat'), (37, 40, 'dinner', 1.00, 'Sat'),
+(12, 40, 'breakfast', 1.00, 'Sun'), (48, 40, 'snack', 1.00, 'Sun'), (24, 40, 'lunch', 1.00, 'Sun'), (35, 40, 'dinner', 1.00, 'Sun'),
+
+-- Plan 41: Youth Athlete - 2600 Cal
+(17, 41, 'breakfast', 1.00, 'Mon'), (41, 41, 'snack', 1.00, 'Mon'), (22, 41, 'lunch', 1.00, 'Mon'), (32, 41, 'dinner', 1.00, 'Mon'),
+(20, 41, 'breakfast', 1.00, 'Tue'), (50, 41, 'snack', 1.00, 'Tue'), (26, 41, 'lunch', 1.00, 'Tue'), (36, 41, 'dinner', 1.00, 'Tue'),
+(17, 41, 'breakfast', 1.00, 'Wed'), (41, 41, 'snack', 1.00, 'Wed'), (29, 41, 'lunch', 1.00, 'Wed'), (34, 41, 'dinner', 1.00, 'Wed'),
+(20, 41, 'breakfast', 1.00, 'Thu'), (50, 41, 'snack', 1.00, 'Thu'), (22, 41, 'lunch', 1.00, 'Thu'), (38, 41, 'dinner', 1.00, 'Thu'),
+(17, 41, 'breakfast', 1.00, 'Fri'), (41, 41, 'snack', 1.00, 'Fri'), (26, 41, 'lunch', 1.00, 'Fri'), (32, 41, 'dinner', 1.00, 'Fri'),
+(20, 41, 'breakfast', 1.00, 'Sat'), (50, 41, 'snack', 1.00, 'Sat'), (29, 41, 'lunch', 1.00, 'Sat'), (36, 41, 'dinner', 1.00, 'Sat'),
+(17, 41, 'breakfast', 1.00, 'Sun'), (41, 41, 'snack', 1.00, 'Sun'), (22, 41, 'lunch', 1.00, 'Sun'), (34, 41, 'dinner', 1.00, 'Sun'),
+
+-- Plan 42: Weight Class Cut - 1600 Cal
+(19, 42, 'breakfast', 0.75, 'Mon'), (44, 42, 'snack', 1.00, 'Mon'), (26, 42, 'lunch', 0.80, 'Mon'), (31, 42, 'dinner', 0.80, 'Mon'),
+(15, 42, 'breakfast', 0.75, 'Tue'), (43, 42, 'snack', 1.00, 'Tue'), (25, 42, 'lunch', 0.80, 'Tue'), (35, 42, 'dinner', 0.80, 'Tue'),
+(13, 42, 'breakfast', 1.00, 'Wed'), (44, 42, 'snack', 1.00, 'Wed'), (30, 42, 'lunch', 0.80, 'Wed'), (37, 42, 'dinner', 0.75, 'Wed'),
+(19, 42, 'breakfast', 0.75, 'Thu'), (43, 42, 'snack', 1.00, 'Thu'), (26, 42, 'lunch', 0.80, 'Thu'), (31, 42, 'dinner', 0.80, 'Thu'),
+(15, 42, 'breakfast', 0.75, 'Fri'), (44, 42, 'snack', 1.00, 'Fri'), (25, 42, 'lunch', 0.80, 'Fri'), (35, 42, 'dinner', 0.80, 'Fri'),
+(13, 42, 'breakfast', 1.00, 'Sat'), (43, 42, 'snack', 1.00, 'Sat'), (30, 42, 'lunch', 0.80, 'Sat'), (37, 42, 'dinner', 0.75, 'Sat'),
+(19, 42, 'breakfast', 0.75, 'Sun'), (44, 42, 'snack', 1.00, 'Sun'), (26, 42, 'lunch', 0.80, 'Sun'), (31, 42, 'dinner', 0.80, 'Sun');
+
 SET FOREIGN_KEY_CHECKS = 1;
