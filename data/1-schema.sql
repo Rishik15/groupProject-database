@@ -439,6 +439,7 @@ CREATE TABLE conversation_member (
   user_id         INT NOT NULL,
   joined_at       DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   role            ENUM('member','admin','owner') NOT NULL DEFAULT 'member',
+  unread_count    INT NOT NULL DEFAULT 0,
   created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
