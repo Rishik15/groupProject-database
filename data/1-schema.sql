@@ -23,14 +23,16 @@ CREATE TABLE audit_event (
 
 -- split from user_mutables, These are attributes that don't change 
 CREATE TABLE users_immutables (
-  user_id      INT AUTO_INCREMENT PRIMARY KEY,
-  dob          DATE NULL,
-  first_name   VARCHAR(50) NOT NULL,
-  last_name    VARCHAR(50) NOT NULL,
-  email        VARCHAR(100) NOT NULL,
-  phone_number VARCHAR(20) NULL,
-  created_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  user_id            INT AUTO_INCREMENT PRIMARY KEY,
+  dob                DATE NULL,
+  first_name         VARCHAR(50) NOT NULL,
+  last_name          VARCHAR(50) NOT NULL,
+  email              VARCHAR(100) NOT NULL,
+  phone_number       VARCHAR(20) NULL,
+  account_status     ENUM('active','suspended','deactivated') NOT NULL DEFAULT 'active',
+  suspension_reason  TEXT NULL,
+  created_at         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   UNIQUE KEY (email),
   INDEX (last_name, first_name)
@@ -180,18 +182,23 @@ CREATE TABLE workout_day (
   FOREIGN KEY (plan_id) REFERENCES workout_plan(plan_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+
 CREATE TABLE exercise (
-  exercise_id   INT AUTO_INCREMENT PRIMARY KEY,
-  exercise_name VARCHAR(120) NOT NULL,
-  equipment     VARCHAR(120) NULL,
-  video_url     VARCHAR(255) NULL,
-  description   TEXT NULL,
-  created_by    INT NOT NULL DEFAULT 1,
-  created_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  exercise_id        INT AUTO_INCREMENT PRIMARY KEY,
+  exercise_name      VARCHAR(120) NOT NULL,
+  equipment          VARCHAR(120) NULL,
+  video_url          VARCHAR(255) NULL,
+  description        TEXT NULL,
+  video_status       ENUM('pending','approved','rejected') NOT NULL DEFAULT 'approved',
+  video_review_note  TEXT NULL,
+  video_reviewed_by  INT NULL,
+  created_by         INT NOT NULL DEFAULT 1,
+  created_at         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   UNIQUE KEY (exercise_name),
-  INDEX (equipment)
+  INDEX (equipment),
+  FOREIGN KEY (video_reviewed_by) REFERENCES admin(admin_id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- junction table: links exercises to a specific day within a workout plan
@@ -310,6 +317,20 @@ CREATE TABLE meal_log (
   FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (meal_id) REFERENCES meal(meal_id) ON DELETE SET NULL ON UPDATE CASCADE,
   FOREIGN KEY (food_item_id) REFERENCES food_item(food_item_id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE user_nutrition_goals (
+    user_id INT PRIMARY KEY,
+
+    calories_target INT NULL,
+    protein_target INT NULL,
+    carbs_target INT NULL,
+    fat_target INT NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user_id) REFERENCES users_immutables(user_id)
 );
 
 CREATE TABLE user_coach_contract (
@@ -440,6 +461,7 @@ CREATE TABLE conversation_member (
   user_id         INT NOT NULL,
   joined_at       DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   role            ENUM('member','admin','owner') NOT NULL DEFAULT 'member',
+  unread_count    INT NOT NULL DEFAULT 0,
   created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
@@ -518,6 +540,23 @@ CREATE TABLE coach_application_certification (
   INDEX idx_coach_application_certification_application_id (application_id),
   INDEX idx_coach_application_certification_issued_expires (issued_date, expires_date),
   FOREIGN KEY (application_id) REFERENCES coach_application(application_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE coach_price_change_request (
+  request_id            INT AUTO_INCREMENT PRIMARY KEY,
+  coach_id              INT NOT NULL,
+  proposed_price        DECIMAL(10,2) NOT NULL,
+  status                ENUM('pending','approved','rejected') NOT NULL DEFAULT 'pending',
+  admin_action          TEXT NULL,
+  reviewed_by_admin_id  INT NULL,
+  reviewed_at           DATETIME NULL,
+  created_at            TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at            TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  INDEX (status),
+  INDEX (created_at),
+  FOREIGN KEY (coach_id) REFERENCES coach(coach_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (reviewed_by_admin_id) REFERENCES admin(admin_id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE user_report (
@@ -673,18 +712,59 @@ CREATE TABLE points_txn (
 
 -- a user goal that others can bet points on, settled manually or via admin
 CREATE TABLE prediction_market (
-  market_id       INT AUTO_INCREMENT PRIMARY KEY,
-  creator_user_id INT NOT NULL,
-  title           VARCHAR(200) NOT NULL,
-  goal_text       TEXT NOT NULL,
-  end_date        DATE NOT NULL,
-  status          ENUM('open','closed','settled','cancelled') NOT NULL DEFAULT 'open',
-  created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  market_id                  INT AUTO_INCREMENT PRIMARY KEY,
+  creator_user_id            INT NOT NULL,
+  title                      VARCHAR(200) NOT NULL,
+  goal_text                  TEXT NOT NULL,
+  end_date                   DATE NOT NULL,
+
+  status                     ENUM('open','closed','settled','cancelled') NOT NULL DEFAULT 'open',
+
+  review_status              ENUM('approved','pending','rejected') NOT NULL DEFAULT 'approved',
+  reviewed_by_admin_id       INT NULL,
+  reviewed_at                DATETIME NULL,
+  review_note                TEXT NULL,
+
+  settlement_result          ENUM('yes','no','cancelled') NULL,
+  settled_by_admin_id        INT NULL,
+  settled_at                 DATETIME NULL,
+  settlement_note            TEXT NULL,
+
+  cancel_request_status      ENUM('none','pending','approved','rejected') NOT NULL DEFAULT 'none',
+  cancel_request_reason      TEXT NULL,
+  cancel_requested_at        DATETIME NULL,
+  cancel_reviewed_by_admin_id INT NULL,
+  cancel_reviewed_at         DATETIME NULL,
+  cancel_review_note         TEXT NULL,
+
+  created_at                 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at                 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   INDEX (status),
   INDEX (end_date),
-  FOREIGN KEY (creator_user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+  INDEX (review_status),
+  INDEX (settlement_result),
+  INDEX (cancel_request_status),
+
+  FOREIGN KEY (creator_user_id)
+    REFERENCES users_immutables(user_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+  FOREIGN KEY (reviewed_by_admin_id)
+    REFERENCES admin(admin_id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+
+  FOREIGN KEY (settled_by_admin_id)
+    REFERENCES admin(admin_id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+
+  FOREIGN KEY (cancel_reviewed_by_admin_id)
+    REFERENCES admin(admin_id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
 );
 
 -- one row per user per market, unique key enforces you can't bet twice on the same market
@@ -764,6 +844,7 @@ CREATE TABLE notification (
 
   user_id INT NOT NULL,
   type VARCHAR(50) NOT NULL,
+  mode ENUM('coach', 'client') NOT NULL, 
 
   conversation_id INT NULL,
   reference_id INT NULL,
@@ -781,12 +862,12 @@ CREATE TABLE notification (
   INDEX idx_user_type (user_id, type),
 
   FOREIGN KEY (user_id)
-  REFERENCES users_immutables(user_id)
-  ON DELETE CASCADE,
+    REFERENCES users_immutables(user_id)
+    ON DELETE CASCADE,
 
   FOREIGN KEY (conversation_id)
-  REFERENCES conversation(conversation_id)
-  ON DELETE CASCADE
+    REFERENCES conversation(conversation_id)
+    ON DELETE CASCADE
 );
 
 -- audit triggers

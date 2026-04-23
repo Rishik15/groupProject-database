@@ -395,7 +395,7 @@ INSERT INTO user_coach_contract (coach_id, user_id, agreed_price, start_date, en
   (5, 11, 60.00, '2026-02-15', '2026-05-15', 'Fat loss HIIT program.',              1),
   (5, 2,  65.00, '2025-12-01', '2026-03-01', 'Completed conditioning block.',       0),
   (5, 6,  65.00, '2026-01-01', '2026-02-28', 'Intro HIIT package - completed.',     0),
-  (3, 3,  75.00, '2025-09-01', '2026-01-01', 'Expired strength program.',           0);
+  (5, 3, 65.00, '2026-01-01', '2027-04-23', 'Sam onboarding as client for testing dual-role chat.', 1);
 
 INSERT INTO coach_availability (coach_id, day_of_week, start_time, end_time, recurring, active) VALUES
   (3, 'Mon', '08:00:00', '11:00:00', 1, 1),
@@ -434,18 +434,20 @@ INSERT INTO conversation (conversation_type, created_by, title) VALUES
   ('dm', 3, NULL),  -- 5: 3 ↔ 10
 
   ('dm', 5, NULL),  -- 6: 5 ↔ 7
-  ('dm', 5, NULL);  -- 7: 5 ↔ 11
+  ('dm', 5, NULL),   -- 7: 5 ↔ 11
+ ('dm', 5, NULL);   -- 8: 5 - 3
 
 -- messaging (10 conversations)
-INSERT INTO conversation_member (conversation_id, user_id, role) VALUES
-  (1, 3, 'owner'), (1, 2, 'member'),
-  (2, 3, 'owner'), (2, 6, 'member'),
-  (3, 3, 'owner'), (3, 8, 'member'),
-  (4, 3, 'owner'), (4, 9, 'member'),
-  (5, 3, 'owner'), (5, 10, 'member'),
+INSERT INTO conversation_member (conversation_id, user_id, role, unread_count) VALUES
+  (1, 3, 'owner', 0),  (1,2, 'member', 0),
+  (2, 3, 'owner', 0), (2, 6, 'member', 0),
+  (3, 3, 'owner', 0), (3, 8, 'member', 0),
+  (4, 3, 'owner', 0), (4, 9, 'member', 0),
+  (5, 3, 'owner', 0), (5, 10, 'member', 0),
 
-  (6, 5, 'owner'), (6, 7, 'member'),
-  (7, 5, 'owner'), (7, 11, 'member');
+  (6, 5, 'owner', 0), (6, 7, 'member', 0),
+  (7, 5, 'owner', 0), (7, 11, 'member', 0),
+    (8, 5, 'owner', 0),  (8, 3, 'member', 0);
 
 INSERT INTO message (conversation_id, sender_user_id, content, sent_at) VALUES
 
@@ -475,7 +477,10 @@ INSERT INTO message (conversation_id, sender_user_id, content, sent_at) VALUES
 
 -- convo 7: coach 5 ↔ user 11
 (7, 11, 'First week, nervous but excited.',                 '2026-03-02 06:15:00'),
-(7, 5,  'You''ll do great, just stay consistent.',          '2026-03-02 06:20:00');
+(7, 5,  'You''ll do great, just stay consistent.',          '2026-03-02 06:20:00'),
+
+  (8, 5, 'Hey Sam, I will be your coach now.', '2026-04-20 07:14:00'),
+  (8, 3, 'Perfect, lets get started.', '2026-04-20 07:14:03');
 
 
 -- reviews (10)
@@ -715,15 +720,6 @@ INSERT INTO feature (title, description, icon, display_order, active) VALUES
 INSERT INTO coach_featured (coach_id, display_order, start_date, end_date, active) VALUES
   (3, 1, '2026-03-01', '2026-04-01', 1),
   (5, 2, '2026-03-01', '2026-04-01', 1);
-  
-INSERT INTO notification
-(user_id, type, conversation_id, reference_id, title, body, is_read)
-VALUES
-(2, 'chat_message',     1, 1,    'New message from Alex',      'Hey coach, excited to start.',                              0),
-(2, 'chat_message',     1, 2,    'New message from Coach Sam', 'Let''s do it. Keep it simple, keep it consistent.',         1),
-(2, 'coach_assigned',   NULL, 1, 'Coach Assigned',             'You are now working with Coach Sam.',                       1),
-(2, 'wellness_reminder',NULL, NULL,'Daily Check-in',           'Don''t forget to complete your wellness survey today.',     0),
-(2, 'workout_reminder', NULL, 1, 'Workout Scheduled',          'You have a workout scheduled today at 6 PM.',               1);
 -- ==========================================
 -- 1. USERS (IDs 12 to 50)
 -- ==========================================
@@ -932,7 +928,7 @@ INSERT INTO coach_application_certification (application_id, cert_name, provider
 -- ==========================================
 INSERT INTO user_coach_contract (coach_id, user_id, agreed_price, start_date, end_date, contract_text, active) VALUES
 (13, 23, 100.00, '2025-05-01', NULL, 'Ongoing strength coaching.', 1),
-(13, 24, 90.00, '2025-10-15', '2026-04-15', '6 month hypertrophy block.', 1),
+(13, 24, 90.00, '2025-10-15', '2026-04-15', '6 month hypertrophy block.', 0),
 (13, 25, 100.00, '2024-01-01', '2024-07-01', 'Completed block.', 0),
 (14, 26, 80.00, '2026-01-10', NULL, 'Fat loss focus.', 1),
 (14, 27, 80.00, '2026-02-01', NULL, 'Recomp goals.', 1),
@@ -953,7 +949,7 @@ INSERT INTO user_coach_contract (coach_id, user_id, agreed_price, start_date, en
 (19, 42, 75.00, '2026-02-20', NULL, 'Daily check-ins.', 1),
 (19, 43, 70.00, '2025-12-01', '2026-03-01', 'Winter habit reset.', 0),
 (20, 44, 110.00, '2025-07-10', NULL, 'Olympic lifting technique.', 1),
-(20, 45, 110.00, '2026-01-20', '2026-06-20', 'Competition prep.', 1),
+(20, 45, 110.00, '2026-01-20', '2026-06-20', 'Competition prep.', 0),
 (20, 46, 100.00, '2025-01-10', '2025-07-10', 'Snatch focus.', 0),
 (21, 47, 85.00, '2025-10-01', NULL, 'Mind-body wellness journey.', 1),
 (21, 48, 85.00, '2026-01-15', NULL, 'Holistic prep.', 1),
@@ -1050,47 +1046,6 @@ INSERT INTO user_report (reported_user_id, reporter_user_id, reason, status, adm
 (50, 22, 'Spam profile.', 'resolved', 'Warned user.', 12),
 (20, 45, 'Missed a zoom call.', 'dismissed', 'Coach proved they were present.', 12),
 (47, 21, 'Soliciting other clients.', 'reviewing', NULL, NULL);
-
--- ==========================================
--- 12. MESSAGES & CONVERSATIONS (Explicit IDs)
--- ==========================================
-INSERT INTO conversation (conversation_id, conversation_type, created_by, title) VALUES
-(11, 'dm', 13, NULL), (12, 'dm', 14, NULL), (13, 'dm', 15, NULL), (14, 'dm', 16, NULL), (15, 'dm', 17, NULL),
-(16, 'dm', 18, NULL), (17, 'dm', 19, NULL), (18, 'dm', 20, NULL), (19, 'dm', 21, NULL), (20, 'dm', 22, NULL);
-
-INSERT INTO conversation_member (conversation_id, user_id, role) VALUES
-(11, 13, 'owner'), (11, 23, 'member'),
-(12, 14, 'owner'), (12, 26, 'member'),
-(13, 15, 'owner'), (13, 29, 'member'),
-(14, 16, 'owner'), (14, 32, 'member'),
-(15, 17, 'owner'), (15, 35, 'member'),
-(16, 18, 'owner'), (16, 38, 'member'),
-(17, 19, 'owner'), (17, 41, 'member'),
-(18, 20, 'owner'), (18, 44, 'member'),
-(19, 21, 'owner'), (19, 47, 'member'),
-(20, 22, 'owner'), (20, 50, 'member');
-
-INSERT INTO message (message_id, conversation_id, sender_user_id, content, sent_at) VALUES
-(50, 11, 13, 'Hey, your deadlift video looked great. Let''s add 10lbs next week.', '2026-03-01 10:00:00'),
-(51, 11, 23, 'Sounds good! Lower back feels fine.', '2026-03-01 10:15:00'),
-(52, 12, 14, 'How did the weekend go with the new macro targets?', '2026-03-02 09:00:00'),
-(53, 12, 26, 'Much better, didn''t feel restricted at all.', '2026-03-02 09:30:00'),
-(54, 13, 15, 'Are you ready for your first block?', '2026-03-03 08:00:00'),
-(55, 13, 29, 'Yes, let''s get it!', '2026-03-03 08:10:00'),
-(56, 14, 16, 'We need to push the pacing on the erg.', '2026-03-04 14:00:00'),
-(57, 14, 32, 'I''ll try to hold sub 1:50.', '2026-03-04 14:20:00'),
-(58, 15, 17, 'Did you meal prep yesterday?', '2026-03-05 09:00:00'),
-(59, 15, 35, 'Yes, got all my lunches done.', '2026-03-05 09:45:00'),
-(60, 16, 18, 'How is the knee after the step-ups?', '2026-03-06 11:00:00'),
-(61, 16, 38, 'No pain at all.', '2026-03-06 11:30:00'),
-(62, 17, 19, 'Check-in time.', '2026-03-07 07:00:00'),
-(63, 17, 41, 'Done, check the app.', '2026-03-07 07:15:00'),
-(64, 18, 20, 'Send me the snatch video.', '2026-03-08 16:00:00'),
-(65, 18, 44, 'Uploading now.', '2026-03-08 16:30:00'),
-(66, 19, 21, 'Did you do the breathwork?', '2026-03-09 20:00:00'),
-(67, 19, 47, 'Yes, really helped me wind down.', '2026-03-09 20:30:00'),
-(68, 20, 22, 'Great week of workouts.', '2026-03-10 18:00:00'),
-(69, 20, 50, 'Thanks coach.', '2026-03-10 18:45:00');
 
 -- ==========================================
 -- 13. CALENDAR & EVENTS & MEALS
@@ -1219,15 +1174,75 @@ INSERT INTO coach_featured (coach_id, display_order, start_date, end_date, activ
 (13, 3, '2026-03-01', '2026-04-01', 1),
 (14, 4, '2026-03-01', '2026-04-01', 1);
 
--- ==========================================
--- 18. NOTIFICATIONS
--- ==========================================
-INSERT INTO notification (user_id, type, conversation_id, reference_id, title, body, is_read) VALUES
-(23, 'chat_message', 11, 50, 'New message from Coach 13', 'Hey, your deadlift video looked great...', 0),
-(13, 'chat_message', 11, 51, 'New message from Isabella', 'Sounds good! Lower back feels fine.', 0),
-(26, 'chat_message', 12, 52, 'New message from Coach 14', 'How did the weekend go...', 0),
-(14, 'chat_message', 12, 53, 'New message from Lucas', 'Much better, didn''t feel restricted...', 0);
 
+-- To test get weight:
+
+INSERT INTO daily_metrics (user_id, metric_date, weight, sleep_hours, resting_hr)
+VALUES
+-- Week 1
+(2, CURDATE() - INTERVAL 27 DAY, 180, 7.5, 65),
+(2, CURDATE() - INTERVAL 25 DAY, 179, 7.2, 66),
+
+-- Week 2
+(2, CURDATE() - INTERVAL 20 DAY, 178, 7.3, 64),
+(2, CURDATE() - INTERVAL 18 DAY, 177, 7.0, 67),
+
+-- Week 3
+(2, CURDATE() - INTERVAL 13 DAY, 176, 7.4, 63),
+(2, CURDATE() - INTERVAL 11 DAY, 175, 7.1, 65),
+
+-- Week 4 (current week)
+(2, CURDATE() - INTERVAL 5 DAY, 174, 7.2, 64),
+(2, CURDATE() - INTERVAL 2 DAY, 173, 7.0, 66);
+
+-- To test get calories
+
+INSERT INTO meal_log (user_id, meal_id, food_item_id, eaten_at, servings, notes) VALUES
+-- Monday
+(2, 1, NULL, NOW() - INTERVAL 4 DAY, 1.0, NULL),
+
+-- Tuesday
+(2, 2, NULL, NOW() - INTERVAL 3 DAY, 1.0, NULL),
+
+-- Thursday (skip Wednesday intentionally)
+(2, NULL, 1, NOW() - INTERVAL 1 DAY, 1.0, NULL);
+
+INSERT INTO meal (meal_id, name, calories, protein, carbs, fats) VALUES
+(1, 'Chicken Bowl', 650, 45.00, 70.00, 18.00),
+(2, 'Greek Yogurt', 140, 15.00, 10.00, 3.00)
+ON DUPLICATE KEY UPDATE name = VALUES(name);
+
+INSERT INTO food_item (food_item_id, user_id, name, calories, protein, carbs, fats) VALUES
+(1, 2, 'Homemade Oatmeal', 300, 10.00, 50.00, 6.00)
+ON DUPLICATE KEY UPDATE name = VALUES(name);
+
+-- To test get workouts:
+
+-- planned workouts
+INSERT INTO event (user_id, event_type, event_date)
+VALUES 
+(2, 'workout', CURDATE()),
+(2, 'workout', DATE_SUB(CURDATE(), INTERVAL 1 DAY)),
+(2, 'workout', DATE_ADD(CURDATE(), INTERVAL 1 DAY));
+
+-- completed workouts
+INSERT INTO workout_session (user_id, ended_at)
+VALUES
+(2, NOW()),
+(2, DATE_SUB(NOW(), INTERVAL 1 DAY));
+
+INSERT INTO meal_log (user_id, meal_id, food_item_id, eaten_at, servings, notes) VALUES
+-- breakfast
+(2, 2, NULL, NOW(), 1.0, 'Breakfast'),
+
+-- lunch
+(2, NULL, 1, NOW(), 1.0, 'Lunch'),
+
+-- dinner
+(2, 1, NULL, NOW(), 1.0, 'Dinner');
+
+
+<<<<<<< HEAD
 
 
 -- ============================================================
@@ -1608,3 +1623,126 @@ INSERT INTO user_meal (meal_id, meal_plan_id, meal_type, servings, day_of_week) 
 (19, 42, 'breakfast', 0.75, 'Sun'), (44, 42, 'snack', 1.00, 'Sun'), (26, 42, 'lunch', 0.80, 'Sun'), (31, 42, 'dinner', 0.80, 'Sun');
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+-- ============================================================
+-- COACH PRICE CHANGE REQUESTS (Phase 11 Testing Data)
+-- ============================================================
+
+-- Pending requests (these are the ones your endpoints will operate on)
+INSERT INTO coach_price_change_request (
+  coach_id,
+  proposed_price,
+  status,
+  admin_action,
+  reviewed_by_admin_id,
+  reviewed_at
+) VALUES
+  (3, 80.00,  'pending', NULL, NULL, NULL),
+  (3, 85.00,  'pending', NULL, NULL, NULL),
+  (5, 70.00,  'pending', NULL, NULL, NULL),
+  (5, 75.00,  'pending', NULL, NULL, NULL),
+  (3, 90.00,  'pending', NULL, NULL, NULL),
+  (5, 68.00,  'pending', NULL, NULL, NULL);
+
+-- Already approved requests (test "cannot re-approve")
+INSERT INTO coach_price_change_request (
+  coach_id,
+  proposed_price,
+  status,
+  admin_action,
+  reviewed_by_admin_id,
+  reviewed_at
+) VALUES
+  (3, 78.00,  'approved', 'Approved during initial onboarding', 4, NOW()),
+  (5, 72.00,  'approved', 'Market adjustment approved',        4, NOW()),
+  (3, 82.00,  'approved', 'Performance-based increase',        4, NOW());
+
+-- Rejected requests (test rejection handling + filtering)
+INSERT INTO coach_price_change_request (
+  coach_id,
+  proposed_price,
+  status,
+  admin_action,
+  reviewed_by_admin_id,
+  reviewed_at
+) VALUES
+  (3, 150.00, 'rejected', 'Too high compared to market rate',   4, NOW()),
+  (5, 120.00, 'rejected', 'Insufficient experience justification', 4, NOW()),
+  (3, 95.00,  'rejected', 'Client complaints pending review',   4, NOW());
+
+-- Edge cases: multiple rapid submissions by same coach
+INSERT INTO coach_price_change_request (
+  coach_id,
+  proposed_price,
+  status,
+  admin_action,
+  reviewed_by_admin_id,
+  reviewed_at
+) VALUES
+  (3, 88.00, 'pending', NULL, NULL, NULL),
+  (3, 89.00, 'pending', NULL, NULL, NULL);
+
+-- Historical (older timestamps to test ordering)
+INSERT INTO coach_price_change_request (
+  coach_id,
+  proposed_price,
+  status,
+  admin_action,
+  reviewed_by_admin_id,
+  reviewed_at,
+  created_at
+) VALUES
+  (5, 60.00, 'approved', 'Legacy approval', 4, NOW(), '2025-12-01 10:00:00'),
+  (3, 65.00, 'rejected', 'Old rejected request', 4, NOW(), '2025-11-15 09:00:00');
+
+-- APPROVED OPEN MARKETS
+INSERT INTO prediction_market (
+  creator_user_id, title, goal_text, end_date,
+  status, review_status
+) VALUES
+(2, 'Will Alex hit 10k steps daily?', 'Goal: 10k steps every day for 1 week.', '2026-06-01', 'open', 'approved'),
+(3, 'Will Sam complete 5 workouts?', 'Goal: 5 workouts in 7 days.', '2026-06-03', 'open', 'approved');
+
+-- PENDING REVIEW
+INSERT INTO prediction_market (
+  creator_user_id, title, goal_text, end_date,
+  status, review_status
+) VALUES
+(2, 'Will I avoid sugar for a week?', 'Goal: no sugar for 7 days.', '2026-06-05', 'open', 'pending');
+
+-- CLOSED (READY FOR SETTLEMENT)
+INSERT INTO prediction_market (
+  creator_user_id, title, goal_text, end_date,
+  status, review_status
+) VALUES
+(4, 'Will Jordan bench 225?', 'Goal: hit 225 bench.', '2026-04-01', 'closed', 'approved');
+
+-- CANCELLED (ADMIN)
+INSERT INTO prediction_market (
+  creator_user_id, title, goal_text, end_date,
+  status, review_status, settlement_result
+) VALUES
+(5, 'Will Casey run daily?', 'Goal: run daily for 2 weeks.', '2026-03-01', 'cancelled', 'approved', 'cancelled');
+
+
+INSERT INTO points_wallet (user_id, balance)
+VALUES
+(2, 200),
+(3, 150),
+(4, 300),
+(5, 100)
+ON DUPLICATE KEY UPDATE balance = VALUES(balance);
+
+INSERT INTO points_txn (user_id, delta_points, reason, ref_type, ref_id)
+VALUES
+(2, -50, 'Prediction wager', 'prediction_market', 1),
+(3, -30, 'Prediction wager', 'prediction_market', 1),
+(4, -20, 'Prediction wager', 'prediction_market', 1),
+
+(2, 100, 'Daily survey reward', 'daily_survey', NULL),
+(3, 50, 'Workout completion', 'workout_session', 10);
+
+INSERT INTO points_txn (user_id, delta_points, reason, ref_type)
+VALUES
+(2, 100, 'Daily survey reward', 'daily_survey');
