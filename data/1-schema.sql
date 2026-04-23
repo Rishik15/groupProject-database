@@ -802,6 +802,7 @@ CREATE TABLE notification (
 
   user_id INT NOT NULL,
   type VARCHAR(50) NOT NULL,
+  mode ENUM('coach', 'client') NOT NULL, 
 
   conversation_id INT NULL,
   reference_id INT NULL,
@@ -819,12 +820,12 @@ CREATE TABLE notification (
   INDEX idx_user_type (user_id, type),
 
   FOREIGN KEY (user_id)
-  REFERENCES users_immutables(user_id)
-  ON DELETE CASCADE,
+    REFERENCES users_immutables(user_id)
+    ON DELETE CASCADE,
 
   FOREIGN KEY (conversation_id)
-  REFERENCES conversation(conversation_id)
-  ON DELETE CASCADE
+    REFERENCES conversation(conversation_id)
+    ON DELETE CASCADE
 );
 
 -- audit triggers

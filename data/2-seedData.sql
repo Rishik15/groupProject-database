@@ -395,7 +395,7 @@ INSERT INTO user_coach_contract (coach_id, user_id, agreed_price, start_date, en
   (5, 11, 60.00, '2026-02-15', '2026-05-15', 'Fat loss HIIT program.',              1),
   (5, 2,  65.00, '2025-12-01', '2026-03-01', 'Completed conditioning block.',       0),
   (5, 6,  65.00, '2026-01-01', '2026-02-28', 'Intro HIIT package - completed.',     0),
-  (3, 3,  75.00, '2025-09-01', '2026-01-01', 'Expired strength program.',           0);
+  (5, 3, 65.00, '2026-01-01', '2027-04-23', 'Sam onboarding as client for testing dual-role chat.', 1);
 
 INSERT INTO coach_availability (coach_id, day_of_week, start_time, end_time, recurring, active) VALUES
   (3, 'Mon', '08:00:00', '11:00:00', 1, 1),
@@ -434,18 +434,20 @@ INSERT INTO conversation (conversation_type, created_by, title) VALUES
   ('dm', 3, NULL),  -- 5: 3 ↔ 10
 
   ('dm', 5, NULL),  -- 6: 5 ↔ 7
-  ('dm', 5, NULL);  -- 7: 5 ↔ 11
+  ('dm', 5, NULL),   -- 7: 5 ↔ 11
+ ('dm', 5, NULL);   -- 8: 5 - 3
 
 -- messaging (10 conversations)
 INSERT INTO conversation_member (conversation_id, user_id, role, unread_count) VALUES
-  (1, 3, 'owner', 0), (1, 2, 'member', 0),
+  (1, 3, 'owner', 0),  (1,2, 'member', 0),
   (2, 3, 'owner', 0), (2, 6, 'member', 0),
   (3, 3, 'owner', 0), (3, 8, 'member', 0),
   (4, 3, 'owner', 0), (4, 9, 'member', 0),
   (5, 3, 'owner', 0), (5, 10, 'member', 0),
 
   (6, 5, 'owner', 0), (6, 7, 'member', 0),
-  (7, 5, 'owner', 0), (7, 11, 'member', 0);
+  (7, 5, 'owner', 0), (7, 11, 'member', 0),
+    (8, 5, 'owner', 0),  (8, 3, 'member', 0);
 
 INSERT INTO message (conversation_id, sender_user_id, content, sent_at) VALUES
 
@@ -475,7 +477,10 @@ INSERT INTO message (conversation_id, sender_user_id, content, sent_at) VALUES
 
 -- convo 7: coach 5 ↔ user 11
 (7, 11, 'First week, nervous but excited.',                 '2026-03-02 06:15:00'),
-(7, 5,  'You''ll do great, just stay consistent.',          '2026-03-02 06:20:00');
+(7, 5,  'You''ll do great, just stay consistent.',          '2026-03-02 06:20:00'),
+
+  (8, 5, 'Hey Sam, I will be your coach now.', '2026-04-20 07:14:00'),
+  (8, 3, 'Perfect, lets get started.', '2026-04-20 07:14:03');
 
 
 -- reviews (10)
@@ -924,7 +929,7 @@ INSERT INTO coach_application_certification (application_id, cert_name, provider
 -- ==========================================
 INSERT INTO user_coach_contract (coach_id, user_id, agreed_price, start_date, end_date, contract_text, active) VALUES
 (13, 23, 100.00, '2025-05-01', NULL, 'Ongoing strength coaching.', 1),
-(13, 24, 90.00, '2025-10-15', '2026-04-15', '6 month hypertrophy block.', 1),
+(13, 24, 90.00, '2025-10-15', '2026-04-15', '6 month hypertrophy block.', 0),
 (13, 25, 100.00, '2024-01-01', '2024-07-01', 'Completed block.', 0),
 (14, 26, 80.00, '2026-01-10', NULL, 'Fat loss focus.', 1),
 (14, 27, 80.00, '2026-02-01', NULL, 'Recomp goals.', 1),
@@ -945,7 +950,7 @@ INSERT INTO user_coach_contract (coach_id, user_id, agreed_price, start_date, en
 (19, 42, 75.00, '2026-02-20', NULL, 'Daily check-ins.', 1),
 (19, 43, 70.00, '2025-12-01', '2026-03-01', 'Winter habit reset.', 0),
 (20, 44, 110.00, '2025-07-10', NULL, 'Olympic lifting technique.', 1),
-(20, 45, 110.00, '2026-01-20', '2026-06-20', 'Competition prep.', 1),
+(20, 45, 110.00, '2026-01-20', '2026-06-20', 'Competition prep.', 0),
 (20, 46, 100.00, '2025-01-10', '2025-07-10', 'Snatch focus.', 0),
 (21, 47, 85.00, '2025-10-01', NULL, 'Mind-body wellness journey.', 1),
 (21, 48, 85.00, '2026-01-15', NULL, 'Holistic prep.', 1),
@@ -1042,47 +1047,6 @@ INSERT INTO user_report (reported_user_id, reporter_user_id, reason, status, adm
 (50, 22, 'Spam profile.', 'resolved', 'Warned user.', 12),
 (20, 45, 'Missed a zoom call.', 'dismissed', 'Coach proved they were present.', 12),
 (47, 21, 'Soliciting other clients.', 'reviewing', NULL, NULL);
-
--- ==========================================
--- 12. MESSAGES & CONVERSATIONS (Explicit IDs)
--- ==========================================
-INSERT INTO conversation (conversation_id, conversation_type, created_by, title) VALUES
-(11, 'dm', 13, NULL), (12, 'dm', 14, NULL), (13, 'dm', 15, NULL), (14, 'dm', 16, NULL), (15, 'dm', 17, NULL),
-(16, 'dm', 18, NULL), (17, 'dm', 19, NULL), (18, 'dm', 20, NULL), (19, 'dm', 21, NULL), (20, 'dm', 22, NULL);
-
-INSERT INTO conversation_member (conversation_id, user_id, role) VALUES
-(11, 13, 'owner'), (11, 23, 'member'),
-(12, 14, 'owner'), (12, 26, 'member'),
-(13, 15, 'owner'), (13, 29, 'member'),
-(14, 16, 'owner'), (14, 32, 'member'),
-(15, 17, 'owner'), (15, 35, 'member'),
-(16, 18, 'owner'), (16, 38, 'member'),
-(17, 19, 'owner'), (17, 41, 'member'),
-(18, 20, 'owner'), (18, 44, 'member'),
-(19, 21, 'owner'), (19, 47, 'member'),
-(20, 22, 'owner'), (20, 50, 'member');
-
-INSERT INTO message (message_id, conversation_id, sender_user_id, content, sent_at) VALUES
-(50, 11, 13, 'Hey, your deadlift video looked great. Let''s add 10lbs next week.', '2026-03-01 10:00:00'),
-(51, 11, 23, 'Sounds good! Lower back feels fine.', '2026-03-01 10:15:00'),
-(52, 12, 14, 'How did the weekend go with the new macro targets?', '2026-03-02 09:00:00'),
-(53, 12, 26, 'Much better, didn''t feel restricted at all.', '2026-03-02 09:30:00'),
-(54, 13, 15, 'Are you ready for your first block?', '2026-03-03 08:00:00'),
-(55, 13, 29, 'Yes, let''s get it!', '2026-03-03 08:10:00'),
-(56, 14, 16, 'We need to push the pacing on the erg.', '2026-03-04 14:00:00'),
-(57, 14, 32, 'I''ll try to hold sub 1:50.', '2026-03-04 14:20:00'),
-(58, 15, 17, 'Did you meal prep yesterday?', '2026-03-05 09:00:00'),
-(59, 15, 35, 'Yes, got all my lunches done.', '2026-03-05 09:45:00'),
-(60, 16, 18, 'How is the knee after the step-ups?', '2026-03-06 11:00:00'),
-(61, 16, 38, 'No pain at all.', '2026-03-06 11:30:00'),
-(62, 17, 19, 'Check-in time.', '2026-03-07 07:00:00'),
-(63, 17, 41, 'Done, check the app.', '2026-03-07 07:15:00'),
-(64, 18, 20, 'Send me the snatch video.', '2026-03-08 16:00:00'),
-(65, 18, 44, 'Uploading now.', '2026-03-08 16:30:00'),
-(66, 19, 21, 'Did you do the breathwork?', '2026-03-09 20:00:00'),
-(67, 19, 47, 'Yes, really helped me wind down.', '2026-03-09 20:30:00'),
-(68, 20, 22, 'Great week of workouts.', '2026-03-10 18:00:00'),
-(69, 20, 50, 'Thanks coach.', '2026-03-10 18:45:00');
 
 -- ==========================================
 -- 13. CALENDAR & EVENTS & MEALS
