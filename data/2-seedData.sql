@@ -1346,15 +1346,6 @@ INSERT INTO prediction_market (
 ) VALUES
 (5, 'Will Casey run daily?', 'Goal: run daily for 2 weeks.', '2026-03-01', 'cancelled', 'approved', 'cancelled');
 
-INSERT INTO prediction (predictor_user_id, market_id, prediction_value, points_wagered)
-VALUES
-(2, 1, 'yes', 50),
-(3, 1, 'no', 30),
-(4, 1, 'yes', 20),
-
-(2, 4, 'yes', 40),
-(5, 4, 'no', 40);
-
 
 INSERT INTO points_wallet (user_id, balance)
 VALUES
