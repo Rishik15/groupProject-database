@@ -711,18 +711,59 @@ CREATE TABLE points_txn (
 
 -- a user goal that others can bet points on, settled manually or via admin
 CREATE TABLE prediction_market (
-  market_id       INT AUTO_INCREMENT PRIMARY KEY,
-  creator_user_id INT NOT NULL,
-  title           VARCHAR(200) NOT NULL,
-  goal_text       TEXT NOT NULL,
-  end_date        DATE NOT NULL,
-  status          ENUM('open','closed','settled','cancelled') NOT NULL DEFAULT 'open',
-  created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  market_id                  INT AUTO_INCREMENT PRIMARY KEY,
+  creator_user_id            INT NOT NULL,
+  title                      VARCHAR(200) NOT NULL,
+  goal_text                  TEXT NOT NULL,
+  end_date                   DATE NOT NULL,
+
+  status                     ENUM('open','closed','settled','cancelled') NOT NULL DEFAULT 'open',
+
+  review_status              ENUM('approved','pending','rejected') NOT NULL DEFAULT 'approved',
+  reviewed_by_admin_id       INT NULL,
+  reviewed_at                DATETIME NULL,
+  review_note                TEXT NULL,
+
+  settlement_result          ENUM('yes','no','cancelled') NULL,
+  settled_by_admin_id        INT NULL,
+  settled_at                 DATETIME NULL,
+  settlement_note            TEXT NULL,
+
+  cancel_request_status      ENUM('none','pending','approved','rejected') NOT NULL DEFAULT 'none',
+  cancel_request_reason      TEXT NULL,
+  cancel_requested_at        DATETIME NULL,
+  cancel_reviewed_by_admin_id INT NULL,
+  cancel_reviewed_at         DATETIME NULL,
+  cancel_review_note         TEXT NULL,
+
+  created_at                 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at                 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   INDEX (status),
   INDEX (end_date),
-  FOREIGN KEY (creator_user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+  INDEX (review_status),
+  INDEX (settlement_result),
+  INDEX (cancel_request_status),
+
+  FOREIGN KEY (creator_user_id)
+    REFERENCES users_immutables(user_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+  FOREIGN KEY (reviewed_by_admin_id)
+    REFERENCES admin(admin_id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+
+  FOREIGN KEY (settled_by_admin_id)
+    REFERENCES admin(admin_id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+
+  FOREIGN KEY (cancel_reviewed_by_admin_id)
+    REFERENCES admin(admin_id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
 );
 
 -- one row per user per market, unique key enforces you can't bet twice on the same market
