@@ -1316,3 +1316,63 @@ INSERT INTO coach_price_change_request (
 ) VALUES
   (5, 60.00, 'approved', 'Legacy approval', 4, NOW(), '2025-12-01 10:00:00'),
   (3, 65.00, 'rejected', 'Old rejected request', 4, NOW(), '2025-11-15 09:00:00');
+
+-- APPROVED OPEN MARKETS
+INSERT INTO prediction_market (
+  creator_user_id, title, goal_text, end_date,
+  status, review_status
+) VALUES
+(2, 'Will Alex hit 10k steps daily?', 'Goal: 10k steps every day for 1 week.', '2026-06-01', 'open', 'approved'),
+(3, 'Will Sam complete 5 workouts?', 'Goal: 5 workouts in 7 days.', '2026-06-03', 'open', 'approved');
+
+-- PENDING REVIEW
+INSERT INTO prediction_market (
+  creator_user_id, title, goal_text, end_date,
+  status, review_status
+) VALUES
+(2, 'Will I avoid sugar for a week?', 'Goal: no sugar for 7 days.', '2026-06-05', 'open', 'pending');
+
+-- CLOSED (READY FOR SETTLEMENT)
+INSERT INTO prediction_market (
+  creator_user_id, title, goal_text, end_date,
+  status, review_status
+) VALUES
+(4, 'Will Jordan bench 225?', 'Goal: hit 225 bench.', '2026-04-01', 'closed', 'approved');
+
+-- CANCELLED (ADMIN)
+INSERT INTO prediction_market (
+  creator_user_id, title, goal_text, end_date,
+  status, review_status, settlement_result
+) VALUES
+(5, 'Will Casey run daily?', 'Goal: run daily for 2 weeks.', '2026-03-01', 'cancelled', 'approved', 'cancelled');
+
+INSERT INTO prediction (predictor_user_id, market_id, prediction_value, points_wagered)
+VALUES
+(2, 1, 'yes', 50),
+(3, 1, 'no', 30),
+(4, 1, 'yes', 20),
+
+(2, 4, 'yes', 40),
+(5, 4, 'no', 40);
+
+
+INSERT INTO points_wallet (user_id, balance)
+VALUES
+(2, 200),
+(3, 150),
+(4, 300),
+(5, 100)
+ON DUPLICATE KEY UPDATE balance = VALUES(balance);
+
+INSERT INTO points_txn (user_id, delta_points, reason, ref_type, ref_id)
+VALUES
+(2, -50, 'Prediction wager', 'prediction_market', 1),
+(3, -30, 'Prediction wager', 'prediction_market', 1),
+(4, -20, 'Prediction wager', 'prediction_market', 1),
+
+(2, 100, 'Daily survey reward', 'daily_survey', NULL),
+(3, 50, 'Workout completion', 'workout_session', 10);
+
+INSERT INTO points_txn (user_id, delta_points, reason, ref_type)
+VALUES
+(2, 100, 'Daily survey reward', 'daily_survey');
