@@ -1242,9 +1242,6 @@ INSERT INTO meal_log (user_id, meal_id, food_item_id, eaten_at, servings, notes)
 (2, 1, NULL, NOW(), 1.0, 'Dinner');
 
 
-<<<<<<< HEAD
-
-
 -- ============================================================
 -- NUTRITION LIBRARY SEED DATA
 -- meal IDs start at 11 (1-10 already exist)
