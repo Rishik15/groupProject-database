@@ -251,6 +251,7 @@ CREATE TABLE meal (
   INDEX (name),
   INDEX (calories)
 );
+
 CREATE TABLE food_item (
   food_item_id INT AUTO_INCREMENT PRIMARY KEY,
   user_id      INT NOT NULL,
@@ -269,7 +270,7 @@ CREATE TABLE food_item (
 
 CREATE TABLE meal_plan (
   meal_plan_id   INT AUTO_INCREMENT PRIMARY KEY,
-  user_id        INT NOT NULL,
+  user_id        INT NOT NULL Default 1,
   plan_name      VARCHAR(120) NOT NULL,
   start_date     DATE NULL,
   end_date       DATE NULL,
@@ -340,6 +341,8 @@ CREATE TABLE user_coach_contract (
   agreed_price  DECIMAL(10,2) NOT NULL DEFAULT 0.00,
   start_date    DATE NOT NULL,
   end_date      DATE NULL,
+  is_recurring  TINYINT(1) NOT NULL DEFAULT 0,
+  next_billing_date DATE NULL,
   contract_text TEXT NULL,
   active        TINYINT(1) NOT NULL DEFAULT 1,
   created_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -349,6 +352,43 @@ CREATE TABLE user_coach_contract (
   INDEX (start_date, end_date),
   FOREIGN KEY (coach_id) REFERENCES coach(coach_id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE user_payment_method (
+  payment_method_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id           INT NOT NULL,
+  card_last_four    CHAR(4) NOT NULL,
+  card_brand        VARCHAR(20) NOT NULL,
+  expiry_month      TINYINT NOT NULL,
+  expiry_year       SMALLINT NOT NULL,
+  is_default        TINYINT(1) NOT NULL DEFAULT 1,
+  created_at        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  INDEX (user_id),
+  FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE payment (
+  payment_id        INT AUTO_INCREMENT PRIMARY KEY,
+  user_id           INT NOT NULL,
+  coach_id          INT NULL,
+  payment_method_id INT NULL,
+  amount            DECIMAL(10,2) NOT NULL,
+  currency          VARCHAR(3) NOT NULL DEFAULT 'USD',
+  status            ENUM('pending','completed','failed','refunded') NOT NULL DEFAULT 'pending',
+  payment_type      ENUM('subscription','coaching_fee','one_time') NOT NULL,
+  description       TEXT NULL,
+  paid_at           DATETIME NULL,
+  created_at        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  INDEX (user_id, paid_at),
+  INDEX (status),
+  INDEX (payment_type),
+  FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (coach_id) REFERENCES coach(coach_id) ON DELETE SET NULL ON UPDATE CASCADE,
+  FOREIGN KEY (payment_method_id) REFERENCES user_payment_method(payment_method_id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE progress_photo (
@@ -840,7 +880,6 @@ CREATE TABLE coach_featured (
   INDEX (start_date, end_date),
   FOREIGN KEY (coach_id) REFERENCES coach(coach_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
 CREATE TABLE notification (
   notification_id INT AUTO_INCREMENT PRIMARY KEY,
 
