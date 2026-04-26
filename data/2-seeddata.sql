@@ -314,17 +314,42 @@ INSERT INTO calendar (user_id, full_date, day_name) VALUES
   (7,  '2026-03-05', 'Thu'),
   (8,  '2026-03-07', 'Sat');
 
-INSERT INTO event (user_id, event_date, start_time, end_time, event_type, description, workout_plan_id) VALUES
-  (2,  '2026-03-02', '18:00:00', '19:00:00', 'workout',       'PPL - push day.',            1),
-  (2,  '2026-03-04', '18:00:00', '19:00:00', 'workout',       'PPL - pull day.',            1),
-  (2,  '2026-03-06', '18:00:00', '19:00:00', 'workout',       'PPL - legs day.',            1),
-  (3,  '2026-03-02', '09:00:00', '09:30:00', 'coach_session', 'Weekly check-in with Alex.', NULL),
-  (3,  '2026-03-05', '12:00:00', '12:30:00', 'meal',          'Meal prep Sunday.',          NULL),
-  (5,  '2026-03-03', '07:00:00', '08:00:00', 'workout',       'Full body morning session.', 3),
-  (5,  '2026-03-06', '07:00:00', '08:00:00', 'workout',       'Full body session 2.',       3),
-  (6,  '2026-03-04', '12:00:00', '12:30:00', 'meal',          'Lunch prep',                 NULL),
-  (7,  '2026-03-05', '18:00:00', '18:30:00', 'reminder',      'Stretching and mobility.',   NULL),
-  (8,  '2026-03-07', '10:00:00', '11:00:00', 'workout',       'Arms and shoulders day.',    4);
+INSERT INTO event
+  (
+    user_id,
+    event_date,
+    start_time,
+    end_time,
+    event_type,
+    description,
+    workout_plan_id,
+    workout_day_id
+  )
+VALUES
+  -- user 2 using plan 1: Push Pull Legs
+  -- plan 1 day_id 1 = Push
+  -- plan 1 day_id 2 = Pull
+  -- plan 1 day_id 3 = Legs
+  (2, '2026-03-02', '18:00:00', '19:00:00', 'workout', 'PPL - Push day', 1, 1),
+  (2, '2026-03-04', '18:00:00', '19:00:00', 'workout', 'PPL - Pull day', 1, 2),
+  (2, '2026-03-06', '18:00:00', '19:00:00', 'workout', 'PPL - Legs day', 1, 3),
+
+  -- coach session / meal events do not need workout plan or workout day
+  (3, '2026-03-02', '09:00:00', '09:30:00', 'coach_session', 'Weekly check-in with Alex', NULL, NULL),
+  (3, '2026-03-05', '12:00:00', '12:30:00', 'meal', 'Meal prep Sunday', NULL, NULL),
+
+  -- user 5 using plan 3: Full Body Strength - 3x Week
+  -- plan 3 day_id 6 = Day 1
+  (5, '2026-03-03', '07:00:00', '08:00:00', 'workout', 'Full body morning session', 3, 6),
+  (5, '2026-03-06', '07:00:00', '08:00:00', 'workout', 'Full body session 2', 3, 6),
+
+  -- other non-workout events
+  (6, '2026-03-04', '12:00:00', '12:30:00', 'meal', 'Lunch prep', NULL, NULL),
+  (7, '2026-03-05', '18:00:00', '18:30:00', 'reminder', 'Stretching and mobility', NULL, NULL),
+
+  -- user 8 using plan 4: Arms & Shoulders Hypertrophy
+  -- plan 4 day_id 7 = Day 1
+  (8, '2026-03-07', '10:00:00', '11:00:00', 'workout', 'Arms and shoulders day', 4, 7);
 
 INSERT INTO meal (name, calories, protein, carbs, fats) VALUES
   ('Chicken Bowl',       650, 45.00, 70.00, 18.00),   -- 1
@@ -1050,19 +1075,37 @@ INSERT INTO user_report (reported_user_id, reporter_user_id, reason, status, adm
 -- ==========================================
 -- 13. CALENDAR & EVENTS & MEALS
 -- ==========================================
+-- ==========================================
 INSERT INTO calendar (user_id, full_date, day_name) VALUES
-(23, '2026-03-02', 'Mon'), (23, '2026-03-04', 'Wed'), (23, '2026-03-06', 'Fri'),
-(26, '2026-03-03', 'Tue'), (26, '2026-03-05', 'Thu'),
-(29, '2026-03-01', 'Sun'), (29, '2026-03-02', 'Mon'),
-(32, '2026-03-04', 'Wed'), (32, '2026-03-06', 'Fri');
+(23, '2026-03-02', 'Mon'), 
+(23, '2026-03-04', 'Wed'), 
+(23, '2026-03-06', 'Fri'),
+(26, '2026-03-03', 'Tue'), 
+(26, '2026-03-05', 'Thu'),
+(29, '2026-03-01', 'Sun'), 
+(29, '2026-03-02', 'Mon'),
+(32, '2026-03-04', 'Wed'), 
+(32, '2026-03-06', 'Fri');
 
-INSERT INTO event (user_id, event_date, start_time, end_time, event_type, description, workout_plan_id) VALUES
-(23, '2026-03-02', '17:00:00', '18:00:00', 'workout', 'Strength block day 1', 1),
-(23, '2026-03-04', '17:00:00', '18:00:00', 'workout', 'Strength block day 2', 1),
-(26, '2026-03-03', '06:00:00', '07:00:00', 'workout', 'Fat loss circuit', 11),
-(26, '2026-03-05', '06:00:00', '07:00:00', 'workout', 'Fat loss circuit 2', 11),
-(29, '2026-03-02', '18:00:00', '19:00:00', 'coach_session', 'Check-in with Coach', NULL),
-(32, '2026-03-04', '15:00:00', '16:00:00', 'workout', 'Conditioning intervals', 13);
+INSERT INTO event (
+  user_id,
+  event_date,
+  start_time,
+  end_time,
+  event_type,
+  description,
+  workout_plan_id,
+  workout_day_id
+) VALUES
+(23, '2026-03-02', '17:00:00', '18:00:00', 'workout', 'Strength block day 1', 1, 1),
+(23, '2026-03-04', '17:00:00', '18:00:00', 'workout', 'Strength block day 2', 1, 2),
+
+(26, '2026-03-03', '06:00:00', '07:00:00', 'workout', 'Fat loss circuit', 11, 14),
+(26, '2026-03-05', '06:00:00', '07:00:00', 'workout', 'Fat loss circuit 2', 11, 14),
+
+(29, '2026-03-02', '18:00:00', '19:00:00', 'coach_session', 'Check-in with Coach', NULL, NULL),
+
+(32, '2026-03-04', '15:00:00', '16:00:00', 'workout', 'Conditioning intervals', 13, 16);
 
 INSERT INTO meal_plan (meal_plan_id, user_id, plan_name, start_date, end_date, total_calories) VALUES
 (11, 23, 'Strength Bulk', '2026-03-01', '2026-05-01', 3200),
@@ -1219,12 +1262,20 @@ ON DUPLICATE KEY UPDATE name = VALUES(name);
 -- To test get workouts:
 
 -- planned workouts
-INSERT INTO event (user_id, event_type, event_date)
+INSERT INTO event (
+  user_id,
+  event_type,
+  event_date,
+  start_time,
+  end_time,
+  description,
+  workout_plan_id,
+  workout_day_id
+)
 VALUES 
-(2, 'workout', CURDATE()),
-(2, 'workout', DATE_SUB(CURDATE(), INTERVAL 1 DAY)),
-(2, 'workout', DATE_ADD(CURDATE(), INTERVAL 1 DAY));
-
+(2, 'workout', CURDATE(), '18:00:00', '19:00:00', 'Today workout', 1, 1),
+(2, 'workout', DATE_SUB(CURDATE(), INTERVAL 1 DAY), '18:00:00', '19:00:00', 'Yesterday workout', 1, 2),
+(2, 'workout', DATE_ADD(CURDATE(), INTERVAL 1 DAY), '18:00:00', '19:00:00', 'Tomorrow workout', 1, 3);
 -- completed workouts
 INSERT INTO workout_session (user_id, ended_at)
 VALUES

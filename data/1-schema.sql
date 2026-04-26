@@ -226,16 +226,36 @@ CREATE TABLE event (
   start_time      TIME NULL,
   end_time        TIME NULL,
   event_type      ENUM('workout','meal','coach_session','reminder','other') NOT NULL DEFAULT 'other',
-  description     TEXT NULL,
+
+  description     TEXT NOT NULL DEFAULT (''),
+  notes           TEXT NOT NULL DEFAULT (''),
+
   workout_plan_id INT NULL,
+  workout_day_id  INT NULL,
+
   created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   INDEX (user_id, event_date),
   INDEX (event_date),
   INDEX (event_type),
-  FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (workout_plan_id) REFERENCES workout_plan(plan_id) ON DELETE SET NULL ON UPDATE CASCADE
+  INDEX (workout_plan_id),
+  INDEX (workout_day_id),
+
+  FOREIGN KEY (user_id)
+    REFERENCES users_immutables(user_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+  FOREIGN KEY (workout_plan_id)
+    REFERENCES workout_plan(plan_id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+
+  FOREIGN KEY (workout_day_id)
+    REFERENCES workout_day(day_id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
 );
 
 CREATE TABLE meal (
@@ -622,16 +642,41 @@ CREATE TABLE user_report (
 CREATE TABLE workout_session (
   session_id      INT AUTO_INCREMENT PRIMARY KEY,
   user_id         INT NOT NULL,
+  event_id        INT NULL,
   started_at      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   ended_at        DATETIME NULL,
   workout_plan_id INT NULL,
+  workout_day_id  INT NULL,
   notes           TEXT NULL,
   created_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   INDEX (user_id, started_at),
-  FOREIGN KEY (user_id) REFERENCES users_immutables(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (workout_plan_id) REFERENCES workout_plan(plan_id) ON DELETE SET NULL ON UPDATE CASCADE
+  INDEX (event_id),
+  INDEX (workout_plan_id),
+  INDEX (workout_day_id),
+
+  UNIQUE KEY uq_workout_session_event_user (event_id, user_id),
+
+  FOREIGN KEY (user_id)
+    REFERENCES users_immutables(user_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+  FOREIGN KEY (event_id)
+    REFERENCES event(event_id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+
+  FOREIGN KEY (workout_plan_id)
+    REFERENCES workout_plan(plan_id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+
+  FOREIGN KEY (workout_day_id)
+    REFERENCES workout_day(day_id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
 );
 
 CREATE TABLE exercise_set_log (
