@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS exercise_app;
 CREATE DATABASE exercise_app;
 USE exercise_app;
 
-SET SESSION time_zone = '+00:00';
+SET SESSION time_zone = '-04:00';
 
 -- append-only log written to by triggers
 CREATE TABLE audit_event (
@@ -954,6 +954,46 @@ CREATE TABLE notification (
   FOREIGN KEY (conversation_id)
     REFERENCES conversation(conversation_id)
     ON DELETE CASCADE
+);
+
+CREATE TABLE coach_session (
+  coach_session_id INT AUTO_INCREMENT PRIMARY KEY,
+
+  event_id INT NOT NULL,
+  contract_id INT NOT NULL,
+  coach_id INT NOT NULL,
+  client_id INT NOT NULL,
+
+  status ENUM('scheduled', 'completed', 'cancelled') NOT NULL DEFAULT 'scheduled',
+
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  UNIQUE KEY (event_id),
+  INDEX (contract_id),
+  INDEX (coach_id),
+  INDEX (client_id),
+  INDEX (status),
+
+  FOREIGN KEY (event_id)
+    REFERENCES event(event_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+  FOREIGN KEY (contract_id)
+    REFERENCES user_coach_contract(contract_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+  FOREIGN KEY (coach_id)
+    REFERENCES coach(coach_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+  FOREIGN KEY (client_id)
+    REFERENCES users_immutables(user_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
 -- audit triggers
