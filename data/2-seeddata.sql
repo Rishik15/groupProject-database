@@ -438,6 +438,46 @@ INSERT INTO coach_time_off (coach_id, start_dt, end_dt, reason) VALUES
   (3, '2026-03-20 00:00:00', '2026-03-22 23:59:00', 'Conference'),
   (5, '2026-04-01 00:00:00', '2026-04-05 23:59:00', 'Vacation');
 
+
+  INSERT INTO user_payment_method (
+      user_id,
+      card_last_four,
+      card_brand,
+      expiry_month,
+      expiry_year,
+      is_default
+  )
+  VALUES
+  (2, '4242', 'Visa', 1, 2027, 1),
+  (2, '1111', 'Mastercard', 5, 2026, 0),
+  (2, '0005', 'Amex', 9, 2028, 0);
+
+  INSERT INTO payment (
+      user_id,
+      coach_id,
+      payment_method_id,
+      amount,
+      currency,
+      status,
+      payment_type,
+      description,
+      paid_at
+  )
+  VALUES
+  -- Sam (coach_id = 3)
+  (2, 3, 1, 75.00, 'USD', 'completed', 'subscription', 'Monthly coaching with Sam', NOW() - INTERVAL 2 DAY),
+
+  (2, 3, 1, 75.00, 'USD', 'completed', 'subscription', 'Monthly coaching with Sam', NOW() - INTERVAL 32 DAY),
+
+  -- Taylor (coach_id = 5)
+  (2, 5, 2, 65.00, 'USD', 'completed', 'coaching_fee', 'HIIT coaching session', NOW() - INTERVAL 5 DAY),
+
+  -- Pending payment
+  (2, 3, 1, 75.00, 'USD', 'pending', 'subscription', 'Upcoming monthly coaching', NOW()),
+
+  -- Failed payment
+  (2, 5, 2, 120.00, 'USD', 'failed', 'one_time', 'Custom program purchase', NOW() - INTERVAL 10 DAY);
+
 INSERT INTO coach_client_note (coach_id, client_user_id, note_text, private) VALUES
   (3, 2,  'Alex is making consistent progress. Increase bench weight next session.',  1),
   (3, 6,  'Morgan struggles with lower body mobility. Add warmup work.',              1),
