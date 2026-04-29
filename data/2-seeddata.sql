@@ -686,22 +686,7 @@ INSERT INTO points_wallet (user_id, balance) VALUES
   (10,  25),
   (11, 310);
 
-INSERT INTO points_txn (user_id, delta_points, reason, ref_type, ref_id) VALUES
-  (2,   50, 'Completed workout session', 'workout_session',   1),
-  (2,   50, 'Completed workout session', 'workout_session',   2),
-  (2,   50, 'Completed workout session', 'workout_session',   3),
-  (2,  -10, 'Prediction wager',          'prediction_market', NULL),
-  (3,   25, 'Workout bonus',             NULL,                NULL),
-  (5,   40, 'Challenge completed',       NULL,                NULL),
-  (5,   50, 'Completed workout session', 'workout_session',   4),
-  (6,   30, 'Completed workout session', 'workout_session',   6),
-  (7,   50, 'Completed workout session', 'workout_session',   7),
-  (8,   60, 'Completed first session',   'workout_session',   8),
-  (9,   40, 'Completed workout session', 'workout_session',   9),
-  (10,  25, 'Completed first session',   'workout_session',   10),
-  (11, 100, 'Referral bonus',            NULL,                NULL),
-  (11, 100, 'Referral bonus',            NULL,                NULL),
-  (11, 110, 'Challenge winner',          NULL,                NULL);
+
 
 
 -- prediction market (IDs 1-10)
@@ -1222,12 +1207,22 @@ INSERT INTO points_wallet (user_id, balance) VALUES
 (34, 100), (35, 200), (36, 150), (37, 300), (38, 50), (39, 10), (40, 500), (41, 400), (42, 100), (43, 200), (44, 150),
 (45, 300), (46, 50), (47, 10), (48, 500), (49, 400), (50, 100);
 
-INSERT INTO points_txn (user_id, delta_points, reason, ref_type, ref_id) VALUES
-(23, 50, 'Completed workout', 'workout_session', 20),
-(23, 50, 'Completed workout', 'workout_session', 21),
-(26, 50, 'Completed workout', 'workout_session', 22),
-(26, 50, 'Completed workout', 'workout_session', 23),
-(32, 50, 'Completed workout', 'workout_session', 24);
+INSERT INTO points_txn (
+  user_id,
+  delta_points,
+  reason,
+  ref_type,
+  ref_id,
+  created_at
+)
+VALUES
+(2, -50, 'Prediction wager', 'prediction_market', 1, '2026-03-01 10:00:00'),
+(3, -30, 'Prediction wager', 'prediction_market', 1, '2026-03-01 10:05:00'),
+(4, -20, 'Prediction wager', 'prediction_market', 1, '2026-03-01 10:10:00'),
+
+(2, 100, 'Daily survey reward', 'daily_survey', NULL, '2026-03-01 11:00:00'),
+(2, 100, 'Daily survey reward', 'daily_survey', NULL, '2026-03-04 11:00:00'),
+(3, 50, 'Workout completion', 'workout_session', 10, '2026-03-01 11:05:00');
 
 INSERT INTO prediction_market (market_id, creator_user_id, title, goal_text, status, end_date) VALUES
 (11, 4, 'Coach 13 Expansion', 'Will Coach 13 reach 20 clients?', 'open', '2026-04-30'),
@@ -1821,16 +1816,3 @@ VALUES
 (4, 300),
 (5, 100)
 ON DUPLICATE KEY UPDATE balance = VALUES(balance);
-
-INSERT INTO points_txn (user_id, delta_points, reason, ref_type, ref_id)
-VALUES
-(2, -50, 'Prediction wager', 'prediction_market', 1),
-(3, -30, 'Prediction wager', 'prediction_market', 1),
-(4, -20, 'Prediction wager', 'prediction_market', 1),
-
-(2, 100, 'Daily survey reward', 'daily_survey', NULL),
-(3, 50, 'Workout completion', 'workout_session', 10);
-
-INSERT INTO points_txn (user_id, delta_points, reason, ref_type)
-VALUES
-(2, 100, 'Daily survey reward', 'daily_survey');
